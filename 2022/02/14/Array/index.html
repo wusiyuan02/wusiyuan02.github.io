@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>强制类型转换 | 追光者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="将值从一种类型转换成另一种类型通常称为类型转换，隐式的情况称为强制类型转换，类型转换发生在静态类型语言的编译阶段，而强制类型转换则发生在动态类型语言的运行时。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="强制类型转换">
+<meta property="og:url" content="https://wusiyuan02.github.io/2022/02/14/Array/index.html">
+<meta property="og:site_name" content="追光者">
+<meta property="og:description" content="将值从一种类型转换成另一种类型通常称为类型转换，隐式的情况称为强制类型转换，类型转换发生在静态类型语言的编译阶段，而强制类型转换则发生在动态类型语言的运行时。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-14T14:13:14.000Z">
+<meta property="article:modified_time" content="2022-03-06T12:59:42.127Z">
+<meta property="article:author" content="Siyuan Wu">
+<meta property="article:tag" content="你不知道的JavaScript">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="[object Object]">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">
+          追光者
+        </a>
+      </h1>
+      <h2 id="subtitle-wrap">
+        <a href="/" id="subtitle">
+          踮起脚，就能更接近阳光。
+        </a>
+      </h2>
+
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">
+            Home
+          </a>
+          
+          <a class="main-nav-link" href="/archives">
+            Archives
+          </a>
+          
+          <a class="main-nav-link" href="/categories">
+            Category
+          </a>
+          
+          <a class="main-nav-link" href="/tags">
+            Tags
+          </a>
+          
+          <a class="main-nav-link" href="/RedBookRead">
+            红宝书重读
+          </a>
+          
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wusiyuan02.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Array" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/02/14/Array/" class="article-date">
+  <time datetime="2022-02-14T14:13:14.000Z" itemprop="datePublished">2022-02-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      强制类型转换
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>将值从一种类型转换成另一种类型通常称为类型转换，隐式的情况称为强制类型转换，<br>类型转换发生在静态类型语言的编译阶段，而强制类型转换则发生在动态类型语言的运行时。</p>
+<span id="more"></span>
+<h2 id="关于Array"><a href="#关于Array" class="headerlink" title="关于Array"></a>关于Array</h2><p>构造函数Array(..)不必须要求带new关键字，不带时，他会被JS引擎自动补上。<br>数组中并没有预设长度的概念，let arr = Array(3) 这样创建出来的只是一个空数组，只是length属性被设置成指定的值。当数组实际长度大于length时，length也会随着数组实际长度的改变而改变。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">5</span>);  <span class="comment">//Edge浏览器打印出[空 * 5] chrome浏览器打印出[empty * 5]</span></span><br></pre></td></tr></table></figure>
+<p>注：</p>
+<ol>
+<li>当<span style="color:red">空数组执行map时会失败</span>，因为数组中并不存在任何单元，所以map无从遍历。</li>
+<li>当<span style="color:red">空数组执行join时会成功</span>，因为join首先假定数组不为空，然后通过length属性值来便利其中的元素。</li>
+<li>永远不要创建和使用空单元数组！</li>
+</ol>
+<h2 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h2><p>将值从一种类型转换成另一种类型通常称为类型转换，隐式的情况称为强制类型转换，<br>类型转换发生在静态类型语言的编译阶段，而强制类型转换则发生在动态类型语言的运行时。</p>
+<h3 id="显式类型转换"><a href="#显式类型转换" class="headerlink" title="显式类型转换"></a>显式类型转换</h3><h4 id="ToString规则"><a href="#ToString规则" class="headerlink" title="ToString规则"></a>ToString规则</h4><h5 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString()"></a>toString()</h5><p>toString() 会将null转换为“null”,undefined转换成“undefined”,数字的字符换则遵顼通用规则，对于<span style="color:red">普通对象(即typeof 返回值是object)</span>，<span style="color:red">Object.prototype.toString()返回内部属性[[Class]]的值</span>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>()</span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(obj)  <span class="comment">//返回 &#x27;[object Object]&#x27;</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="literal">null</span>) <span class="comment">//返回 &#x27;[object Null]&#x27;</span></span><br></pre></td></tr></table></figure>
+<h5 id="JSON-stringify"><a href="#JSON-stringify" class="headerlink" title="JSON.stringify()"></a>JSON.stringify()</h5><p>JSON.stringify(..) 可以将JSON对象序列化。JSON字符串转化话和toString(..)的效果基本相同，但序列化的结果总是字符串。所有安全的JSON值能使用JSON.stringify(..)字符串转换。<br><span style="color:red">undefined、function、symbol （ES6+）和包含循环引用（对象之间相互引用，形成一个无限循环）的对象都不符合 JSON 结构标准，支持 JSON 的语言无法处理它们</span>。<br>如果要对含有非法JSON值的对象做字符串化，需要自定义toJSON(..)方法返回一个安全的JSON值。JSON字符串化会首先调用该方法，然后用它的返回值来序列化。</p>
+<h4 id="ToNumber-规则"><a href="#ToNumber-规则" class="headerlink" title="ToNumber 规则"></a>ToNumber 规则</h4><ol>
+<li>true =&gt; 1 , false =&gt; 0 , undefined =&gt; NaN , null =&gt; 0 ，[] =&gt; 0 , {} =&gt;NaN</li>
+<li>检查该值是否有valueOf方法，有就返回基本类型值，使用该值进行强制类型转换，没有就使用toString()返回值字符串来强类型转换。  </li>
+</ol>
+<h4 id="ToBoolean-规则"><a href="#ToBoolean-规则" class="headerlink" title="ToBoolean 规则"></a>ToBoolean 规则</h4><ol>
+<li>假值：undefined，null，false，0，NaN,””。</li>
+<li>假值对象:对象都是真值，假值对象是在语法基础上自己创建了一些外来值，这些值就是“假值对象”。常见的是document.all。可以通过document.all来判断是否是版本IE。</li>
+<li>真值：假值之外的值都是真值。空对象，空数组，空函数都是真值。  </li>
+</ol>
+<h4 id="ToPrimitive-规则"><a href="#ToPrimitive-规则" class="headerlink" title="ToPrimitive 规则"></a>ToPrimitive 规则</h4><p>Symbol.ToPrimitive 是一个内置的Symbol值，它是作为对象的函数值属性存在的，当一个对象转换为对应的原始值时，会调用此函数。该函数调用时，会被传递一个字符串参数hint，表示要转换到的原始值的预期类型，hint = [“number”|”string”|”default”]<br>为了将对象强制类型转换为基本数据类型值，首先调用valueOf(..)方法，如果有并且返回基本类型值，就会用该值进行强制类型转换，如果没有，就调用toString(..)方法如果有并且返回基本类型值，就会用该值进行强制类型转换。如果均不返回基本类型值，就会产生TypeError错误。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj=&#123;  </span><br><span class="line">  <span class="attr">toString</span>:<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;  </span><br><span class="line">    alert(<span class="string">&#x27;valueOf方法没有返回标量，我会被调用&#x27;</span>);  </span><br><span class="line">  &#125;,  </span><br><span class="line">  <span class="attr">valueOf</span>:<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;  </span><br><span class="line">    alert(<span class="string">&#x27;我先被调用,Object的valueOf方法默认实现是返回对象自身&#x27;</span>);  </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;; </span><br><span class="line">obj == <span class="number">1</span>; </span><br></pre></td></tr></table></figure>
+<h4 id="显式强制类型转换"><a href="#显式强制类型转换" class="headerlink" title="显式强制类型转换"></a>显式强制类型转换</h4><h5 id="字符串和数字之间显式类型转换"><a href="#字符串和数字之间显式类型转换" class="headerlink" title="字符串和数字之间显式类型转换"></a>字符串和数字之间显式类型转换</h5><h6 id="String-和Number"><a href="#String-和Number" class="headerlink" title="String(..)和Number(..)"></a>String(..)和Number(..)</h6><p>toString(..)显示转换。不过对基本类型值不适用，所以JS引擎会为基本类型值封装对象，在对象上调用toString(..)。</p>
+<ol>
+<li>+c 是+运算符的一元形式。显示将字符串转化成数字。</li>
+<li>~ 运算符：字位运算符只适应32位整数，~x = -(x+1) x=-1时，~x = 0</li>
+<li>~~运算符，字位截除，返回整数部分。因为数位运算符只能在32位有效，~~可以截取32位数字。<h6 id="显示解析数字字符串"><a href="#显示解析数字字符串" class="headerlink" title="显示解析数字字符串"></a>显示解析数字字符串</h6>显示解析数字字符串：parseInt、parseFloat，这两个方法接受两个参数，第一个是要转换的字符串，第二个参数是指定转换的进制。<br>解析（即parseInt、parseFloat）允许字符串中含有非数字字符。Number不允许。<br>ES5之前的parseInt(..)如果没有第二个参数来指定转换的禁止，会根据字符串第一个字符来自行决定转换的进制。如果没有第二个参数来指定转换的参数，会根据字符串第一个字符来自行决定转换成的进制。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">parseint(<span class="number">1</span>/<span class="number">0</span>, <span class="number">19</span>) <span class="comment">// 1/0等于Infinity，其中i在19进制里等于十进制的18，所以最后的 输出18</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="number">0.000008</span>) <span class="comment">// 0</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="number">0.0000008</span>) <span class="comment">// 8, 0.0000008会转换成8e-7,8来自于第一个数位的8</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="literal">false</span>,<span class="number">16</span>)  <span class="comment">// 15</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="built_in">parseInt</span>,<span class="number">16</span>) <span class="comment">// 15 parseInt 为function parseInt。15来自于function的f</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">&quot;0x10&quot;</span>)  <span class="comment">// 16 根据第一个字符，指定为16进制</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">&quot;103&quot;</span>,<span class="number">2</span>) <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<h6 id="js中科学计数法"><a href="#js中科学计数法" class="headerlink" title="js中科学计数法"></a>js中科学计数法</h6>当数值小于1而且小数点后面带有6个0以上的浮点数值和整数位数字多于21位时，js引擎会自动将数值转换成科学计数法的表现形式。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">0.0003</span>) <span class="comment">// 0.0003</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">0.0000007</span>) <span class="comment">//7e-7</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1234567891234567891234</span>) <span class="comment">//1.234567891234568e+21</span></span><br></pre></td></tr></table></figure>
+<h6 id="数字运算中的精度缺失问题"><a href="#数字运算中的精度缺失问题" class="headerlink" title="数字运算中的精度缺失问题"></a>数字运算中的精度缺失问题</h6>这个问题有一个受众很广的例子，0.1+0.2！=0.3<br>下面分析一下原因<br>计算机中数字是以多位二进制进行存储的，js中采用的是IEEE 754的双精度标准。也就是说0.1 这样的数值用二进制表示就会发现无法整除，0.1 用二进制转换后的结果为0.0 0011 0011 …..由于计算机的存储数位有限，最后计算机后舍弃后面的数值，所以我们只能得到一个近似值。</li>
+<li>1 和 0.2 这个式子中，0.1和0.2都是近似表示的，在他们相加的时候，两个近似值都进行了计算，导致最后得到的结果是0.30000000000000004,对于js来说不够近似于0.3，于是就出现了0.1+0.2！=0.3</li>
+</ol>
+<h6 id="显示转换为布尔值"><a href="#显示转换为布尔值" class="headerlink" title="显示转换为布尔值"></a>显示转换为布尔值</h6><p>Boolean 是显式的ToBoolean强制类型转换。</p>
+<ol>
+<li>！一元运算符显式将值转换成布尔值，同时还将真值反转。所以最常用的转换成布尔值是!!。</li>
+</ol>
+<h4 id="隐式强制类型转换"><a href="#隐式强制类型转换" class="headerlink" title="隐式强制类型转换"></a>隐式强制类型转换</h4><h5 id="字符串和数字之间的隐式强制类型转换"><a href="#字符串和数字之间的隐式强制类型转换" class="headerlink" title="字符串和数字之间的隐式强制类型转换"></a>字符串和数字之间的隐式强制类型转换</h5><ol>
+<li>如果某个操作数是字符串或能通过一些步骤转换成字符串，+将进行拼接操作。如果一个操作数是对象，首先调用ToPrimitive抽象操作，该操作再调用[[DefaultValue]],以数字作为上下文。</li>
+<li>将数字和空字符串相加将数字转化成字符串。2+’’，根据ToPrimitive抽象从左首先调用valueOf方法，然后通过ToString抽象操作将返回值转换成字符串。而String(2)则会直接调用ToString()。</li>
+<li>字符串强制转换成数字： ‘3,14’ - 0 或者’3.14’ * 1 等等数字运算符。  </li>
+</ol>
+<h5 id="布尔值到数字的隐式强制类型转换"><a href="#布尔值到数字的隐式强制类型转换" class="headerlink" title="布尔值到数字的隐式强制类型转换"></a>布尔值到数字的隐式强制类型转换</h5><ol>
+<li>隐式强制类型转换为布尔值<br>if( .. )、  for( .. ; .. ; .. ) 、while( .. ) 、? : 、||等非布尔值会被隐式强制类型转换为布尔值，遵循前面介绍过的ToBlloean抽象操作规则。</li>
+<li>&amp;&amp; 和 || 操作数选择器</li>
+</ol>
+<ul>
+<li><strong>&amp;&amp; 第一个数为真返回第二个数的值</strong>，第一个数为假返回第一个数的值。</li>
+<li><strong>&nbsp;|| &nbsp;&nbsp;第一个数为真返回第一个数的值</strong>，第一个数为假返回第二个操作数的值。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a = a || <span class="string">&quot;hello&quot;</span><span class="comment">// 如果a未赋值，赋予a默认值”hello”。这里会根据ToBoolean规则隐式转化。</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>符号的强制类型转换<br>符号不能够被强制类型转换为数字，但可以被强制类型转化为布尔值（显示隐式都为true）。</li>
+<li>== 和 ===（两边都会转换成数字类型进行比较）<br>== 允许在相等比较中进行类型转换，=== 不允许。<br>对象在比较中调用ToPrimitive抽象规则，先调用valueOf,对返回的结果调用toString。  </li>
+</ol>
+<h6 id="数值相等的算法细节"><a href="#数值相等的算法细节" class="headerlink" title="==数值相等的算法细节"></a>==数值相等的算法细节</h6><p>1、如果x不是正常值（比如抛出一个错误），中断执行。<br>2、如果y不是正常值，中断执行。<br>3、如果Type(x)与Type(y)相同，执行严格相等运算x === y。<br>4、如果x是null，y是undefined，返回true。<br>5、如果x是undefined，y是null，返回true。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">null</span> == <span class="literal">undefined</span> <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>6、如果Type(x)是数值，Type(y)是字符串，返回x == ToNumber(y)的结果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span> == <span class="string">&quot;5&quot;</span>  <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>7、如果Type(x)是字符串，Type(y)是数值，返回ToNumber(x) == y的结果。<br>8、如果Type(x)是布尔值，返回ToNumber(x) == y的结果。<br>9、如果Type(y)是布尔值，返回x == ToNumber(y)的结果。<br>10、如果Type(x)是字符串或数值或Symbol值，Type(y)是对象，返回x == ToPrimitive(y)的结果。<br>11、如果Type(x)是对象，Type(y)是字符串或数值或Symbol值，返回ToPrimitive(x) == y的结果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Object</span>() == <span class="string">&#x27;[object Object]&#x27;</span> <span class="comment">//返回true</span></span><br></pre></td></tr></table></figure>
+<p>12、返回false。<br>总结：<br>1、如果有null或者undefined，返回false<br>2、如果有Boolean将Boolean转换成Number<br>3、 如果其中一个是对象，执行ToPrimitive抽象规则。（先调用valueOf，如果没有valueOf或者返回的不是基本数据类型,调用tostring）<br>4、如果一个是数字，一个是字符串，将字符串转化成数字。<br>5、如果x,y不正常，中止执行，如果x,y为null和undefined，返回true<br>6、根据规范，比较a &lt;= b时会比较 b &lt; a,并将结果反转。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wusiyuan02.github.io/2022/02/14/Array/" data-id="cl1x7815v0001vgvc9znneyk4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript/" rel="tag">你不知道的JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/02/20/this/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          this与JS中的原型
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/02/14/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">编译与词法作用域</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hello-Blog/">Hello Blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue%E6%A1%86%E6%9E%B6/">Vue框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BOM/" rel="tag">BOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript/" rel="tag">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2/" rel="tag">字节二面</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Siyuan Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/RedBookRead" class="mobile-nav-link">红宝书重读</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

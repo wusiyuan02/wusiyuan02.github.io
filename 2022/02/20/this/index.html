@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>this与JS中的原型 | 追光者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="this的使用存在许多误解。在没有系统的学习this之前，我不敢确信this到底意味着什么。this的最常见的误解有两种。第一种误解是this指向自身，这个推断从英语的语法角度来说的。第二种误解是，this指向函数的作用域，这种误解在某些情况说得通的。this是在运行时进行绑定的，他的绑定与函数声明的位置没有任何关系，只取决于函数的调用方式，当函数被调用时，会创建一个FEC（函数执行上下文），EC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="this与JS中的原型">
+<meta property="og:url" content="https://wusiyuan02.github.io/2022/02/20/this/index.html">
+<meta property="og:site_name" content="追光者">
+<meta property="og:description" content="this的使用存在许多误解。在没有系统的学习this之前，我不敢确信this到底意味着什么。this的最常见的误解有两种。第一种误解是this指向自身，这个推断从英语的语法角度来说的。第二种误解是，this指向函数的作用域，这种误解在某些情况说得通的。this是在运行时进行绑定的，他的绑定与函数声明的位置没有任何关系，只取决于函数的调用方式，当函数被调用时，会创建一个FEC（函数执行上下文），EC">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-20T09:07:56.000Z">
+<meta property="article:modified_time" content="2022-02-20T12:57:47.461Z">
+<meta property="article:author" content="Siyuan Wu">
+<meta property="article:tag" content="你不知道的JavaScript">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="[object Object]">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">
+          追光者
+        </a>
+      </h1>
+      <h2 id="subtitle-wrap">
+        <a href="/" id="subtitle">
+          踮起脚，就能更接近阳光。
+        </a>
+      </h2>
+
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">
+            Home
+          </a>
+          
+          <a class="main-nav-link" href="/archives">
+            Archives
+          </a>
+          
+          <a class="main-nav-link" href="/categories">
+            Category
+          </a>
+          
+          <a class="main-nav-link" href="/tags">
+            Tags
+          </a>
+          
+          <a class="main-nav-link" href="/RedBookRead">
+            红宝书重读
+          </a>
+          
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wusiyuan02.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-this" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/02/20/this/" class="article-date">
+  <time datetime="2022-02-20T09:07:56.000Z" itemprop="datePublished">2022-02-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      this与JS中的原型
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>this的使用存在许多误解。在没有系统的学习this之前，我不敢确信this到底意味着什么。this的最常见的误解有两种。<br>第一种误解是this指向自身，这个推断从英语的语法角度来说的。<br>第二种误解是，this指向函数的作用域，这种误解在某些情况说得通的。<br>this是在运行时进行绑定的，他的绑定与函数声明的位置没有任何关系，只取决于函数的调用方式，当函数被调用时，会创建一个FEC（函数执行上下文），EC会记录包括函数在哪里被调用，函数的调用方法，参数等信息。</p>
+<span id="more"></span>
+<h2 id="更改误解"><a href="#更改误解" class="headerlink" title="更改误解"></a>更改误解</h2><ol>
+<li>this既不指向函数自身也不指向函数的词法作用域。</li>
+<li>this实际上是在函数被调用是发生的绑定，它指向声明完全取决于函数在哪里被调用的。</li>
+</ol>
+<h2 id="this-的解析"><a href="#this-的解析" class="headerlink" title="this 的解析"></a>this 的解析</h2><p>this 是在函数被调用是发生绑定的，所以this被绑定完全取决与函数的调用位置。</p>
+<blockquote>
+<p><strong>执行上下文栈</strong>：JS引擎为了执行代码，内部有一个执行上下文栈，ECS被执行时，先执行全局代码块，在执行全局代码块的时候会构建一个全局上下文GEC，GEC会被放在ECS中执行，GEC会先声明变量，然后执行代码。<br>当<strong>执行到函数</strong>的时候，JS引擎会开辟空间存放函数，生成函数执行上下文（FEC），FEC中的VO指向函数空间中的AO。这个函数存储空间主要存放函数的父级执行与和函数执行代码块。<br>FEC包括AO，作用域链，和this指向。</p>
+</blockquote>
+<h3 id="this的绑定规则"><a href="#this的绑定规则" class="headerlink" title="this的绑定规则"></a>this的绑定规则</h3><p>this的绑定规则共包含四种情况：默认绑定、隐式绑定、显式绑定、new 绑定。</p>
+<h4 id="默认绑定"><a href="#默认绑定" class="headerlink" title="默认绑定"></a>默认绑定</h4><p><span style="color:red">默认绑定：</span>即在其他绑定规则无法执行时执行的规则。<br>默认绑定this<strong>绑定全局对象</strong>，在<strong>严格模式</strong>下，this会绑定<span style="color:red">undefined</span>。    </p>
+<h4 id="隐式绑定"><a href="#隐式绑定" class="headerlink" title="隐式绑定"></a>隐式绑定</h4><p><span style="color:red">隐式绑定：</span>调用位置是否会被上下文对象，或者说是否被<strong>某个对象</strong>拥有或者包含。<span style="color:red">foo函数被当作引用属性添加到obj对象</span>中，但是无论是直接在obj中定义还是先定义再添加为引用属性，<strong>这个函数严格来说都不属于obj对象</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>.a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="number">2</span>,</span><br><span class="line">  <span class="attr">foo</span>: foo,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line">foo()     <span class="comment">// 打印全局中a，即打印this.a 输出 3</span></span><br><span class="line">obj.foo() <span class="comment">// 打印obj中a，输出2</span></span><br></pre></td></tr></table></figure>
+<p>注：JS引擎会开辟一个堆存储空间存放函数的父级执行域和函数的执行代码块。<br>当函数引用有上下文对象时，隐式绑定规则会把函数调用中的this绑定到这个上下文对象。<br>在对象属性引用链中，只有最后一层会影响调用位置。</p>
+<p>还有一种特殊情况会让隐式绑定的引用丢失：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bar = obj.foo</span><br><span class="line">bar()  <span class="comment">//打印全局变量中的a</span></span><br></pre></td></tr></table></figure>
+<p>虽然bar是obj.foo的一个引用，但<span style="color:red">实际上bar指向foo函数本身</span>。此时bar()不带任何修饰的函数调用。因此执行默认绑定。<br>隐式绑定必须在一个对象内部包含一个指向函数的属性，并通过属性间接引用函数。从而实现this的间接绑定。但隐式绑定会存在回调函数中绑定消失问题。</p>
+<h5 id="绑定丢失问题"><a href="#绑定丢失问题" class="headerlink" title="绑定丢失问题"></a>绑定丢失问题</h5><p>给函数传参数时，传送的是参数的物理地址。因为函数上下文在内存中的物理地址。传给回调函数的参数自然也是物理地址。这个时候this的绑定就会丢失。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>.a)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doFoo</span>(<span class="params">fn</span>)</span>&#123;</span><br><span class="line">  fn();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  <span class="attr">a</span>:<span class="number">2</span>,</span><br><span class="line">  <span class="attr">foo</span>:foo</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a = <span class="number">3</span></span><br><span class="line"><span class="keyword">var</span> a =<span class="string">&quot;oops global&quot;</span>;</span><br><span class="line">doFoo(obj.foo);    <span class="comment">//这里的this是window.a。本意是希望打印obj.a</span></span><br></pre></td></tr></table></figure>
+<h4 id="显式绑定"><a href="#显式绑定" class="headerlink" title="显式绑定"></a>显式绑定</h4><p><span style="color:red">显式绑定：</span>故名思意，让this绑定的对象显示出来，在某个对象上<strong>强制</strong>调用函数。使用apply，call，bind方法等。但是显式绑定也无法解决丢失回调函数中绑定问题。     </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>.a)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  <span class="attr">a</span>:<span class="number">2</span>,</span><br><span class="line">&#125;</span><br><span class="line">foo();  <span class="comment">//打印的是window.a</span></span><br><span class="line">foo.call(obj)  <span class="comment">//打印的是this.a</span></span><br></pre></td></tr></table></figure>
+<p>apply和call的区别：他们第一个参数都是函数绑定的this，apply只接受两个参数，第二个参数是数组Array的形式,call可以接受很多参数。 如果第一个参数是原始值，作为this的绑定对象，这个原始值会被转化成他的对象形式。    </p>
+<h5 id="硬绑定"><a href="#硬绑定" class="headerlink" title="硬绑定"></a>硬绑定</h5><p><span style="color:red">硬绑定</span>：硬绑定是显式绑定的一个变种，就是<strong>创建一个包裹函数</strong>，传入所有的参数并返回接收到的所有值。内置方法是bind。<br>其内部原理就是在包裹函数中对接受的参数进行显式绑定。<br><span style="color:red">内置方法bind会<strong>返回</strong>一个硬编码的新函数</span>，新函数会把把你指定的参数设置为this的上下文并调用原始函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>.a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  <span class="attr">a</span>:<span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> bar = foo.bind(obj)</span><br><span class="line">bar() <span class="comment">//打印obj.a</span></span><br></pre></td></tr></table></figure>
+<p>在一些第三方库中的许多函数，为了确保回调函数使用指定的this，就是提供context等价于bind通过apply，call实现显示绑定。   </p>
+<h5 id="软绑定"><a href="#软绑定" class="headerlink" title="软绑定"></a>软绑定</h5><p>硬绑定这种方式可以把this<strong>强制</strong>绑定到指定的对象，所以硬绑定的存在会降低代码的灵活性。我们希望对函数this绑定之后还可以改变函数的this绑定。如果给默认绑定指定一个全局对象和undefined以外的值，就可以实现和硬绑定相同的效果同时保留显式绑定和隐式绑定修改this的能力。<br><span style="color:red">封装函数：</span>首先检查调用时的this，如果this绑定到全局对象或者undefined上，那就把指定的默认对象绑定到this上，否则不会修改this。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="built_in">Function</span>.prototype.softBind)&#123;</span><br><span class="line">  <span class="built_in">Function</span>.prototype.softBind=<span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> fn = <span class="built_in">this</span>;  <span class="comment">// this指向不明确</span></span><br><span class="line">    <span class="keyword">var</span> curried =  [].slice.call(<span class="built_in">arguments</span>,<span class="number">1</span>);  <span class="comment">//arguments 是传入该函数的参数类数组</span></span><br><span class="line">    <span class="keyword">var</span> bound = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> fn.apply(</span><br><span class="line">        (!<span class="built_in">this</span> || <span class="built_in">this</span> === (<span class="built_in">window</span> || <span class="built_in">global</span>))? <span class="comment">//如果this绑定到全局对象或者undefined上，那就把指定的默认对象绑定到this</span></span><br><span class="line">        obj</span><br><span class="line">        :</span><br><span class="line">        <span class="built_in">this</span>,curried.concat.apply(curried,<span class="built_in">arguments</span>)</span><br><span class="line">      );</span><br><span class="line">    &#125;;</span><br><span class="line">    bound.prototype = <span class="built_in">Object</span>.create(fn.prototype);</span><br><span class="line">    <span class="keyword">return</span> bound; <span class="comment">//返回一个新函数bound，新函数的原型链指向新创建的fn。</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="new绑定"><a href="#new绑定" class="headerlink" title="new绑定"></a>new绑定</h4><p>JavaScript中的new操作符与其他面向类的语言不同。在JavaScript中，构造函数只是使用new操作符被调用的函数。使用new调用函数是，会自动执行下面操作：</p>
+<ol>
+<li>创建一个全新的对象</li>
+<li>新对象[[prototype]]关联原型链</li>
+<li>新对象与函数调用的this属性绑定</li>
+<li>如果函数没有返回其他对象，new表达式中的函数调用会自动返回这个新对象。   </li>
+</ol>
+<h4 id="绑定的优先级为：new绑定-gt-硬绑定-gt-显式绑定-gt-隐式绑定-gt-默认绑定"><a href="#绑定的优先级为：new绑定-gt-硬绑定-gt-显式绑定-gt-隐式绑定-gt-默认绑定" class="headerlink" title="绑定的优先级为：new绑定 &gt; 硬绑定 &gt; 显式绑定 &gt; 隐式绑定 &gt; 默认绑定"></a>绑定的优先级为：new绑定 &gt; 硬绑定 &gt; 显式绑定 &gt; 隐式绑定 &gt; 默认绑定</h4><h4 id="箭头函数的this绑定"><a href="#箭头函数的this绑定" class="headerlink" title="箭头函数的this绑定"></a>箭头函数的this绑定</h4><p>箭头函数不适用this的四种标准规则，而是根据外层作用域来决定this。外层作用域的this绑定什么，箭头函数中的this就绑定什么。<br>而且：<span style="color:red">箭头函数的this绑定无法修改</span>。</p>
+<h2 id="面向对象编程理论"><a href="#面向对象编程理论" class="headerlink" title="面向对象编程理论"></a>面向对象编程理论</h2><p>下面介绍的全是面向类的编程语言的机制，<strong>与JavaScript无关</strong>。</p>
+<h3 id="类理论：实例化、继承、（相对）多态"><a href="#类理论：实例化、继承、（相对）多态" class="headerlink" title="类理论：实例化、继承、（相对）多态"></a>类理论：实例化、继承、（相对）多态</h3><p>类不是必须的编程基础，而是一种可选的代码抽象。类是一种设计模式，JavaScript提供了近似类的语法，但是<strong>JavaScript的机制一直在阻止类设计模式的使用</strong>。<br>把类看成一个蓝图，为了获取真正可以交互的对象，就必须按照类来创建也就是实例化一个实例。类通过复制操作被实例化为对象形式。<br>类的实例是由一个特殊的类方法构造的，这个方法名通常与类名相同，被称为构造函数。<br><strong>类的继承</strong>：把父类和子类当成父类DNA和子类DNA，根据DNA来实例化一个人。<br><strong>类的多态</strong>：相对多态，绝对多态<br><strong>相对多态</strong>：任何方法都可以引用继承层次中 高层的方法，之所以成为相对，是因为我们不会定义想要访问的绝对继承层次，而是使用相对引用查找上一层。<br>子类通过相对多态引用来访问父类中的行为，子类得到的是继承自父类方法的副本，子类可以对继承到的一个方法进行重写而不会影响父类中的方法。类的继承其实就是复制。</p>
+<h3 id="JavaScript中"><a href="#JavaScript中" class="headerlink" title="JavaScript中"></a>JavaScript中</h3><p>在继承或者实例化时，<strong>JavaScript的机制不会自动执行复制行为</strong>，也就是JavaScript中只有对象，并不存在可以被实例化的“类”。一个对象并不会被复制到其他对象，他们只会被关联起来。JavaScript也不提供“多重继承”功能。但有一些JavaScript开发者尽力在模拟其他面向类的编程语言中类的复制行为。</p>
+<h4 id="混入："><a href="#混入：" class="headerlink" title="混入："></a>混入：</h4><p>mixin是JavaScript开发者模拟面向类的编程语言中类的复制行为。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mixin</span>(<span class="params">sourceObj,targetObj</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> sourceObj)&#123;</span><br><span class="line">    <span class="keyword">if</span>(!key <span class="keyword">in</span> targetObj)&#123; <span class="comment">//判断子类中是否有同名属性，从而保留了子类中定义的同名属性</span></span><br><span class="line">      targetObj[key] = sourceObj[key]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> sourceObj</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还有一种混入写法是将父类复制到空对象中，再将子类复制到已拷贝父类的对象中，子类会覆盖父类共有的属性。但这种mixin方法中属性可能会引用同一个对象，因此这种mixin实际上并不能完全模拟面向类的语言中的复制。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj=&#123;</span><br><span class="line">  <span class="attr">a</span>:<span class="number">2</span>,</span><br><span class="line">  <span class="attr">b</span>:<span class="number">3</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> target = mixin(obj,&#123;&#125;)</span><br><span class="line">mixin(target,&#123;</span><br><span class="line">  <span class="attr">a</span>:<span class="number">4</span>,</span><br><span class="line">&#125;) <span class="comment">//此时target中的输出为&#123;a:4,b:3&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h2><p>JavaScript中的对象有一个特殊的[[prototype]]内置属性，<span style="color:red">其实就是对其他对象的引用</span>。几乎所有的对象在创建时该属性都会被赋予一个非空的值（字面写法默认指向Object）。</p>
+<h3 id="原型链查找"><a href="#原型链查找" class="headerlink" title="原型链查找"></a>原型链查找</h3><p>如果属性名不在对象中，就会在该对象的[[prototype]]指向的对象上查找，直到找到或者查找完 全部的原型链。如果是后者，返回undefined。<br>使用forin时查找原理与原型链查找相同。</p>
+<h4 id="给对象设置属性"><a href="#给对象设置属性" class="headerlink" title="给对象设置属性"></a>给对象设置属性</h4><blockquote>
+<p>Eg: myObject.foo=”bar”</p>
+</blockquote>
+<ol>
+<li>如果myObject对象中包含属性为foo的普通数据访问属性，这条赋值语句会直接执行。</li>
+<li>如果myObject对象不存在该属性名，就会进行原型链查找，如果原型链上没有找到，foo就会被直接添加到myObject上。</li>
+<li>如果foo存在原型链上分为下面三种情况：  </li>
+</ol>
+<ul>
+<li><span style="color:red">存在foo</span>并且<span style="color:red">writable:true</span>  =&gt; 直接在myObject上添加一个名为foo的新属性，这个属性是<span style="color:red">屏蔽属性</span>。</li>
+<li><span style="color:red">存在foo</span>并且<span style="color:red">writable:false</span>  =&gt; 无法修改已有属性或者在myObject上创建屏蔽属性。严格模式下抛出错误，否则会被忽略。（这种限制只存在<span style="color:red">=</span>赋值）</li>
+<li><span style="color:red">存在foo</span>并且<span style="color:red">是一个setter</span>  =&gt; 调用这个setter,foo不会被调价，也不会重新定义setter。</li>
+</ul>
+<h3 id="JavaScript-模仿类的行为"><a href="#JavaScript-模仿类的行为" class="headerlink" title="JavaScript 模仿类的行为"></a>JavaScript 模仿类的行为</h3><p>JavaScript模仿类的行为利用了函数的一种<span style="color:red">特殊特性</span>：<strong>所有函数默认会拥有一个名为prototype的共有并且不可枚举的属性，它会指向另一个对象</strong>。  </p>
+<p>因为JavaScript中没有类似于面向类的编程语言的复制机制。就不能创建一个类的多个实例，只能创建多个对象，并让他们的<span style="color:red">[[prototype]]</span>内置属性关联的是同一个对象。  </p>
+<p>new Foo()实例化一个对象时，新对象内置属性<span style="color:red">[[prototype]]</span>关联的是Foo.prototype对象，就这样，我们没有像其他面向类的编程语言一样复制父类的任何属性到子类中，只是让两个对象<strong>相互关联</strong>。<br>new Foo() 这个函数调用实际上没有直接创建关联，这个关联只是一个以外的副作用。**Object.create()更直接做到这点(关联prototype)**。</p>
+<h4 id="构造函数”详解：所有带new的函数调用"><a href="#构造函数”详解：所有带new的函数调用" class="headerlink" title="构造函数”详解：所有带new的函数调用"></a>构造函数”详解：所有带new的函数调用</h4><p>ES6 class关键字还没被引入之前，通过function Foo(){…}这种形式作为“类”的构造函数。<br>Foo.prototype默认情况下有一个公有并且不可枚举的属性.constructor，这个属性引用的时对象关联的函数（这里是Foo）。此外，可以看到通过“构造函数”调用new Foo()创建的对象的[[prototype]]也有.constructor属性，指向Foo。</p>
+<h5 id="对-constructor属性的错误理解"><a href="#对-constructor属性的错误理解" class="headerlink" title="对.constructor属性的错误理解"></a>对.constructor属性的错误理解</h5><p>默认情况下，.constructor属性通过默认的[[prototype]]内置属性委托指向Foo。即实例本身没有constructor属性，通过原型链查找找到[[prototype]]上的constructor属性。而原型上的 .constructor 属性只是构造函数在声明时的默认属性。<br>如果创建一个新对象（类）之后替换了函数默认的.prototype对象引用，那么<strong>新对象不会自动获取.constructor属性</strong>。当然可以手动给.prototype添加一个.constructor属性。但还要注意，这个.constructor属性时不可枚举的。<br>因此，constructor属性并不表示被构造。</p>
+<h4 id="更正JavaScript中类的继承"><a href="#更正JavaScript中类的继承" class="headerlink" title="更正JavaScript中类的继承"></a>更正JavaScript中类的继承</h4><p>我们已经知道JavaScript不会像其他面向类的语言一样复制父类到子类中，我们也更正了JavaScript中的构造函数constructor的解释，我们也知道了JavaScript是通过子类中的[[prototype]]属性<span style="color:red">委托关联</span>到父类。下面，父类与子类继承时一些错误的做法。</p>
+<h5 id="常见的错误做法"><a href="#常见的错误做法" class="headerlink" title="常见的错误做法"></a>常见的错误做法</h5><ol>
+<li>Bar.prototype = Foo.prototype </li>
+<li>Bar.prototype = new Foo()  </li>
+</ol>
+<p>第一种做法是完全错误的，对象是引用类型，所以Bar.prototype引用的和Foo.prototype引用的是同一个对象。当修改Bar.prototype时也会修改Foo.prototype。<br>第二种做法也能完成需求，但是使用new Foo()构造调用会有一些副作用，比如写日志、修改状态、注册到其他对象、给this添加数据属性等等，会影响到Bar()的后代。</p>
+<h4 id="正确的委托关联的做法："><a href="#正确的委托关联的做法：" class="headerlink" title="正确的委托关联的做法："></a>正确的委托关联的做法：</h4><h5 id="Object-create"><a href="#Object-create" class="headerlink" title="Object.create"></a>Object.create</h5><p>Bar.prototype = Object.create( Foo.prototype )<br>调用这个Object.create语句，会创建一个“新对象”并把新对象的[[prototype]]内置属性关联到指定对象中。<br>在声明构造函数时，Bar会有一个.prototype委托关联到默认的对象，但这个对象并不是我们想要的实现继承的Foo.prototype。因此我们创建了一个新对象Bar.prototype<span style="color:red">(此处的新对象相当于子类)</span>并关联到我们希望的对象上，直接把原始的关联对象<strong>抛弃</strong>。<br><strong>注：</strong>使用Object.create方法有一个缺点，抛弃了旧对象。</p>
+<h6 id="Object-create的ployfill代码"><a href="#Object-create的ployfill代码" class="headerlink" title="Object.create的ployfill代码"></a>Object.create的ployfill代码</h6><p>Object.create(..)是ES5时提出的，因此在ES5之前要使用一段简单的ployfill代码来部分实现Object.create(..)的功能：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="built_in">Object</span>.create)&#123;</span><br><span class="line">  <span class="built_in">Object</span>.create=<span class="function"><span class="keyword">function</span>(<span class="params">o</span>)</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>)</span>&#123;&#125; <span class="comment">//声明一个空的构造函数</span></span><br><span class="line">    F.prototype = o;  <span class="comment">//将新声明的构造函数委托到o</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> F(); <span class="comment">//返回用空构造函数的声明的对象，此对象的[[prototype]]关联o</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="Object-setPrototypeOf"><a href="#Object-setPrototypeOf" class="headerlink" title="Object.setPrototypeOf(..)"></a>Object.setPrototypeOf(..)</h5><p>ES6之前只能使用.__proto__属性来修改对象的[[prototype]]关联，但<strong>这个方法并不是标准的并且无法兼容所有浏览器</strong>。ES6添加了辅助函数Object.setPrototypeOf(..)，提供了标准并且可靠的方法来修改关联。</p>
+<ul>
+<li>ES6之前的写法：Bar.prototype = Object.create(Foo.prototype)</li>
+<li>ES6之后的写法：Object.setPrototypeOf(Bar.prototype,Foo.prototype)     <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.setPrototypeOf(Bar.prototype,Foo.prototype)</span><br></pre></td></tr></table></figure>
+除了Object.create(..)方法带来的轻微性能损失（垃圾回收机制），相比于比Object.setPrototypeOf(..)方法更短并且可读性更高。</li>
+</ul>
+<h4 id="检查类之间的委托关系"><a href="#检查类之间的委托关系" class="headerlink" title="检查类之间的委托关系"></a>检查类之间的委托关系</h4><p>检查一个实例的委托关联通常被称为<strong>内省</strong>（或者反射）。</p>
+<h5 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h5><p>instanceof方法左边是一个对象，右边是构造函数。instanceof表示的是对象是否是构造函数的一个实例。这个方法回答的问题是<span style="color:red">对象的整条[[prototype]]链中是否有指向构造函数的prototype属性的对象</span>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isRelatedTo</span>(<span class="params">o1,o2</span>)</span>&#123;	</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">  F.prototype = o2;</span><br><span class="line">  <span class="keyword">return</span> o1 <span class="keyword">instanceof</span> F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="isPrototypeOf-NaN"><a href="#isPrototypeOf-NaN" class="headerlink" title="isPrototypeOf"></a>isPrototypeOf</h5><p>isPrototypeOf方法回答的问题是<span style="color:red">在a的整条原型链上是否出现过Foo.prototype</span>。</p>
+<h5 id="Object-getPrototypeOf"><a href="#Object-getPrototypeOf" class="headerlink" title="Object.getPrototypeOf"></a>Object.getPrototypeOf</h5><p>Object.getPrototypeOf(..)方法直接获取一个对象的[[prototype]]链。<br>ES6中也提供了一个属性**.<strong>proto</strong>**来引用内部[[prototype]]对象。这个属性和<br>.constructor一样，实际上并不存在与你正在使用的对象中。<br>.__proto__实现大致是这样的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">Object</span>.prototype,<span class="string">&#x27;__proto__&#x27;</span>,&#123;</span><br><span class="line">  <span class="attr">get</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>.getPrototypeOf(<span class="built_in">this</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">  <span class="attr">set</span>: <span class="function"><span class="keyword">function</span>(<span class="params">o</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">Object</span>.setPrototypeOf(<span class="built_in">this</span>,o)</span><br><span class="line">    <span class="keyword">return</span> o;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>介绍了JavaScript中实现继承（就是委托）的几种方法: Object.create、Object.setPrototypeOf(..)。<br>Object.create(..) 创建一个新对象，并将新对象中的内置属性[[prototype]]绑定到构造函数的prototype属性上。对比new 绑定，少了许多副作用。<br>Object.setPrototypeOf(..) 将第一个参数的prototype 属性绑定到第二个参数的prototype 属性上去。<br>Object.create的ployfill代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="built_in">Object</span>.create)&#123;</span><br><span class="line">  <span class="built_in">Object</span>.create = <span class="function"><span class="keyword">function</span>(<span class="params">o</span>)</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">    F.prototype = o;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> F();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wusiyuan02.github.io/2022/02/20/this/" data-id="cl1x7816l000nvgvccovk2xce" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript/" rel="tag">你不知道的JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/02/25/%E5%BC%82%E6%AD%A5%E4%B8%8Epromise/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          异步与promise
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/02/14/Array/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">强制类型转换</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hello-Blog/">Hello Blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue%E6%A1%86%E6%9E%B6/">Vue框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BOM/" rel="tag">BOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript/" rel="tag">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2/" rel="tag">字节二面</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Siyuan Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/RedBookRead" class="mobile-nav-link">红宝书重读</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

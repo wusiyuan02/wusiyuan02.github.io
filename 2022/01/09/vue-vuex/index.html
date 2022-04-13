@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>vue-vuex | 追光者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="vuex 状态管理模式 响应式采用集中式存储模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-vuex">
+<meta property="og:url" content="https://wusiyuan02.github.io/2022/01/09/vue-vuex/index.html">
+<meta property="og:site_name" content="追光者">
+<meta property="og:description" content="vuex 状态管理模式 响应式采用集中式存储模式">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-09T11:54:56.000Z">
+<meta property="article:modified_time" content="2022-01-22T08:41:01.133Z">
+<meta property="article:author" content="Siyuan Wu">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="[object Object]">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">
+          追光者
+        </a>
+      </h1>
+      <h2 id="subtitle-wrap">
+        <a href="/" id="subtitle">
+          踮起脚，就能更接近阳光。
+        </a>
+      </h2>
+
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">
+            Home
+          </a>
+          
+          <a class="main-nav-link" href="/archives">
+            Archives
+          </a>
+          
+          <a class="main-nav-link" href="/categories">
+            Category
+          </a>
+          
+          <a class="main-nav-link" href="/tags">
+            Tags
+          </a>
+          
+          <a class="main-nav-link" href="/RedBookRead">
+            红宝书重读
+          </a>
+          
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wusiyuan02.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-vue-vuex" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/01/09/vue-vuex/" class="article-date">
+  <time datetime="2022-01-09T11:54:56.000Z" itemprop="datePublished">2022-01-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Vue%E6%A1%86%E6%9E%B6/">Vue框架</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      vue-vuex
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>vuex 状态管理模式 响应式<br>采用集中式存储模式</p>
+<span id="more"></span>
+<p>单界面的状态管理（view &lt;- state&lt;- actions&lt;-)</p>
+<p>通过mutations来修改state。<br>修改mutation时，如果有异步操作，放在actions里</p>
+<p>dev tools单步跟踪修改</p>
+<p>State单一状态树（single data source）<br>只有一个store，便于管理和维护</p>
+<p>Getters： //类似于computed计算属性 一个参数是state，两个参数是state，getters<br>getters 默认不能传送参数，如果想传送参数可以返回一个函数。<br>1、moreAgeStu(age)  //错误<br>2、moreAgeStu(state) {<br>      return function(age) {<br>        return state.student.filter(s =&gt; s &gt; age);<br>      }<br>    }</p>
+<p>Mutations:更新store的state的状态，便于devtools跟踪变化<br>arguements包括两部分：1、字符串的事件类型<br>                    2、一个回调函数（handler），该回调函数的第一个参数就是state<br>1、调用mutation： this.$store.commit(“mutations函数名”)<br>     add(){<br>            this.$store.commit(“increment”)<br>     }<br>     increment(state){<br>            state.counter++<br>     }<br>2、mutations 可以回传参数。参数被成为payload负载。<br>     addcount(counter){<br>            this.$store.commit(“incrementCounter”,counter)<br>     }<br>      incrementCounter(state,counter){<br>            state.counter+=counter<br>     }<br>3、mutations 的提交风格<br>     this.$store.commit({<br>             type: “incrementCounter”<br>             counter//数字视为payload，payload是一个对象<br>     })<br>4、mutation的响应式规则<br>     state中的所有attribate加入响应式系统。每个属性对应一个dep对象，监听watcher，当属性发生改变时，会通知所有用到该属性的页面刷新。<br>     后面添加的属性不在响应式里面，所以不能一起刷新。想要添加属性，可以用push，pop，splice，set等等可以产生响应式。delete做不到响应式，界面不会刷新。Vue.delete(对象，属性)，响应式，界面刷新。（响应式添加对象Vue.set(对象，索引，值)，删除对象Vue.delete(对象，属性)）<br>5、mutations 中的方法必须要是同步方法，setTimeOut是异步操作</p>
+<p>Action 用来使用代替Mutations来进行异步操作<br>1、调用actions： this.$store.dispatch(“mutations函数名”)<br>2、actions 可以回传参数。参数被成为payload负载。（context,payload）//context时上下文<br>3、一种十分优雅的写法<br>//store actions中的函数<br>ActionsIncrement(context,payload){<br>     return new Promise((resolve,reject)=&gt;{<br>              setTimeout(()=&gt;{<br>                     console.log(‘123’);<br>                     resolve(‘456’);<br>                     reject(‘789’);<br>               }<br>      })<br>}<br>//vue methods中的函数<br>increment(){<br>      this.$store.dispatch(‘ActionsIncrement’,payload)<br>      .then(res=&gt;{<br>               console.log(‘里面完成了提交’);<br>               console.log(res);<br>      }).catch(res=&gt;{<br>              console.log(res)<br>     })<br>}<br>把异步操作放在promise中链式编程，再把异步请求后的回调函数写在异步函数之后。<br>其中，actions里的函数来处理异步请求（调用），vue函数then或catch来返回请求失败的结果。<br>4、actions另一种写法，ES6语法，解构 context 去除 state,commit,rootState<br>   ActionsIncrement({state，commit，rootState}）</p>
+<p>Modules: 可以用模板字面量的形式来定义<br>调用modules:<br>1、state: $store.state.a.name  //从state获得module，a是module名，name是a模块里的属性<br>2、 mutations: this.$store.commit<br>3、getters：this.$store.getters 两个参数时，getters默认为当前module的getters<br>                   module中gettr想引入根vuex，加上第三个参数rootState<br>4、actions: this.$store.dispatch module中的getters里的context 是当前模块的内容。<br>       context.rootgetters  context.rootState</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wusiyuan02.github.io/2022/01/09/vue-vuex/" data-id="cl1x7816x0018vgvc4x8v69dd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/01/09/vue-axios/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          vue-axios
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/01/09/build-blog/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">build blog</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hello-Blog/">Hello Blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue%E6%A1%86%E6%9E%B6/">Vue框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BOM/" rel="tag">BOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript/" rel="tag">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2/" rel="tag">字节二面</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Siyuan Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/RedBookRead" class="mobile-nav-link">红宝书重读</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>ArrayAndString | 追光者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本人在实际原生js的编写的过程中，容易忘记相应的数组，字符串的方法使用。因此写下这篇笔记汇总数组和字符串常用的方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ArrayAndString">
+<meta property="og:url" content="https://wusiyuan02.github.io/2022/01/23/array-string/index.html">
+<meta property="og:site_name" content="追光者">
+<meta property="og:description" content="本人在实际原生js的编写的过程中，容易忘记相应的数组，字符串的方法使用。因此写下这篇笔记汇总数组和字符串常用的方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-23T07:45:54.000Z">
+<meta property="article:modified_time" content="2022-01-23T09:35:45.422Z">
+<meta property="article:author" content="Siyuan Wu">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="[object Object]">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">
+          追光者
+        </a>
+      </h1>
+      <h2 id="subtitle-wrap">
+        <a href="/" id="subtitle">
+          踮起脚，就能更接近阳光。
+        </a>
+      </h2>
+
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">
+            Home
+          </a>
+          
+          <a class="main-nav-link" href="/archives">
+            Archives
+          </a>
+          
+          <a class="main-nav-link" href="/categories">
+            Category
+          </a>
+          
+          <a class="main-nav-link" href="/tags">
+            Tags
+          </a>
+          
+          <a class="main-nav-link" href="/RedBookRead">
+            红宝书重读
+          </a>
+          
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wusiyuan02.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-array-string" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/01/23/array-string/" class="article-date">
+  <time datetime="2022-01-23T07:45:54.000Z" itemprop="datePublished">2022-01-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ArrayAndString
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本人在实际原生js的编写的过程中，容易忘记相应的数组，字符串的方法使用。因此写下这篇笔记汇总数组和字符串常用的方法。</p>
+<span id="more"></span>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>数组是一种特殊的变量，它能够一次存放一个以上的值。对数组相同处理的方法也有很多种，比如将数组转换成字符串就有toString()/join()两种方法,但是这两种方法都可以把数组转化成字符串，但其中还是存在细节的差异。下面主要来介绍数组的方法并着重比较其中细节的差异。</p>
+<h4 id="数组的类栈、队列的方法"><a href="#数组的类栈、队列的方法" class="headerlink" title="数组的类栈、队列的方法"></a>数组的类栈、队列的方法</h4><p>因为javascript的语法中没有栈和队列的数据类型，在JavaScript的语法中，就给数组创造了pop()、push()、shift()、unshift()的四种方法来模拟栈和队列的特性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> nums=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line">nums.pop() <span class="comment">//输出nums的最末位的元素3，等同于栈中的pop方法。  </span></span><br><span class="line">nums.push(<span class="number">4</span>) <span class="comment">//将元素4插入到nums数组的末位，并返回当前数组的长度 3</span></span><br><span class="line">nums.shift()  <span class="comment">//删除nums数组的首个数组元素，并返回删除的数组元素的值 </span></span><br><span class="line">nums.unshift(<span class="number">5</span>) <span class="comment">//将元素5插入到nums的数组的首位，返回当前数组的长度 3</span></span><br></pre></td></tr></table></figure>
+<h4 id="数组的增删改查"><a href="#数组的增删改查" class="headerlink" title="数组的增删改查"></a>数组的增删改查</h4><p>除去上一个标题记录的类栈、类队列的方法之外，下面记录的方法是对数组的增、删、改、查。故我不在该模块将上面记录的方法重复记录一遍。在这块，很多数组的方法都能产生相同的效果，但存在着细微的差异。</p>
+<h5 id="拼接方法splice"><a href="#拼接方法splice" class="headerlink" title="拼接方法splice()"></a>拼接方法splice()</h5><p>splice()方法可用于向数组中添加新项、删除元素、拼接数组等等是一个功能十分强大的方法。<br>splice()方法第一个参数定义了应添加新元素的位置，第二个参数定义应删除多数元素，其他的参数定义了要添加的新元素。此方法返回一个包含已删除项的数组。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> nums=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">nums.splice(<span class="number">2</span>,<span class="number">1</span>,<span class="number">6</span>) <span class="comment">//表示在数组第二个位置删除一个元素后，再插入元素6，此时返回一个新的数组[1,2,6]</span></span><br><span class="line">nums.splice(<span class="number">2</span>,<span class="number">1</span>) <span class="comment">//表示在数组第二个位置删除一个元素6,并返回一个新数组[1,2]</span></span><br></pre></td></tr></table></figure>
+<h5 id="合并方法concat"><a href="#合并方法concat" class="headerlink" title="合并方法concat()"></a>合并方法concat()</h5><p>concat()方法通过合并现有数组来船舰一个新的数组，此方法不会更改现有数组，它总是返回一个新的数组。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myGirls = [<span class="string">&quot;Cecilie&quot;</span>, <span class="string">&quot;Lone&quot;</span>];</span><br><span class="line"><span class="keyword">var</span> myBoys = [<span class="string">&quot;Emil&quot;</span>, <span class="string">&quot;Tobias&quot;</span>, <span class="string">&quot;Linus&quot;</span>];</span><br><span class="line"><span class="keyword">var</span> myChildren = myGirls.concat(myBoys);   <span class="comment">// 连接 myGirls 和 myBoys</span></span><br></pre></td></tr></table></figure>
+<p>如果想合并三个和三个以上的数组，提供下面两种写法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr1 = [<span class="string">&quot;Cecilie&quot;</span>, <span class="string">&quot;Lone&quot;</span>];</span><br><span class="line"><span class="keyword">var</span> arr2 = [<span class="string">&quot;Emil&quot;</span>, <span class="string">&quot;Tobias&quot;</span>, <span class="string">&quot;Linus&quot;</span>];</span><br><span class="line"><span class="keyword">var</span> arr3 = [<span class="string">&quot;Robin&quot;</span>, <span class="string">&quot;Morgan&quot;</span>];</span><br><span class="line"><span class="comment">//第一种写法，把所有的待合并的数组，放在一个concat方法中</span></span><br><span class="line"><span class="keyword">var</span> myChildren = arr1.concat(arr2, arr3);   <span class="comment">// 将arr1、arr2 与 arr3 连接在一起</span></span><br><span class="line"><span class="comment">//第二种写法，用多个concat链接</span></span><br><span class="line"><span class="keyword">var</span> myChildren = arr1.concat(arr2).concat(arr3);   <span class="comment">// 将arr1、arr2 与 arr3 连接在一起</span></span><br></pre></td></tr></table></figure>
+<p>concat()方法也可以将值作为参数用于数组的合并。</p>
+<h5 id="裁剪方法slice"><a href="#裁剪方法slice" class="headerlink" title="裁剪方法slice()"></a>裁剪方法slice()</h5><p>slice()方法用数组的某个片段切除新的数组。他和splice方法不同，他<strong>创建</strong>一个新的数组，<strong>不会从原数组中删除任何元素</strong>。<br>slice()可接受两个参数，第一个参数表示开始的位置，第二个参数表示结束的位置。(不包括结束的位置的元素)如果结束参数被省略，那会切除数组的剩余部分。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fruits = [<span class="string">&quot;Banana&quot;</span>, <span class="string">&quot;Orange&quot;</span>, <span class="string">&quot;Lemon&quot;</span>, <span class="string">&quot;Apple&quot;</span>, <span class="string">&quot;Mango&quot;</span>];</span><br><span class="line"><span class="keyword">var</span> citrus = fruits.slice(<span class="number">1</span>, <span class="number">3</span>);  <span class="comment">// [&quot;Orange&quot;, &quot;Lemon&quot;]</span></span><br><span class="line"><span class="keyword">var</span> citrus = ruits.slice(<span class="number">1</span>); <span class="comment">// [&quot;Orange&quot;, &quot;Lemon&quot;, &quot;Apple&quot;, &quot;Mango&quot;]</span></span><br></pre></td></tr></table></figure>
+<h4 id="数组的遍历方法"><a href="#数组的遍历方法" class="headerlink" title="数组的遍历方法"></a>数组的遍历方法</h4><p>这一类相比较前面的方法，在功能的使用和理解上面是有一定难度的。包括forEach()数组迭代方法、map()方法、filter()过滤器方法、reduce()方法、reduceRight()方法、every()方法、some()方法、indexOf()方法、lastIndexOf()方法、find()方法、findIndex()方法。<br><strong>注意：</strong>除了 Internet Explorer 8 或更早的版本，所有浏览器都支持上述方法。</p>
+<h5 id="forEach-、map-、filter"><a href="#forEach-、map-、filter" class="headerlink" title="forEach()、map()、filter()"></a>forEach()、map()、filter()</h5><p>将这三个方法划分在一起，是因为这三种方法都为<strong>每个数组元素调用一次函数，都接受三个参数，三个参数的顺序都是(value、index、arr)，都返回一个数组</strong>。只不过，map和filter方法<strong>不会更改原始数组</strong>。<br>forEach()方法为每个数组元素调用一次回调函数，如果数组为空，就不会执行回调函数。<br>map()方法通过对每个数组元素执行函数来创建新数组，不会对没有值的数组元素执行操作，在这两方面来看，和forEach方法相同，<strong>不同的是</strong>，map()方法不会更改原始数组，他会返回一个新数组。<br>filter()方法也会对每个数组元素执行函数，但会返回通过测试的数组元素的新数组，这个方法在实际应用中更多的是用来<strong>筛选</strong>数组中的元素。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> numbers = [<span class="number">45</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">25</span>];</span><br><span class="line">numbers.forEach(<span class="function"><span class="params">value</span>=&gt;</span>&#123;</span><br><span class="line">  value=value+<span class="number">1</span>;</span><br><span class="line">&#125;)                                             <span class="comment">//此时numbers为[46,5,10,17,26]</span></span><br><span class="line">bar map=numbers.map(<span class="function"><span class="params">value</span>=&gt;</span>&#123;</span><br><span class="line">  value=value+<span class="number">2</span>;                               <span class="comment">//此时map为[47,6,11,18,27]</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">var</span> over18 = numbers.filter(myFunction); </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myFunction</span>(<span class="params">value, index, array</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> value &gt; <span class="number">18</span>;                           <span class="comment">//此时over18为[45,25]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong>这三个函数只接受三个参数，顺序为value,index,arr,如果仅使用value，可以忽略其他两个参数。</p>
+<h5 id="reduce-和reduceRight"><a href="#reduce-和reduceRight" class="headerlink" title="reduce()和reduceRight()"></a>reduce()和reduceRight()</h5><p>这两个方法使用方式相同，<strong>不同的是</strong>，reduce方法是从左向右，reduceRight方法是从右向左工作。此方法接受四个参数，<strong>总数（初始值/先前返回的值）</strong>，<strong>value</strong>,<strong>index</strong>,<strong>arr</strong>。如果total有初始化的值，将总值写在回调函数外面。如果写在回调函数里面，默认是0。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> numbers1 = [<span class="number">45</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">25</span>];</span><br><span class="line"><span class="keyword">var</span> sum = numbers1.reduce(<span class="function">(<span class="params">total,value</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> total + value;</span><br><span class="line">&#125;, <span class="number">100</span>);</span><br></pre></td></tr></table></figure>
+<h5 id="every-和some"><a href="#every-和some" class="headerlink" title="every()和some()"></a>every()和some()</h5><p>这两种方法可以理解成为检测方法。返回的是boolean数据类型。当数组的元素都满足回调函数时，every返回true，否则返回false，当存在数组中的元素满足回调函数时，some返回true，否则返回false。   </p>
+<h5 id="indexOf-、lastIndexOf-、find-、findIndex"><a href="#indexOf-、lastIndexOf-、find-、findIndex" class="headerlink" title="indexOf()、lastIndexOf()、find()、findIndex()"></a>indexOf()、lastIndexOf()、find()、findIndex()</h5><ul>
+<li>indexOf() 方法在数组中搜索元素值并返回其位置。第一个参数为预查找的元素，第二个参数可选，从哪里搜索。如果没找到返回-1.</li>
+<li>Array.lastIndexOf() 与 Array.indexOf() 类似，但是从数组结尾开始搜索。返回的位置也是从结尾向前开始计数的。</li>
+<li>find() 方法返回通过测试函数的第一个数组元素的值。回调函数的写法与filter类似，不同的是find只返回通过测试的第一个数组元素。</li>
+<li>findIndex() 与 Array.find() 类似，方法返回通过测试函数的第一个数组元素的<strong>索引</strong>。</li>
+</ul>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>字符串和数组不同，字符串是原始值，数组是引用值。这说明字符串是无法使用方法和属性的。但是通过JavaScript，原始值也可以拥有方法和属性，这是因为在执行方法和属性的时候，JavaScript将其视为对象。<br>当想访问字符串上某一位置的字符时，也可以使用str[index]这种类数组访问的方法。</p>
+<h4 id="字符串的增删改查"><a href="#字符串的增删改查" class="headerlink" title="字符串的增删改查"></a>字符串的增删改查</h4><h5 id="字符串的查找"><a href="#字符串的查找" class="headerlink" title="字符串的查找"></a>字符串的查找</h5><p>字符串的查找方法有indexOf()、lastIndexOf()、search()、match()、includes()、startsWith()、endsWith()共七种方法。</p>
+<h6 id="search-方法"><a href="#search-方法" class="headerlink" title="search()方法"></a>search()方法</h6><p>indexOf()和lastIndexOf方法和数组一样，相比较于数组，字符串的<strong>search</strong>方法才是其一大亮点。<br>search()方法无法设置第二个开始位置的参数。但是，search可以使用正则表达式来查找特定的字符串并返回匹配位置。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">&quot;The full name of China is the People&#x27;s Republic of China.&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> pos = str.search(<span class="string">&quot;locate&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> pos = str.search(<span class="regexp">/locate/</span>);</span><br></pre></td></tr></table></figure>
+<h6 id="match-方法"><a href="#match-方法" class="headerlink" title="match()方法"></a>match()方法</h6><p>match() 方法根据<strong>正则表达式</strong>在字符串中搜索匹配项，并将匹配项作为 Array 对象返回。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> text = <span class="string">&quot;The rain in SPAIN stays mainly in the plain&quot;</span>;</span><br><span class="line">text.match(<span class="regexp">/ain/g</span>)    <span class="comment">// 返回数组 [ain,ain,ain]</span></span><br></pre></td></tr></table></figure>
+<h6 id="includes-方法"><a href="#includes-方法" class="headerlink" title="includes()方法"></a>includes()方法</h6><p>includes()支持两个参数：<strong>searchvalue必需</strong>。需要搜索的字符串。<strong>start</strong>可选。默认为 0. 开始搜索的位置。<strong>返回</strong>：    如果字符串包含该值则返回 true，否则返回 false。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> text = <span class="string">&quot;Hello world, welcome to the universe.&quot;</span>;</span><br><span class="line">text.includes(<span class="string">&quot;world&quot;</span>, <span class="number">12</span>)    <span class="comment">// 返回 false</span></span><br></pre></td></tr></table></figure>
+<h6 id="startswith-and-endswith"><a href="#startswith-and-endswith" class="headerlink" title="startswith() and endswith()"></a>startswith() and endswith()</h6><p>如果字符串以指定值开头，则 startsWith() 方法返回 true，否则返回 false。如果字符串以指定值结尾，则 endsWith() 方法返回 true，否则返回 false。这两个方法都区分大小写。<br>两者不同的是：startsWith()第二个参数是<strong>开始搜索的位置</strong>。endsWith第二个参数是<strong>要搜索的长度</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> text = <span class="string">&quot;Hello world, welcome to the universe.&quot;</span>;</span><br><span class="line">text.startsWith(<span class="string">&quot;world&quot;</span>, <span class="number">5</span>)    <span class="comment">// 返回 false</span></span><br><span class="line">text.startsWith(<span class="string">&quot;world&quot;</span>, <span class="number">6</span>)    <span class="comment">// 返回 true</span></span><br><span class="line">text.endsWith(<span class="string">&quot;world&quot;</span>, <span class="number">11</span>)    <span class="comment">// 返回 true</span></span><br></pre></td></tr></table></figure>
+<h5 id="字符串的提取方法"><a href="#字符串的提取方法" class="headerlink" title="字符串的提取方法"></a>字符串的提取方法</h5><h6 id="提取字符串的方法"><a href="#提取字符串的方法" class="headerlink" title="提取字符串的方法"></a>提取字符串的方法</h6><p>字符串有三种提取部分字符串的方法：**slice(start, end)、substring(start, end)、substr(start, length)**。substring()方法不同于slice方法，他无法支持负的索引。substr()方法与其他两种方法不同的是，他第二个参数规定被提取部分的长度。</p>
+<h6 id="提取字符串字符的方法"><a href="#提取字符串字符的方法" class="headerlink" title="提取字符串字符的方法"></a>提取字符串字符的方法</h6><p>提起字符串字符可以使用str[index]这种形式来提取(<strong>属性访问</strong>)，不过这种方法是<strong>不安全</strong>的方法，更建议使用charAt和charCodeAt这两种<strong>安全</strong>的提取字符串字符方法。其中参数都是position。charAt返回字符串中指定下标的字符。charCodeAt 返回字符串中指定索引的字符的unicode编码。<br><strong>属性访问：</strong>属性访问就是[]访问的方法，但使用属性访问有点缺点：</p>
+<ol>
+<li>不适用 Internet Explorer 7 或更早的版本</li>
+<li>它让字符串看起来像是数组（其实并不是）</li>
+<li>如果找不到字符，[ ] 返回 undefined，而 charAt() 返回空字符串。</li>
+<li><strong>它是只读的</strong>。str[0] = “A” 不会产生错误（但也不会工作！）</li>
+</ol>
+<h5 id="字符串的替换"><a href="#字符串的替换" class="headerlink" title="字符串的替换"></a>字符串的替换</h5><p>字符串替换使用<strong>replace</strong>方法，默认的replace()只替换首个匹配的字符(可以加g来全局匹配)，对大小写敏感(加i可以对大小写不敏感)。第一个参数是预替换的元素，第二个参数是替换后的元素。<br>replace()方法返回的是<strong>新字符串</strong>。第一个参数支持正则表达式的形式。</p>
+<h5 id="将字符串转换成数组"><a href="#将字符串转换成数组" class="headerlink" title="将字符串转换成数组"></a>将字符串转换成数组</h5><p>可以通过 split() 将字符串转换为数组。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> txt = <span class="string">&quot;a,b,c,d,e&quot;</span>;   <span class="comment">// 字符串</span></span><br><span class="line">txt.split(<span class="string">&quot;,&quot;</span>);          <span class="comment">// 用逗号分隔</span></span><br><span class="line">txt.split(<span class="string">&quot; &quot;</span>);          <span class="comment">// 用空格分隔</span></span><br><span class="line">txt.split(<span class="string">&quot;|&quot;</span>);          <span class="comment">// 用竖线分隔</span></span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong><br>如果省略分隔符，被返回的数组将包含 index [0] 中的整个字符串。<br>如果分隔符是 “”，被返回的数组将是间隔单个字符的数组。<br>将数组转化成字符串使用join方法，传的参数是将数组元素转换成字符串分割的字符。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> txt = [a,b,c,d,e];   <span class="comment">// 字符串</span></span><br><span class="line">txt.join(<span class="string">&quot;,&quot;</span>);          <span class="comment">// 用逗号分隔</span></span><br><span class="line">txt.join(<span class="string">&quot; &quot;</span>);          <span class="comment">// 用空格分隔</span></span><br><span class="line">txt.join(<span class="string">&quot;|&quot;</span>);          <span class="comment">// 用竖线分隔</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wusiyuan02.github.io/2022/01/23/array-string/" data-id="cl1x7816c000bvgvcg67kal3m" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/01/23/%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93-%E4%B8%80/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          算法总结(一)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/01/22/markdown/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Markdown</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hello-Blog/">Hello Blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue%E6%A1%86%E6%9E%B6/">Vue框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BOM/" rel="tag">BOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript/" rel="tag">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2/" rel="tag">字节二面</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Siyuan Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/RedBookRead" class="mobile-nav-link">红宝书重读</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

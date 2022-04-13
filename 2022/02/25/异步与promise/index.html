@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>异步与promise | 追光者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="程序是分块的。最常见的块是函数。这些块只有一个是现在执行，其余的则是会在将来执行。常见的问题是：现在无法完成的任务将会一步完成，因此并不会出现别人本能地认为会出现或希望出现的阻塞行为。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="异步与promise">
+<meta property="og:url" content="https://wusiyuan02.github.io/2022/02/25/%E5%BC%82%E6%AD%A5%E4%B8%8Epromise/index.html">
+<meta property="og:site_name" content="追光者">
+<meta property="og:description" content="程序是分块的。最常见的块是函数。这些块只有一个是现在执行，其余的则是会在将来执行。常见的问题是：现在无法完成的任务将会一步完成，因此并不会出现别人本能地认为会出现或希望出现的阻塞行为。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-25T13:42:10.000Z">
+<meta property="article:modified_time" content="2022-02-26T02:48:39.890Z">
+<meta property="article:author" content="Siyuan Wu">
+<meta property="article:tag" content="你不知道的JavaScript">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="[object Object]">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">
+          追光者
+        </a>
+      </h1>
+      <h2 id="subtitle-wrap">
+        <a href="/" id="subtitle">
+          踮起脚，就能更接近阳光。
+        </a>
+      </h2>
+
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">
+            Home
+          </a>
+          
+          <a class="main-nav-link" href="/archives">
+            Archives
+          </a>
+          
+          <a class="main-nav-link" href="/categories">
+            Category
+          </a>
+          
+          <a class="main-nav-link" href="/tags">
+            Tags
+          </a>
+          
+          <a class="main-nav-link" href="/RedBookRead">
+            红宝书重读
+          </a>
+          
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wusiyuan02.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-异步与promise" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/02/25/%E5%BC%82%E6%AD%A5%E4%B8%8Epromise/" class="article-date">
+  <time datetime="2022-02-25T13:42:10.000Z" itemprop="datePublished">2022-02-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      异步与promise
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>程序是分块的。最常见的块是函数。这些块只有一个是现在执行，其余的则是会在将来执行。<br>常见的问题是：现在无法完成的任务将会一步完成，因此并不会出现别人本能地认为会出现或希望出现的阻塞行为。</p>
+<span id="more"></span>
+<h1 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h1><p>程序是分块的。最常见的块是函数。这些块只有一个是现在执行，其余的则是会在将来执行。<br>常见的问题是：现在无法完成的任务将会一步完成，因此并不会出现别人本能地认为会出现或希望出现的阻塞行为。</p>
+<ol>
+<li>异步：关于现在和将来的时间间隙。</li>
+<li>并行：能够同时发生的事情。  </li>
+</ol>
+<p>JavaScript本质上<strong>单线程</strong>的，他的底层运算不会被中断。如果是在并行系统。<span style="color:red">但是</span>,同一个程序可能会有两个不同的线程在运转(其中牵扯到事件循环的概念)，这是很可能会得到不确定的结果。<br>而由于JavaScript单线程的特性，回调函数中的代码具有原子性，完整运行特性。<br>在异步编程中，同一段代码有可能输出存在不确定性，但这种不确定性是在函数时间顺序级别上，而不是因为多线程情况下的语句顺序级别。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ajax(“http:<span class="comment">//www.baidu.com/api/xml”,foo)</span></span><br><span class="line">ajax(“http:<span class="comment">//www.baidu.com/api/xml”,bar)</span></span><br></pre></td></tr></table></figure>
+<p>ajax是一个异步请求，在请求结束后调用回调函数，如果foo和bar中有对同一数据的操作，那么这个数据最终值是不可预测的。</p>
+<h2 id="竞态条件"><a href="#竞态条件" class="headerlink" title="竞态条件"></a>竞态条件</h2><p>在JavaScript的特性中，这种函数时间上发生的顺序不确定性就是<strong>竞态条件</strong>。具体来说，无法可靠的预测最终的数据值。<br>《你不知道的JavaScript》中举了一个例子：<br>有一个展示状态更新列表，需要两个进程（进程和线程的概念是不同的），其中一个进程是负责在用户滚动时响应事件，另一个进程是接受Ajax响应并将内容展示到页面上。这两个进程同时执行，这是并发的。<br>但JavaScript是单线程的，一次只能处理一个事件，在连续滚动的过程中，负责监听的进程一和负责响应的进程二事件处理的顺序就会有很多种。但由于JavaScript是单线程的，这些事件会在事件循环队列中依次运行。</p>
+<h3 id="非交互"><a href="#非交互" class="headerlink" title="非交互"></a>非交互</h3><p>如果两进程之间没有相互影响，不确定性就完全可以接受的。</p>
+<h3 id="交互"><a href="#交互" class="headerlink" title="交互"></a>交互</h3><p>出现交互时，需要对他们的交互进行协调以避免竞态的出现。</p>
+<h4 id="门latch"><a href="#门latch" class="headerlink" title="门latch"></a>门latch</h4><p>只有第一名取胜。</p>
+<h2 id="事件循环"><a href="#事件循环" class="headerlink" title="事件循环"></a>事件循环</h2><p>JavaScript 是单线程非阻塞的脚本语言，这是由最初的用途来决定的：与浏览器进行交互。单线程意味着在javascript执行代码的时候，<span style="color:red">只有一个主线程来处理所有的任务</span>。而<strong>非阻塞</strong>是指当代码需要进行一项异步任务时，即在将来发生的事情，主线程会挂起这个任务，然后在任务返回结果后根据一定的规则去执行相应的回调函数。javascript实现非阻塞这一特点就是通过<span style="color:red">事件循环</span>。<br>事件循环主要与任务队列有关，任务队列就与任务有关。</p>
+<h3 id="JavaScript-中的线程与进程"><a href="#JavaScript-中的线程与进程" class="headerlink" title="JavaScript 中的线程与进程"></a>JavaScript 中的线程与进程</h3><h4 id="为什么浏览器要多进程"><a href="#为什么浏览器要多进程" class="headerlink" title="为什么浏览器要多进程"></a>为什么浏览器要多进程</h4><p>假设浏览器是单进程，那么某个标签页崩溃时，所有的标签页都会崩溃，严重影响用户的体验感。所以浏览器不能是多进程的。</p>
+<h4 id="渲染进程中的线程"><a href="#渲染进程中的线程" class="headerlink" title="渲染进程中的线程"></a>渲染进程中的线程</h4><p>渲染进程中共包括五大进程,分别是GUI 渲染线程，js 引擎线程，事件触发线程，定时触发器线程，异步http请求线程。下面分别介绍各线程的作用。</p>
+<h5 id="GUI-渲染线程"><a href="#GUI-渲染线程" class="headerlink" title="GUI 渲染线程"></a>GUI 渲染线程</h5><p>负责渲染浏览器界面，解析HTML,CSS，构建DOM节点树，布局和绘制等等，<br>GUI 渲染线程和js引擎线程时互斥的。</p>
+<ul>
+<li>当js引擎线程执行时，GUI线程会被挂起。</li>
+<li>GUI更新会被保存到一个队列中等到js引擎空闲时立即执行。  </li>
+</ul>
+<h5 id="js-引擎线程"><a href="#js-引擎线程" class="headerlink" title="js 引擎线程"></a>js 引擎线程</h5><p>js引擎线程就是js内核，负责处理javascript脚本程序</p>
+<ul>
+<li><span style="color:red">js引擎线程负责解析javascript脚本，运行代码</span></li>
+<li><span style="color:red">js引擎线程在等待任务队列中任务的到来，然后加以处理</span></li>
+</ul>
+<h5 id="事件触发线程"><a href="#事件触发线程" class="headerlink" title="事件触发线程"></a>事件触发线程</h5><p>事件触发线程属于<span style="color:red">浏览器</span>，而不是js引擎的，用来控制事件循环，并且<span style="color:red">管理着一个事件队列</span>。</p>
+<ul>
+<li>当js执行碰到事件绑定和一些异步操作时，会走事件触发线程将对应的事件添加到对应的线程中.</li>
+<li>等异步事件有结果后，便把他们的回调操作添加到事件队列中，等待js引擎空闲时来处理。  </li>
+</ul>
+<h5 id="定时触发器线程"><a href="#定时触发器线程" class="headerlink" title="定时触发器线程"></a>定时触发器线程</h5><p>setInterval和setTimeout所在的线程。</p>
+<ul>
+<li>浏览器定时计数器并不是由js引擎计数的，因为<span style="color:red">如果js引擎处于阻塞态</span>，状态就会影响到计数器。</li>
+<li>通过单独的线程来计时并触发定时。</li>
+<li>当<span style="color:red">计时结束</span>后，添加到事件触发线程的事件队列中，等待js引擎孔宪后执行。  </li>
+</ul>
+<h5 id="异步http请求线程"><a href="#异步http请求线程" class="headerlink" title="异步http请求线程"></a>异步http请求线程</h5><p>在xhr连接后是通过浏览器单开一个线程请求。</p>
+<ul>
+<li>在检测到状态变更时，如果设置有回调函数，异步线程会产生状态变更事件，再把这个回调放入事件队列中等待js引擎执行。</li>
+</ul>
+<h3 id="任务队列"><a href="#任务队列" class="headerlink" title="任务队列"></a>任务队列</h3><p>任务主要包括<strong>同步任务</strong>和<strong>异步任务</strong>。<strong>同步任务</strong>到执行栈中，由<strong>js引擎线程</strong>按照顺序执行。 <strong>异步任务</strong>会被放在任务队列中，由<strong>事件触发线程</strong>管理，这些异步任务会等到执行栈清空后才会执行，也就是说，在所有执行栈中的任务执行完成后，事件触发线程会将异步任务添加到执行栈中由js引擎线程执行。<br>执行顺序: script中同步代码&gt;微任务&gt;宏任务</p>
+<h4 id="异步任务"><a href="#异步任务" class="headerlink" title="异步任务"></a>异步任务</h4><p>异步任务一共包括两种，宏任务和微任务。</p>
+<ol>
+<li>宏任务包括script标签、setTimeout、setInterval、setImmediate、I/O输入输出、UI渲染。</li>
+<li>微任务是宏任务执行完成后立即执行的任务。包括Promise.then,process.nextTick、MutationObserver。</li>
+</ol>
+<h3 id="正式介绍事件循环"><a href="#正式介绍事件循环" class="headerlink" title="正式介绍事件循环"></a>正式介绍事件循环</h3><p>知晓宏任务和微任务与线程之后，我们就能对事件循环的机制有所了解：</p>
+<ol>
+<li>一开始script标签中的所有代码是作为一个宏任务执行的。</li>
+<li>在宏任务执行过程中，同步代码由js引擎线程直接执行，异步任务由事件触发线程管理维护在任务队列中，宏任务放在宏任务队列，微任务放在微任务队列。</li>
+<li>当前宏任务执行完毕之后，将当前微任务队列中的所有任务放入执行栈中由主线程(js引擎线程)执行。</li>
+<li>当前宏任务执行完毕，GUI线程接管渲染，对页面进行重新渲染。</li>
+<li>渲染完毕后，js引擎线程接管执行栈，开始下一个宏任务，依次循环，直到所有任务队列都为空。  </li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">1</span>)</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; 	 <span class="comment">//timer1</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>)</span><br><span class="line">  &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line">test();</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; 	 <span class="comment">//timer2</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">3</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">4</span>)</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; 	<span class="comment">//timer3</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">5</span>)</span><br><span class="line">  &#125;, <span class="number">100</span>)</span><br><span class="line">  resolve()</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;        <span class="comment">//timer4</span></span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;   <span class="comment">//timer5</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">6</span>)</span><br><span class="line">  &#125;, <span class="number">0</span>)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">7</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">8</span>)</span><br></pre></td></tr></table></figure>
+<p>对上述代码进行解释：</p>
+<ol>
+<li>script标签是一个宏任务，首先执行宏任务中的同步代码，输出test()中的<span style="color:red">console.log(1)</span>，new Promise 中<span style="color:red">console.log(4)</span>,script代码块中的<span style="color:red">console.log(8)</span>。</li>
+<li>将该任务中的宏任务由事件触发线程放入宏任务队列中。将timer1、timer2、timer3放入宏任务队列，timer4放入微任务队列中，再把微任务队列放入执行栈中由js引擎线程执行。依照先执行同步代码的规则，依次输出timer4中的<span style="color:red">console.log(7)</span>，将timer4中的timer5放入宏任务队列。此时第一次事件循环执行结束。</li>
+<li>检查宏任务队列，按照定时器延迟时间得到可以执行顺序，依次输出<span style="color:red">console.log(3)</span>，<span style="color:red">console.log(6)</span>，<span style="color:red">console.log(5)</span>，<span style="color:red">console.log(2)</span>。此时又结束四次事件循环(即每次事件循环只从宏任务队列中取出一次宏任务执行)。</li>
+</ol>
+<h1 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h1><p>对promise的理解是同步执行异步的操作。<br>Promise是一个<span style="color:red">对象类型</span>，构造是new Promise,必须提供一个函数回调，这个函数回调接受两个函数回调。用来支持Promise的resolve、reject两个函数。reject（。。）是拒绝这个promise时的调用函数，即promise执行报错时调用reject( .. )，resolve( .. )是决议，用来判断最终决议值或者状态。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">      resolve();</span><br><span class="line">    &#125;<span class="keyword">catch</span>&#123;</span><br><span class="line">      reject();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>创建一个<span style="color:red">已被拒绝</span>的Promise的快捷方式是Promise.reject( .. )<br>创建一个<span style="color:red">决议</span>的Promise的快捷方式是Promise.resolve( .. )<br>如果promise执行成功，执行.then创建的promise，如果promise执行失败，执行.catch的内容。</p>
+<h2 id="Promise-then"><a href="#Promise-then" class="headerlink" title="Promise.then"></a>Promise.then</h2><p>Promise.then接受一个或两个参数，第一个用于完成回调fulfilled，第二个用于拒绝回调reject。如果两者中任何一个被忽略或者作为非函数值传入的化，就会替换成相应的默认回调。<span style="color:red">默认完成回调只是把消息传递下去</span>，而<span style="color:red">默认拒绝回调则只是重新抛出接收到的出错原因</span>。</p>
+<h2 id="Promise-catch"><a href="#Promise-catch" class="headerlink" title="Promise.catch"></a>Promise.catch</h2><p>catch 只接受一个拒绝回调作为参数，并自动替换默认完成回调。</p>
+<h2 id="Promise-与-thenable的参数传递"><a href="#Promise-与-thenable的参数传递" class="headerlink" title="Promise 与 thenable的参数传递"></a>Promise 与 thenable的参数传递</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">	foo.bar() <span class="comment">// 不存在 foo.bar(),报错</span></span><br><span class="line">	resolve(<span class="number">123</span>)	 <span class="comment">//如果上一语句不存在，就执行resolve，给then返回数值123	</span></span><br><span class="line">&#125;).then(<span class="function">(<span class="params">res</span>)=&gt;</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(“fulilled”,res) 	<span class="comment">//打印fulilled 123</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">456</span>	<span class="comment">//给下一个then传递数据456</span></span><br><span class="line">&#125;,<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(“rejected”,err)	<span class="comment">//此出then中捕获到上一链接中错误,打印 rejected 错误原因</span></span><br><span class="line">	foo.bar()	<span class="comment">//不存在foo.bar()</span></span><br><span class="line">&#125;).then(<span class="function">(<span class="params">res</span>)=&gt;</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(“<span class="number">2</span> fulilled”,res)	<span class="comment">//打印 2 fulilled 456</span></span><br><span class="line">&#125;,<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(“<span class="number">2</span> rejected”,err) <span class="comment">//打印第二次 rejected 错误原因</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>then会自动捕获上一链接中出错的原因，并执行reject。如果想给下一链接返回数据，Promise中使用resolve()（决议函数，让下一then决议），then中使用return 给下一链接返回数据或者最终返回数据。<br><span style="color:red">注意</span>： promise与thenable中只接收一个参数。也就是<span style="color:red">reject、fulfilled、resolve三种函数只接受一个参数</span>。多个参数可以使用对象或者数组封装。<br>如果thenable中返回一个promise/thenable，内部会被展开并成为链接上的promise的决议。<br>为了避免丢到被忽略和抛弃的Promise错误，开发者表示<span style="color:red">Promise链的一个最佳实践就是以一个catch(..)结束</span>。 </p>
+<h3 id="封装一个promise运行定时器"><a href="#封装一个promise运行定时器" class="headerlink" title="封装一个promise运行定时器"></a>封装一个promise运行定时器</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">timeOutPromise</span>(<span class="params">delay</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">		<span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">		reject();		</span><br><span class="line">&#125;,delay)		</span><br><span class="line">&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对定时器的解释：举一个例子，delay=1000, timeOutPromise(1000) 就会在1000ms后将reject事件加入事件循环队列等待执行，如果Promise.<span style="color:red">race</span>(promise,timeOutPromise())中的promise在1000ms内完成执行，定时器就不会工作，否则timeOutPromise事件执行完成输出reject()，.then监听事件出错随后执行rejected。</p>
+<h2 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h2><p>js中一个函数一旦开始执行，就会运行到结束。期间不会有其他代码能够打断并插入到其中。但是js的新语法生成器借助field可以打破这个特性。<br>执行生成器函数时会<span style="color:red">构造一个生成器的迭代器</span>。迭代器会控制生成器的执行。<br>下面是一个生成器函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> * <span class="title">foo</span>(<span class="params">x,y</span>)</span>&#123;</span><br><span class="line">x+=<span class="number">1</span>;</span><br><span class="line">y+=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">yield</span>;</span><br><span class="line"><span class="keyword">return</span> x*y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> it = foo()  <span class="comment">//构造生成器的迭代器</span></span><br><span class="line">it.next()  <span class="comment">//启动生成器并运行到yield处</span></span><br><span class="line">it.next()  <span class="comment">//继续执行生成器停到下一个yeild处或者直至结束</span></span><br></pre></td></tr></table></figure>
+<p>生成器函数的特点：</p>
+<ol>
+<li>生成器函数和其他函数一样有输入输出的能力。</li>
+<li>生成器提供了更强大的内建消息输入输出能力，通过yeild和next()实现。  <ol>
+<li>   第一个next用来<span style="color:red">启动生成器并运行到第一个yield处</span>。</li>
+<li>   第二个next调用<span style="color:red">完成第一个被暂停的yield表达式并执行到下一个yield或者函数完成</span>。</li>
+<li>   以此类推</li>
+<li>   yield在输出数据的时候自身做好接受next输入数据的准备。  </li>
+</ol>
+</li>
+<li>yield可以发出消息响应next，next也可以向暂停的yield表达式发送值。</li>
+<li>同一个生成器的多个实例并发运行不会相互影响。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> *<span class="title">foo</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line">	<span class="keyword">var</span> x = <span class="keyword">yield</span> <span class="number">2</span>;</span><br><span class="line">	z++; </span><br><span class="line">	<span class="keyword">var</span> y = <span class="keyword">yield</span> (x * z); </span><br><span class="line">	<span class="built_in">console</span>.log( x, y, z ); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> z = <span class="number">1</span>; </span><br><span class="line"><span class="keyword">var</span> it1 = foo(); </span><br><span class="line"><span class="keyword">var</span> it2 = foo(); </span><br><span class="line"><span class="keyword">var</span> val1 = it1.next().value; <span class="comment">// 2 &lt;-- yield 2 </span></span><br><span class="line"><span class="keyword">var</span> val2 = it2.next().value; <span class="comment">// 2 &lt;-- yield 2 </span></span><br><span class="line">val1 = it1.next( val2 * <span class="number">10</span> ).value; <span class="comment">// 40 &lt;-- x:20, z:2 </span></span><br><span class="line">val2 = it2.next( val1 * <span class="number">5</span> ).value; <span class="comment">// 600 &lt;-- x:200, z:3 </span></span><br><span class="line">it1.next( val2 / <span class="number">2</span> ); <span class="comment">// y:300 // 20 300 3 </span></span><br><span class="line">it2.next( val1 / <span class="number">4</span> ); <span class="comment">// y:10 // 200 10 3</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3><p>为数字序列生成器实现标准的迭代器接口</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> something = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> val;</span><br><span class="line">	<span class="keyword">return</span>&#123;</span><br><span class="line">    [<span class="built_in">Symbol</span>.iterator]:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">this</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">next</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(val === <span class="literal">undefined</span>)&#123;</span><br><span class="line">        val=<span class="number">1</span>;</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        val = <span class="number">3</span>*val +<span class="number">6</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">done</span>:<span class="literal">false</span>,</span><br><span class="line">        <span class="attr">value</span>:val</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<p>ES6 新增forof循环，可以通过原生循环语句自动迭代标准迭代器。<br>iterable 值是一个包含可以在其值上迭代的迭代器对象。ES6开始，从一个iterator提取迭代器的方法时iterable必须支持一个名称为Symbol.iterator函数，<span style="color:red">调用这个函数时，会返回一个迭代器</span>。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wusiyuan02.github.io/2022/02/25/%E5%BC%82%E6%AD%A5%E4%B8%8Epromise/" data-id="cl1x7816z001cvgvccgfm95mx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript/" rel="tag">你不知道的JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/03/18/%E5%85%B3%E4%BA%8E%E8%B7%A8%E5%9F%9F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          关于跨域
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/02/20/this/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">this与JS中的原型</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hello-Blog/">Hello Blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue%E6%A1%86%E6%9E%B6/">Vue框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BOM/" rel="tag">BOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript/" rel="tag">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2/" rel="tag">字节二面</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Siyuan Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/RedBookRead" class="mobile-nav-link">红宝书重读</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

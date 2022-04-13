@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>最长有效括号 | 追光者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="lc第32题，32. 最长有效括号 - 力扣（LeetCode） (leetcode-cn.com)。题目如下： 1给你一个只包含 &amp;#x27;(&amp;#x27; 和 &amp;#x27;)&amp;#x27; 的字符串，找出最长有效（格式正确且连续）括号子串的长度。  好难*_*，不过还是找到了一个能看懂的答案。用栈来存储索引，动态规划表示以当前元素结尾的最长有效括号。发现自己好像对以当前元素结尾这种动态规划情有独">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最长有效括号">
+<meta property="og:url" content="https://wusiyuan02.github.io/2022/04/08/%E6%9C%80%E9%95%BF%E6%9C%89%E6%95%88%E6%8B%AC%E5%8F%B7/index.html">
+<meta property="og:site_name" content="追光者">
+<meta property="og:description" content="lc第32题，32. 最长有效括号 - 力扣（LeetCode） (leetcode-cn.com)。题目如下： 1给你一个只包含 &amp;#x27;(&amp;#x27; 和 &amp;#x27;)&amp;#x27; 的字符串，找出最长有效（格式正确且连续）括号子串的长度。  好难*_*，不过还是找到了一个能看懂的答案。用栈来存储索引，动态规划表示以当前元素结尾的最长有效括号。发现自己好像对以当前元素结尾这种动态规划情有独">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-08T07:15:40.000Z">
+<meta property="article:modified_time" content="2022-04-09T06:22:28.006Z">
+<meta property="article:author" content="Siyuan Wu">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="leetcode">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="[object Object]">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">
+          追光者
+        </a>
+      </h1>
+      <h2 id="subtitle-wrap">
+        <a href="/" id="subtitle">
+          踮起脚，就能更接近阳光。
+        </a>
+      </h2>
+
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">
+            Home
+          </a>
+          
+          <a class="main-nav-link" href="/archives">
+            Archives
+          </a>
+          
+          <a class="main-nav-link" href="/categories">
+            Category
+          </a>
+          
+          <a class="main-nav-link" href="/tags">
+            Tags
+          </a>
+          
+          <a class="main-nav-link" href="/RedBookRead">
+            红宝书重读
+          </a>
+          
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wusiyuan02.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-最长有效括号" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/04/08/%E6%9C%80%E9%95%BF%E6%9C%89%E6%95%88%E6%8B%AC%E5%8F%B7/" class="article-date">
+  <time datetime="2022-04-08T07:15:40.000Z" itemprop="datePublished">2022-04-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      最长有效括号
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>lc第32题，<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-valid-parentheses/">32. 最长有效括号 - 力扣（LeetCode） (leetcode-cn.com)</a>。题目如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">给你一个只包含 &#x27;(&#x27; 和 &#x27;)&#x27; 的字符串，找出最长有效（格式正确且连续）括号子串的长度。</span><br></pre></td></tr></table></figure>
+
+<p>好难*_*，不过还是找到了一个能看懂的答案。用栈来存储索引，动态规划表示以当前元素结尾的最长有效括号。发现自己好像对以当前元素结尾这种动态规划情有独钟，可能做的题目太少了只有这一种动态规划思路。</p>
+<span id="more"></span>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">longestValidParentheses</span>(<span class="params">s</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> stack = [];<span class="comment">//维护这个栈</span></span><br><span class="line">    <span class="keyword">let</span> dp = <span class="keyword">new</span> <span class="built_in">Array</span>(s.length).fill(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; s.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(s.charAt(i) == <span class="string">&#x27;(&#x27;</span>)&#123; <span class="comment">//有效括号不可能以‘(’结尾，所以dp只能为0</span></span><br><span class="line">            dp[i] = <span class="number">0</span>;</span><br><span class="line">            stack.push(i); <span class="comment">// 把所有左括号的索引储存在栈中。</span></span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(stack.length)&#123; <span class="comment">//首先判断栈中是否存在左括号的索引</span></span><br><span class="line">                <span class="comment">// 如果存在左括号的索引。获取左括号的索引</span></span><br><span class="line">                <span class="keyword">let</span> leftIndex = stack.pop();</span><br><span class="line">                <span class="comment">// 因为dp表示的是以当前元素结尾的最长有效括号的长度,</span></span><br><span class="line">                <span class="comment">// dp 应该加上当前左索引左边的最长有效括号长度和左索引右边到当前元素索引的长度。</span></span><br><span class="line">                dp[i] = dp[leftIndex - <span class="number">1</span>] + (i + <span class="number">1</span> -leftIndex);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123; <span class="comment">// 如果不存在左括号的索引，那就只能为0</span></span><br><span class="line">                dp[i] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.max(...dp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面算法还是有点缺陷，但大致思路基本上体现出来了。下面对上述算法添加一些细节。</p>
+<p>如果样例为 ：“（（））”</p>
+<p>此时计算dp[3]时，leftIndex = 0 ;则dp[leftIndex - 1] 越界。这种特殊情况添加dp[ -1 ]  = 0; 即可。</p>
+<p>如果样例为空字符串。</p>
+<p>Math.max(…[]) 返回的结果为-Infinity。 加一层判断即可 return s.length &amp;&amp; Math.max(…dp);</p>
+<p>此时代码为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">longestValidParentheses</span>(<span class="params">s</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> stack = [];<span class="comment">//维护这个栈</span></span><br><span class="line">    <span class="keyword">let</span> dp = <span class="keyword">new</span> <span class="built_in">Array</span>(s.length).fill(<span class="number">0</span>);</span><br><span class="line">    dp[-<span class="number">1</span>]  = <span class="number">0</span>; </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; s.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(s.charAt(i) == <span class="string">&#x27;(&#x27;</span>)&#123;</span><br><span class="line">            dp[i] = <span class="number">0</span>;</span><br><span class="line">            stack.push(i); </span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(stack.length)&#123;</span><br><span class="line">                <span class="keyword">let</span> leftIndex = stack.pop();</span><br><span class="line">                dp[i] = dp[leftIndex - <span class="number">1</span>] + (i + <span class="number">1</span> -leftIndex);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                dp[i] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> s.length &amp;&amp; <span class="built_in">Math</span>.max(...dp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>完成！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wusiyuan02.github.io/2022/04/08/%E6%9C%80%E9%95%BF%E6%9C%89%E6%95%88%E6%8B%AC%E5%8F%B7/" data-id="cl1x78171001ivgvc8sxpgmt8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/04/09/%E5%9B%9E%E6%96%87%E9%93%BE%E8%A1%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          回文链表
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/04/06/B2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">B2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hello-Blog/">Hello Blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue%E6%A1%86%E6%9E%B6/">Vue框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BOM/" rel="tag">BOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript/" rel="tag">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2/" rel="tag">字节二面</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Siyuan Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/RedBookRead" class="mobile-nav-link">红宝书重读</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

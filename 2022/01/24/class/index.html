@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>class的总结（一） | 追光者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="这篇总结是我在深究原生JavaScript中类的概念后，经过程序的校验汇成的。会存在一些问题，以后发现了会及时来修改。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="class的总结（一）">
+<meta property="og:url" content="https://wusiyuan02.github.io/2022/01/24/class/index.html">
+<meta property="og:site_name" content="追光者">
+<meta property="og:description" content="这篇总结是我在深究原生JavaScript中类的概念后，经过程序的校验汇成的。会存在一些问题，以后发现了会及时来修改。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wusiyuan02.github.io/2022/01/24/class/class(1).jpg">
+<meta property="og:image" content="https://wusiyuan02.github.io/2022/01/24/class/class(2).jpg">
+<meta property="og:image" content="https://wusiyuan02.github.io/2022/01/24/class/class(3).jpg">
+<meta property="og:image" content="https://wusiyuan02.github.io/2022/01/24/class/class(4).jpg">
+<meta property="article:published_time" content="2022-01-24T13:30:26.000Z">
+<meta property="article:modified_time" content="2022-01-24T14:08:01.954Z">
+<meta property="article:author" content="Siyuan Wu">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Class">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wusiyuan02.github.io/2022/01/24/class/class(1).jpg">
+  
+  
+    <link rel="icon" href="[object Object]">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">
+          追光者
+        </a>
+      </h1>
+      <h2 id="subtitle-wrap">
+        <a href="/" id="subtitle">
+          踮起脚，就能更接近阳光。
+        </a>
+      </h2>
+
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">
+            Home
+          </a>
+          
+          <a class="main-nav-link" href="/archives">
+            Archives
+          </a>
+          
+          <a class="main-nav-link" href="/categories">
+            Category
+          </a>
+          
+          <a class="main-nav-link" href="/tags">
+            Tags
+          </a>
+          
+          <a class="main-nav-link" href="/RedBookRead">
+            红宝书重读
+          </a>
+          
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wusiyuan02.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-class" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/01/24/class/" class="article-date">
+  <time datetime="2022-01-24T13:30:26.000Z" itemprop="datePublished">2022-01-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      class的总结（一）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这篇总结是我在深究原生JavaScript中类的概念后，经过程序的校验汇成的。会存在一些问题，以后发现了会及时来修改。</p>
+<span id="more"></span>
+<p><strong>首先</strong>,从构建函数创建的新实例的特征并非全盘复制，而是通过一个叫做原形链的参考链链接过去的。（参见 Object prototypes），所以这并非真正的实例，严格的讲， JavaScript 在对象间使用和其它语言的共享机制不同。</p>
+<p>JavaScript在创建实例方面和其他语言不同，其他语言是将类中的属性和方法复制到新的命名空间之中，JavaScript是通过<strong>原型链链接</strong>过去，当想使用的时候，通过原型链来调用。</p>
+<p>先前描述的原型链模型下，上游对象的方法不会复制到下游的对象实例中；下游对象本身虽然没有定义这些方法，但浏览器会通过上溯原型链、从上游对象中找到它们。这种继承模型提供了一个强大而可扩展的功能系统。</p>
+<p>使用构造函数创建一个对象实例后，在构造函数的原型上再定义一个方法，这个时候对象实例仍然可以访问这种方法。但是如果在构造函数上再定义方法使用function…，这种定义方法的形式是无效的。正确的定义方法应该是：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">people</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">_age</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.age=_age;</span><br><span class="line">    getAge=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  <span class="comment">//错误的定义方法，这个时候，类中不存在getAge方法。</span></span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">this</span>.age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">this</span>.getAge=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  <span class="comment">//正确的定义方法。</span></span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">this</span>.age;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">setName</span>(<span class="params">_name</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.name=_name;  <span class="comment">//写在类之中，构造函数之外的方法都会放在类的原型上去。</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面是在浏览器控制台运行的结果：<br><img src="/2022/01/24/class/class(1).jpg" alt="反正就是有结果啦！"><br>可以看到在控制台输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Uncaught ReferenceError: getAge is not defined</span><br></pre></td></tr></table></figure>
+<p>当把这一行删除之后：<br><img src="/2022/01/24/class/class(2).jpg" alt="就正确了啊！"><br>也能发现class构造函数外的方法写在原型链上。<br>除了在class构建函数中写实例私有的属性和方法和构建函数之外写原型链公用的方法之外，也可以使用<strong>function定义类</strong>，在function内部写实例私有的属性和方法，在function的原型链上定义共用方法，通过function.prototype来定义。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">People</span>(<span class="params">_age</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.age=_age;</span><br><span class="line">  <span class="built_in">this</span>.setName=<span class="function"><span class="keyword">function</span>(<span class="params">_name</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.name=_name;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> person = <span class="keyword">new</span> People(<span class="number">18</span>);</span><br></pre></td></tr></table></figure>
+<p>可以看见结果如下：<br><img src="/2022/01/24/class/class(3).jpg"><br>如果想在类的原型链上加方法，应该采用prototype才访问原型链定义方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">People.prototype.getYear=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">2022</span>-<span class="built_in">this</span>.age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从控制台可以看到类的原型链上有了新的方法getYear,对象实例也能正常调用。<br><img src="/2022/01/24/class/class(4).jpg"><br><strong>总结</strong>： function定义类等价于class内部的constructor,在class.prototype添加属性和方法等价于在class内部constructor外部添加方法属性。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wusiyuan02.github.io/2022/01/24/class/" data-id="cl1x7816g000gvgvcb8fpdfdr" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/01/24/BOM/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          BOM
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/01/23/%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93-%E4%B8%80/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">算法总结(一)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hello-Blog/">Hello Blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue%E6%A1%86%E6%9E%B6/">Vue框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BOM/" rel="tag">BOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript/" rel="tag">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2/" rel="tag">字节二面</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Siyuan Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/RedBookRead" class="mobile-nav-link">红宝书重读</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

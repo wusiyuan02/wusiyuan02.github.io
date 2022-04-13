@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>排序算法 | 追光者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="目前我已总结的排序算法共有如下七种：冒泡排序，选择排序，插入排序，希尔排序，归并排序，堆排序，快速排序。下面一一介绍这七种排序算法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="排序算法">
+<meta property="og:url" content="https://wusiyuan02.github.io/2022/03/29/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="追光者">
+<meta property="og:description" content="目前我已总结的排序算法共有如下七种：冒泡排序，选择排序，插入排序，希尔排序，归并排序，堆排序，快速排序。下面一一介绍这七种排序算法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-29T08:24:10.000Z">
+<meta property="article:modified_time" content="2022-04-09T15:35:38.493Z">
+<meta property="article:author" content="Siyuan Wu">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="[object Object]">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">
+          追光者
+        </a>
+      </h1>
+      <h2 id="subtitle-wrap">
+        <a href="/" id="subtitle">
+          踮起脚，就能更接近阳光。
+        </a>
+      </h2>
+
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">
+            Home
+          </a>
+          
+          <a class="main-nav-link" href="/archives">
+            Archives
+          </a>
+          
+          <a class="main-nav-link" href="/categories">
+            Category
+          </a>
+          
+          <a class="main-nav-link" href="/tags">
+            Tags
+          </a>
+          
+          <a class="main-nav-link" href="/RedBookRead">
+            红宝书重读
+          </a>
+          
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wusiyuan02.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-排序算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/03/29/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="article-date">
+  <time datetime="2022-03-29T08:24:10.000Z" itemprop="datePublished">2022-03-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      排序算法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>目前我已总结的排序算法共有如下七种：冒泡排序，选择排序，插入排序，希尔排序，归并排序，堆排序，快速排序。下面一一介绍这七种排序算法。</p>
+<span id="more"></span>
+
+<h1 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h1><p>冒泡排序是上大学是接触的第一个排序算法，所以对冒泡排序的算法思想也算是印象很深刻。总的来说就是模拟水冒泡的事件，来对数组进行排序。当前指针始终是未排序数组元素中最值元素。<br>下面对一个数组进行冒泡排序模拟：<br><strong>Eg:</strong>   arr = [42, 20, 17, 13, 28, 14, 23, 15]<br>第一趟： 20 17 13 28 14 23 15 42<br>这一趟发生的事情有：从第 i = 1个元素开始，两两比较，如果 arr[ i + 1 ] &gt; arr[ i ]，就调换两元素的位置。<br>第二趟:    17 13 20 14 23 15 28 42<br>第三趟： 13 17 14 20 15 23 28 42<br>第四趟： 13 14 17 15 20 23 28 42<br>第五趟： 13 14 15 17 20 23 28 42<br>至此排序完成。代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(len--)&#123; <span class="comment">// len初始表示数组的长度。随后每走一趟就减一</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>;i &lt; len - <span class="number">1</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(arr[i] &lt; arr[i+<span class="number">1</span>])&#123;</span><br><span class="line">            swap(i,i+<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h1><p>选择排序，顾名思义，就是选择最值，选择最值的方法就是暴力迭代未排序的数组，然后找到最值，与未排序数组的起始元素或者末尾元素交换位置。<br>同样举上面的例子：<br><strong>Eg:</strong>   arr = [42, 20, 17, 13, 28, 14, 23, 15]<br>第一趟： 42 20 17 13 28 14 23 15<br>这一趟发生的事情有：从第 i = 0个元素开始找到未排序数组中最小的元素，第一趟就是整个数组中最小的元素。然后交换位置。只是交换位置后数组没变。<br>第二趟:    42 28 17 13 20 14 23 15<br>第三趟： 42 28 23 13 20 14 17 15<br>第四趟： 42 28 23 20 13 14 17 15<br>第五趟： 42 28 23 20 17 14 13 15<br>第六趟： 42 28 23 20 17 15 13 14<br>第七趟： 42 28 23 20 17 15 14 13<br>很明显，选择排序和冒泡排序相比：比较次数较多，交换次数减少。<br>代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>;i &lt; len;i++)&#123;</span><br><span class="line">	<span class="keyword">let</span> Max = i;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> j = i + <span class="number">1</span>;j &lt; len;j++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(arr[Max] &lt; arr[j])&#123;</span><br><span class="line">            Max = j;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    swap(Max,i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h1><p>之前总是会把插入排序和选择排序相混淆，插入排序就是将未排序数组元素挨个比较，插入到已排序数组相应的位置上。<br><strong>Eg:</strong>   arr = [42, 20, 17, 13, 28, 14, 23, 15]<br>第一趟： 42 20 17 13 28 14 23 15<br>这一趟发生的事情有：确定数组前面为已排序数组，后面为待排序数组，此时已排序数组长度为 2。<br>第二趟:    42 20 17 13 28 14 23 15     //此时已排序数组长度为 3。<br>第三趟： 42 20 17 13 28 14 23 15     //此时已排序数组长度为 4。<br>第四趟： 42 28 23 20 17 14 13 15<br>此时已排序数组长度为 5。本趟待排序元素为28，28依次与有序数组比较，如果数组元素小于28，交换位置，如果大于28，说明28已插入到正确位置。<br>第五趟： 42 28 23 20 17 15 13 14<br>第六趟： 42 28 23 20 17 15 13 14<br>第七趟： 42 28 23 20 17 15 14 13<br>插入排序在基本有序的数组中使用表现较优，比较次数与交换次数都会少很多。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>;i &lt; len;i++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> j = i + <span class="number">1</span>; j &gt; <span class="number">0</span>;j++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(arr[j] &gt; arr[j-<span class="number">1</span>])&#123;</span><br><span class="line">            swap(j,j-<span class="number">1</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h1><p>希尔排序是特殊的插入排序，希尔排序就是利用插入排序在基本有序的数组表现较优的特性，先使用插入排序按步长将数组调整到基本有序。一般希尔排序的起始步长（step）都为数组长度的一半。<br><strong>Eg:</strong>   arr = [42, 20, 17, 13, 28, 14, 23, 15]<br>第一趟： 42 20 23 15 28 14 17 13<br>确定步长为4，依次排序（42，28），（20，14），（17，23），（13，15）。<br>第二趟:    42 20 28 15 23 14 17 13<br>确定步长为2，依次排序（42，23，17，28），（20，14，13，15）。<br>第三趟： 42 28 23 20 17 15 14 13<br>确定步长为1，排序整个数组，输出结果。<br>引用为什么希尔排序是不稳定的排序：<br>希尔排序是按照不同步长对元素进行插入排序，当刚开始元素很无序的时候，步长最大，所以插入排序的元素个数很少，速度很快；当元素基本有序了，步长很小， 插入排序对于有序的序列效率很高。所以，希尔排序的时间复杂度会比o(n^2)好一些。由于多次插入排序，我们知道一次插入排序是稳定的，不会改变相同元 素的相对顺序，但在不同的插入排序过程中，相同的元素可能在各自的插入排序中移动，最后其稳定性就会被打乱，所以shell排序是不稳定的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> step = <span class="built_in">Math</span>.floor(len / <span class="number">2</span>);</span><br><span class="line"><span class="keyword">while</span>(step &gt;= <span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>;i &lt; step;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> j = i;j &lt; len - step;j += step)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">let</span> k = j + step;j &lt; len;j += step)&#123;</span><br><span class="line">                <span class="keyword">if</span>(arr[k] &gt; arr[k - step])&#123;</span><br><span class="line">                    swap(k,k-step);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    step /= <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h1><p>归并排序使用分而治之的思想，是分治法的一个非常典型的应用。归并排序由两种实现方法，自上而下的递归和自下而上的迭代。<br>下面这种方法是自上而下的递归。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将数组拆分成更小的数组</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeSort</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(arr.length == <span class="number">1</span>) <span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">let</span> mid = <span class="built_in">Math</span>.floor(arr.length / <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">let</span> left = arr.slice(<span class="number">0</span>,mid)   </span><br><span class="line">    <span class="keyword">let</span> right = arr.slice(mid)</span><br><span class="line">    <span class="keyword">return</span> merge(mergeSort(left),mergeSort(right))</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 将拆分后的小数组合并。</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">left,right</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">let</span> result = [];</span><br><span class="line">    <span class="keyword">while</span>(left.length || right.length)&#123;</span><br><span class="line">    	<span class="keyword">let</span> LeftShift = left.length ? left[<span class="number">0</span>] : <span class="literal">Infinity</span>;</span><br><span class="line">   		<span class="keyword">let</span> RightShift = right.length ? right[<span class="number">0</span>] : <span class="literal">Infinity</span>;</span><br><span class="line">   	 	<span class="keyword">if</span>(LeftShift &lt; RightShift)&#123;</span><br><span class="line">     	    result.push(right.shift())</span><br><span class="line">    	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        	result.push(left.shift())</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h1><p>堆排序利用了堆这种数据结构的特性。堆是特殊的完全二叉树。但是堆要求根节点必须大于（小于）子节点。如果根节点的值大于子节点，这种堆叫做最大堆；如果根节点的值小于子节点，这种堆叫做最小堆。<br>JavaScript 这门语言中没有堆这种数据结构，所以需要我们自己构建堆。至于堆的类构造函数，留着下面再写~</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> len = arr.length;</span><br><span class="line"><span class="comment">// 将数组构建成堆的形式</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">buildHeap</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="built_in">Math</span>.floor(len / <span class="number">2</span>) ; i &gt;= <span class="number">0</span> ; i++)&#123;</span><br><span class="line">        heapify(arr,i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">heapify</span>(<span class="params">arr,index</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> left = <span class="number">2</span> * index + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">let</span> right = <span class="number">2</span> * index + <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">let</span> large = index;</span><br><span class="line">    <span class="keyword">if</span>(arr[left] &gt; arr[large])&#123;</span><br><span class="line">        large = left;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(arr[right] &gt; arr[large])&#123;</span><br><span class="line">        large = index;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(large != index)&#123;</span><br><span class="line">    	swap(large,index); <span class="comment">// 交换根节点与子节点，使根节点比子节点大。</span></span><br><span class="line">    	heapify(arr,large); <span class="comment">// 交换之后需要判断现在的子节点是否满足堆的特性</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">buildHeap(arr); <span class="comment">// 将数组初始化为最大堆,此时最大值为arr[0]</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = arr.length - <span class="number">1</span>;i &gt;= <span class="number">0</span>;i--)&#123;</span><br><span class="line">	swap(<span class="number">0</span>,i); <span class="comment">// 将arr[0] 与 arr[arr.length - 1]交换，并让排序数组长度减一。</span></span><br><span class="line">	len -- ;</span><br><span class="line">    heapify(arr,<span class="number">0</span>); <span class="comment">// 此时，这个数组前两个节点必定是除根节点外的最大节点，将这个数组维护成最大堆。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="堆的构造函数"><a href="#堆的构造函数" class="headerlink" title="堆的构造函数"></a>堆的构造函数</h2><p>堆的方法由插入，删除堆顶，获取堆顶，夺取堆大小，维护堆的节点上移和节点下移等方法。下面一一实现。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MaxHeap</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="title">constructor</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(Arrat.isArray(arr) &amp;&amp; arr.length)&#123;</span><br><span class="line">            <span class="built_in">this</span>.Heap = [...arr];</span><br><span class="line">        	<span class="built_in">this</span>.len = arr.length;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.Heap = [];</span><br><span class="line">            <span class="built_in">this</span>.len = <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 获取父节点索引</span></span><br><span class="line">	<span class="function"><span class="title">getParentIndex</span>(<span class="params">i</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Math</span>.floor((i - <span class="number">1</span>) / <span class="number">2</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 获取左节点索引</span></span><br><span class="line">	<span class="function"><span class="title">getLeftIndex</span>(<span class="params">i</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span> * i + <span class="number">1</span> &lt; <span class="built_in">this</span>.len ? <span class="number">2</span> * i + <span class="number">1</span> : -<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 获取右节点索引</span></span><br><span class="line">	<span class="function"><span class="title">getRightIndex</span>(<span class="params">i</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span> * i + <span class="number">2</span> &lt; <span class="built_in">this</span>.len ? <span class="number">2</span> * i + <span class="number">2</span> : -<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 插入</span></span><br><span class="line">	<span class="function"><span class="title">insert</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray(value))&#123;</span><br><span class="line">        	<span class="built_in">this</span>.Heap.push(value);</span><br><span class="line">        	<span class="built_in">this</span>.len ++;</span><br><span class="line">        	<span class="built_in">this</span>.shiftUp(<span class="built_in">this</span>.len - <span class="number">1</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            value.forEach( <span class="function"><span class="params">v</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">this</span>.Heap.push(v);</span><br><span class="line">        		<span class="built_in">this</span>.len ++;</span><br><span class="line">       		 	<span class="built_in">this</span>.shiftUp(<span class="built_in">this</span>.len - <span class="number">1</span>);</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 节点上移</span></span><br><span class="line">	<span class="function"><span class="title">shiftUp</span>(<span class="params">index</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(index == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">let</span> ParentIndex = <span class="built_in">this</span>.getParentIndex(index);</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">this</span>.Heap[ParentIndex] &lt; <span class="built_in">this</span>.Heap[index])&#123;</span><br><span class="line">            <span class="built_in">this</span>.swap(ParentIndex,index);</span><br><span class="line">            <span class="built_in">this</span>.shiftUp(ParentIndex);</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 交换节点</span></span><br><span class="line">	<span class="function"><span class="title">swap</span>(<span class="params">i,j</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> temp = <span class="built_in">this</span>.Heap[i];</span><br><span class="line">        <span class="built_in">this</span>.Heap[i] = <span class="built_in">this</span>.Heap[j];</span><br><span class="line">        <span class="built_in">this</span>.Heap[j] = temp;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 节点下移：shift() 栈顶元素后需要维护堆</span></span><br><span class="line">	<span class="function"><span class="title">shiftDown</span>(<span class="params">index</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">let</span> leftIndex = <span class="built_in">this</span>.getLeftIndex(index);</span><br><span class="line">		<span class="keyword">let</span> rightIndex = <span class="built_in">this</span>.getRightIndex(index);</span><br><span class="line">		<span class="keyword">let</span> maxIndex = index;</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">this</span>.Heap[leftIndex] &gt; <span class="built_in">this</span>.Heap[maxIndex])&#123;</span><br><span class="line">            maxIndex = leftIndex;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">this</span>.Heap[rightIndex] &gt; <span class="built_in">this</span>.Heap[maxIndex])&#123;</span><br><span class="line">            maxIndex = rightIndex;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(maxIndex != index)&#123;</span><br><span class="line">            <span class="built_in">this</span>.swap(maxIndex,index);</span><br><span class="line">            <span class="built_in">this</span>.shiftDown(maxIndex);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 弹出根节点</span></span><br><span class="line">	<span class="function"><span class="title">pop</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> topRoot = <span class="built_in">this</span>.Heap.shift();</span><br><span class="line">        <span class="built_in">this</span>.shiftDown(<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> topRoot;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 获取根节点</span></span><br><span class="line">	<span class="function"><span class="title">peek</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.Heap[<span class="number">0</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 获取堆的大小</span></span><br><span class="line">	<span class="function"><span class="title">size</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.len;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h1><p>菜鸟教程上说快速拍寻算是在冒泡排序基础上的递归分治法，，我反正没看出来。不如排序的时候用双指针来做，看起来更清楚。<br>感觉快速排序和归并排序很像，可能因为他俩的O(n)都是nlogn，，，快速排序就是找到一个基准，比这个基准小的数放在基准前面，比基准大的数放在基准后面。然后相同操作操作这两个区间，直到区间长度为1，就停止。<br><strong>Eg:</strong>   arr = [42, 20, 17, 13, 28, 14, 23, 15]<br>第一趟： 42 20 17 13 28 14 23 15<br>确定基准为42，数据划分成两个区间null和[20, 17, 13, 28, 14, 23, 15]<br>第二趟:    42 23 28 20 15 14 17 13<br>确定基准为20，依次排序[23, 28]，[20, 15, 14, 17, 13 ]。<br>第三趟： 42 23 28 20 15 14 17 13<br>确定基准为23，[23, 28] 区间排序完成。<br>第四趟： 42 23 28 20 15 14 17 13<br>确定基准为20，数据划分成两个区间null和[15, 14, 17, 13]。<br>第四趟： 42 23 28 20 13 14 15 17<br>确定基准为15，数据划分成两个区间[13, 14]和[17]。<br>此时数据已排序完成。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">quickSort</span>(<span class="params">arr, left = <span class="number">0</span>, right = arr.length - <span class="number">1</span></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(left&lt;right)&#123;</span><br><span class="line">    	<span class="keyword">let</span> partitionIndex =partition(arr,left,right);</span><br><span class="line">    	quickSort(arr, left, partitionIndex);</span><br><span class="line">    	quickSort(arr, partitionIndex + <span class="number">1</span>, right);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">partition</span>(<span class="params">arr, left, right</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">let</span> tempLeft = left;</span><br><span class="line">	<span class="keyword">let</span> pivot = arr[left];</span><br><span class="line">	<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">        <span class="keyword">while</span>(arr[left] &gt; pivot) left++;</span><br><span class="line">        <span class="keyword">while</span>(arr[right] &lt; pivot) right--;</span><br><span class="line">        <span class="keyword">if</span>(left &lt; right)&#123;</span><br><span class="line">            swap(left,right);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	swap(tempLeft,left-<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line">quickSort(arr);</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wusiyuan02.github.io/2022/03/29/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" data-id="cl1x78170001evgvc9qnpdm4t" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/04/06/B2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          B2
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/03/18/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">身份认证</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hello-Blog/">Hello Blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue%E6%A1%86%E6%9E%B6/">Vue框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BOM/" rel="tag">BOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript/" rel="tag">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2/" rel="tag">字节二面</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Siyuan Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/RedBookRead" class="mobile-nav-link">红宝书重读</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>JavaScript重读（1） | 追光者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="下面将对JavaScript第二章和第三章的内容作一个总结。主要包括平时容易忽略的点和没有掌握的知识点。 第二章1、 script 元素的属性。src: 将要执行的外部js文件。 defer: 另开线程下载脚本，在文档解析和显示完成后再执行脚本，只适应外部脚本文件。 async: 另开线程下载脚本，在文档下载完成后立即执行脚本文件。 不带defer 和 script 时：直接下载js脚本，下载完成">
+<meta property="og:type" content="website">
+<meta property="og:title" content="JavaScript重读（1）">
+<meta property="og:url" content="https://wusiyuan02.github.io/RedBookRead/2-3.html">
+<meta property="og:site_name" content="追光者">
+<meta property="og:description" content="下面将对JavaScript第二章和第三章的内容作一个总结。主要包括平时容易忽略的点和没有掌握的知识点。 第二章1、 script 元素的属性。src: 将要执行的外部js文件。 defer: 另开线程下载脚本，在文档解析和显示完成后再执行脚本，只适应外部脚本文件。 async: 另开线程下载脚本，在文档下载完成后立即执行脚本文件。 不带defer 和 script 时：直接下载js脚本，下载完成">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/23/no.jpg">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/23/async.png">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/23/defer.png">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/23/xhtml.jpg">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/23/SyntaxError.jpg">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/23/SyntaxError2.jpg">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/23/number8.jpg">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/23/num82.jpg">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/23/ES6num8.jpg">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/23/ES6num82.jpg">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/23/parseInt.jpg">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/23/stringlabel.jpg">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/23/stringRaw.jpg">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/23/symbol1.jpg">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/23/symbol2.jpg">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/23/symbol3.jpg">
+<meta property="article:published_time" content="2022-04-11T14:57:46.000Z">
+<meta property="article:modified_time" content="2022-04-12T15:44:25.345Z">
+<meta property="article:author" content="Siyuan Wu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wusiyuan02.github.io/RedBookRead/23/no.jpg">
+  
+  
+    <link rel="icon" href="[object Object]">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">
+          追光者
+        </a>
+      </h1>
+      <h2 id="subtitle-wrap">
+        <a href="/" id="subtitle">
+          踮起脚，就能更接近阳光。
+        </a>
+      </h2>
+
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">
+            Home
+          </a>
+          
+          <a class="main-nav-link" href="/archives">
+            Archives
+          </a>
+          
+          <a class="main-nav-link" href="/categories">
+            Category
+          </a>
+          
+          <a class="main-nav-link" href="/tags">
+            Tags
+          </a>
+          
+          <a class="main-nav-link" href="/RedBookRead">
+            红宝书重读
+          </a>
+          
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wusiyuan02.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/RedBookRead/2-3.html" class="article-date">
+  <time datetime="2022-04-11T14:57:46.000Z" itemprop="datePublished">2022-04-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JavaScript重读（1）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>下面将对JavaScript第二章和第三章的内容作一个总结。主要包括平时容易忽略的点和没有掌握的知识点。</p>
+<h1 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h1><h2 id="1、-script-元素的属性。"><a href="#1、-script-元素的属性。" class="headerlink" title="1、 script 元素的属性。"></a>1、 script 元素的属性。</h2><p>src: 将要执行的外部js文件。</p>
+<p>defer: 另开线程下载脚本，在文档解析和显示完成后再执行脚本，只适应外部脚本文件。</p>
+<p>async: 另开线程下载脚本，在文档下载完成后立即执行脚本文件。</p>
+<p>不带defer 和 script 时：直接下载js脚本，下载完成后立即执行。</p>
+<p>对此进行验证：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">script</span>  <span class="attr">src</span>=<span class="string">&quot;./no.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">  &lt;!-- <span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">&quot;./async.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span> --&gt;</span><br><span class="line">  &lt;!-- <span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">defer</span> <span class="attr">src</span>=<span class="string">&quot;./async.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span> --&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>async 和 defer<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"> </span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>这是不带defer和script时候的js执行情况，很明显，在下载并执行之后，才开始解析HTML标签。</p>
+<img src="/RedBookRead/23/no.jpg">
+
+<p>由network可以得知，js文件先下载，下载完成后再执行。并且要在Load事件之前执行。</p>
+<img src="/RedBookRead/23/async.png">
+
+<p>为什么设置脚本执行之后显示一样呢？明天再来解决吧。</p>
+<p>对这一问题的解释是：按照我猜测，http2.0支持服务器推送，所以就不用等到html解析到script标签的时候再进行下载，可以使用node托管静态文件设置响应头http1.X来查看。</p>
+<img src="/RedBookRead/23/defer.png">
+
+<h2 id="2、XHTML兼容script标签"><a href="#2、XHTML兼容script标签" class="headerlink" title="2、XHTML兼容script标签"></a>2、XHTML兼容script标签</h2><img src="/RedBookRead/23/xhtml.jpg">
+
+<p>XHTML是HTML作为XML的应用重新包装的结果。主要是嵌入’&lt;’的问题。有两种解决方法，第一种是把 &lt; 变成 lt;，第二种方法就是像上面一样把js代码包装在&lt;![CDATA[  js code ]]&gt;中。</p>
+<h2 id="兼容不支持JavaScript的标签-lt-noscript-gt"><a href="#兼容不支持JavaScript的标签-lt-noscript-gt" class="headerlink" title="兼容不支持JavaScript的标签&lt;noscript&gt;"></a>兼容不支持JavaScript的标签&lt;noscript&gt;</h2><p>在不支持js脚本或者对js脚本支持关闭的浏览器中，会使用&lt;noscript&gt;标签来提供替代内容。</p>
+<p>&lt;noscript&gt;标签包含任何可以出现在&lt;body&gt;中的HTML元素。</p>
+<h1 id="第三章"><a href="#第三章" class="headerlink" title="第三章"></a>第三章</h1><h2 id="1、重复声明"><a href="#1、重复声明" class="headerlink" title="1、重复声明"></a>1、重复声明</h2><p>在js中，使用var声明重复声明同名变量会忽略后面的声明。使用let重复声明同名变量会报错。</p>
+<img src="/RedBookRead/23/SyntaxError.jpg">
+
+<p><span style="color:red">注意：</span>这块容易忽略的点是，使用var声明后，又使用let声明同样会爆出SynatxError的错误。这应该很好理解，但是使用let声明后，再使用var声明，也会报错！</p>
+<img src="/RedBookRead/23/SyntaxError2.jpg">
+
+<p>尝试给一个解释：使用var和let声明变量，只是给变量一个状态。var没有块作用域，let有块作用域，一个变量不可能同时存在两个作用域中。当给定一个变量一个状态后，就不能改变状态了。</p>
+<p>网上看到另一种解释：let具有TDZ，var可以声明提升，在let声明前就使用了这个变量名，也会报错。</p>
+<p>这块可能得结合ES6的一些知识，目前还没了解到，等了解到了再来补充。</p>
+<h2 id="2、Number八进制"><a href="#2、Number八进制" class="headerlink" title="2、Number八进制"></a>2、Number八进制</h2><p>我看红宝书上说到，对于八进制字面量，以0开头。十六进制字面量，以0x开头。</p>
+<img src="/RedBookRead/23/number8.jpg">
+
+<img src="/RedBookRead/23/num82.jpg">
+
+<p>ES6中，使用0o来表示八进制，严格模式下前缀0会报错。</p>
+<img src="/RedBookRead/23/ES6num8.jpg">
+
+<p>使用0o前缀就对了。</p>
+<img src="/RedBookRead/23/ES6num82.jpg">
+
+<h2 id="3、parseInt和parseFloat"><a href="#3、parseInt和parseFloat" class="headerlink" title="3、parseInt和parseFloat"></a>3、parseInt和parseFloat</h2><p>这两个函数在你不知道的js里面叫做解析，Number被成为转换。主要区别有：</p>
+<ol>
+<li>Number(‘12ab’) =&gt; NaN , parseInt(‘12ab’) =&gt; 12;</li>
+<li>Number(‘’) =&gt; 0, parseInt(‘’) =&gt; NaN;</li>
+<li>Number(‘12.5’) =&gt; 12.5 , parseInt(‘12.5’) =&gt; 12</li>
+<li>Number转换的一个特殊情况，<span style="color:red">Number(‘\n’) = 0</span></li>
+</ol>
+<p>这是一些转换的差异，对parseInt函数，只接受字符串，如果不是字符串调用toString()，否则返回NaN。parseInt接受两个参数，第二个参数表示用多少进制解释，如果不写的话默认以字符串前缀来解释。</p>
+<img src="/RedBookRead/23/parseInt.jpg">
+
+<p>根据上图，很明显当我parseInt(‘023’) 返回的居然是23，这还是很难理解的…MDN上解释字符串以0开头被假定为八进制或者十六进制，具体是哪个进制取决于实现，很显然，Chrome是十进制。<strong>因此，在使用parseInt时，一定要指定进制！</strong></p>
+<p>相比较于parseInt,parseFloat就简单的多，1、只能接受一个参数，2、如果没有小数点后的数就直接返回整数，3、用十进制来解释，4、0开头的字符串会忽略0。</p>
+<h2 id="4、模板字面量与标签函数"><a href="#4、模板字面量与标签函数" class="headerlink" title="4、模板字面量与标签函数"></a>4、模板字面量与标签函数</h2><p>模板字面量和字符串字面形式不同的点有：</p>
+<ol>
+<li>声明方式不同，模板字面量``声明，字面形式使用单引号，双引号。</li>
+<li>模板字面量有一种特殊的调用形式。fn`string`</li>
+<li>模板字面量支持${}插值引入变量的值。${}叫做标签占位符。插入的值调用toString方法强行转换成字符串。</li>
+<li>模板字面量可以跨行定义字符串。   </li>
+</ol>
+<p>1，3，4三点已掌握，下面主要关注第二点。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">simpleTag</span>(<span class="params">strings, aVal, bVal, sumVal</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(strings);</span><br><span class="line">    <span class="built_in">console</span>.log(aVal);    </span><br><span class="line">    <span class="built_in">console</span>.log(bVal);</span><br><span class="line">    <span class="built_in">console</span>.log(sumVal);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;OK!&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> a = <span class="number">2</span>, b = <span class="number">3</span>;</span><br><span class="line"><span class="built_in">console</span>.log(simpleTag<span class="string">`<span class="subst">$&#123;a&#125;</span>+<span class="subst">$&#123;b&#125;</span>=<span class="subst">$&#123;a+b&#125;</span>`</span>)</span><br></pre></td></tr></table></figure>
+
+<p>上面代码输出结果为：</p>
+<img src="/RedBookRead/23/stringlabel.jpg">
+
+<p>关于strings的解释：标签函数的第一个参数，它的值与模板字符串有关，可以发现，把每个模板字符串插值的位置替换成” , “进行分割，就得到strings。</p>
+<p>关于模板字符串其实也没什么难点，还有一个就是String.raw也是标签函数。可以后面直接跟模板字符串输出结果。String.raw作用是获取原始的模板字符串内容。</p>
+<img src="/RedBookRead/23/stringRaw.jpg">
+
+<h2 id="5、Symbol类型"><a href="#5、Symbol类型" class="headerlink" title="5、Symbol类型"></a>5、Symbol类型</h2><p>Symbol 是ES6新增的数据类型。symbol是原始值，Symbol实例是唯一的，不可变的。<span style="color:red">Symbol 不可以当作构造函数，而且没有字面量语法。</span></p>
+<img src="/RedBookRead/23/symbol1.jpg">
+
+<p>上面图片可以验证symbol的唯一性。</p>
+<h3 id="全局符号注册表"><a href="#全局符号注册表" class="headerlink" title="全局符号注册表"></a>全局符号注册表</h3><p>不同的部分需要共享和重用符号实力，那么可以用字符串作为键，在全局符号注册表中创建并重用符号。</p>
+<p>使用Symbol.for()方法进行操作。</p>
+<img src="/RedBookRead/23/symbol2.jpg">
+
+<p>第一次调用Symbol.for(‘foo’) 先查询全局符号注册表中的键是否有‘foo’，如果有的话，拿过来就用，如果没有的话，构建一个以‘foo’为键的符号实例。</p>
+<p>第二次调用也会先查询是否有‘foo’，有，拿过来使用即可。</p>
+<p>这个时候两个变量指向同一个内存，所以二者相等。</p>
+<img src="/RedBookRead/23/symbol3.jpg">
+
+<p>很明显，Symbol(‘foo’) 和 Symbol.for(‘foo’)即使使用相同的符号描述，他俩并不相同。</p>
+<p>这就有点对象相等的概念了。</p>
+<h2 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString"></a>toString</h2><p>toString函数当把数字转换成字符串时，接受一个参数，表示按多少进制进行转换。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> num = <span class="number">16</span>;</span><br><span class="line">num.toString(<span class="number">4</span>); <span class="comment">// &#x27;100&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h2><p>位运算符只能处理32位的位运算。在JS中应用位操作符时，后台会发生转换（64位转换成32位），最后再把结果从32位转换成64位运算符。在转换的过程中，NaN和Infinity在位运算中会被当作0来处理。</p>
+<p>对非数值进行位运算时，首先使用Number转换成数值。</p>
+<ol>
+<li>按位非 ~</li>
+<li>按位与 &amp;</li>
+<li>按位或 |</li>
+<li>按位异或  ^</li>
+<li>左移  &lt;&lt;</li>
+<li>无符号左移 &lt;&lt;&lt;</li>
+<li>右移 &gt;&gt;</li>
+<li>无符号右移 &gt;&gt;&gt;</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> num1 = <span class="number">16</span>, num2 = <span class="number">7</span>;</span><br><span class="line">num1 = num1.toString(<span class="number">2</span>); <span class="comment">// 10000</span></span><br><span class="line">num2 = num2.toString(<span class="number">2</span>); <span class="comment">// 111</span></span><br><span class="line"><span class="keyword">let</span> res1 = num1 ^ num2; <span class="comment">// 此时res1的存储是10111，以二进制的形式存储。</span></span><br><span class="line">res1 &lt; <span class="number">128</span> <span class="comment">// false 二进制比较，然而128有非法数字，返回false</span></span><br><span class="line">res1 &lt; <span class="number">1000000</span> <span class="comment">// true 二进制比较</span></span><br><span class="line"><span class="keyword">let</span> res2 = num1 | num2; <span class="comment">// 10111</span></span><br><span class="line"><span class="keyword">let</span> res3 = num1 &amp; num2; <span class="comment">// 返回0，其他位数用0来补齐，做与运算返回0</span></span><br><span class="line"><span class="keyword">let</span> res4 = num1 &gt;&gt; <span class="number">1</span>; <span class="comment">// 返回1000</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>下面补充js中数字的存储格式IEEE754。</p>
+<h3 id="IEEE-754"><a href="#IEEE-754" class="headerlink" title="IEEE 754"></a>IEEE 754</h3><h2 id="关系运算符比较规则"><a href="#关系运算符比较规则" class="headerlink" title="关系运算符比较规则"></a>关系运算符比较规则</h2><p>这块知识之前记住了，现在就来回溯一下吧。</p>
+<ol>
+<li>任一操作数是布尔值，转换成数值比较。</li>
+<li>俩操作数都是字符串直接进行字符串比较。</li>
+<li>对象比较时，首先调用valueOf()方法，如果返回的不是一个基本值，调用toString()方法。进行比较。</li>
+<li>除undefined、null，不符合上面规则的转换成数值然后比较。</li>
+<li>undefined、null与自身相等和互相相等之外，其他的都为false</li>
+</ol>
+<p>下面列举一个对象的比较。一般来说obj默认的valueOf方法返回自身。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;&#125;;</span><br><span class="line">obj == <span class="string">&#x27;[object Object]&#x27;</span>; <span class="comment">// true</span></span><br><span class="line">obj.valueOf = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line">obj == <span class="number">3</span>; <span class="comment">// true;</span></span><br></pre></td></tr></table></figure>
+
+<p>下面是一些难理解的地方：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">false</span> == []; </span><br><span class="line">  <span class="string">&#x27;&#x27;</span>  == [];</span><br><span class="line">  <span class="string">&#x27;&#x27;</span>  == &#123;&#125;;</span><br><span class="line">  <span class="number">0</span>   == [];</span><br></pre></td></tr></table></figure>
+
+<p>下面尝试来解释一下: 可以看到基本上是和空数组 [] 有关，数组也是对象，首先执行valueOf()方法，返回本身，<span style="color:red">但是！强制类型转换的过程中会进行字符串化！</span>所以 [] 字符串化后为空字符串。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">false</span> == [];  =&gt; <span class="string">&#x27;&#x27;</span>  == <span class="string">&#x27;&#x27;</span>;  <span class="comment">// true;</span></span><br><span class="line">  <span class="string">&#x27;&#x27;</span>  == [];  =&gt; <span class="string">&#x27;&#x27;</span>  == <span class="string">&#x27;&#x27;</span>;  <span class="comment">// true;</span></span><br><span class="line">  <span class="string">&#x27;&#x27;</span>  == &#123;&#125;;  =&gt;  <span class="number">0</span>  == <span class="string">&#x27;[object Object]&#x27;</span>; <span class="comment">// false;</span></span><br><span class="line">  <span class="number">0</span>   == [];  =&gt;  <span class="number">0</span>  == <span class="string">&#x27;&#x27;</span>; <span class="comment">// true;</span></span><br></pre></td></tr></table></figure>
+
+<p>[2, 3] == ‘2,3’ 返回true！</p>
+<p>还有一个最离谱的情况吧：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[] == ![] =&gt; [] == <span class="function"><span class="params">false</span> =&gt;</span> <span class="string">&#x27;&#x27;</span> == <span class="function"><span class="params">false</span> =&gt;</span> <span class="number">0</span> == <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>第一步，![] 对[] 显示转换成布尔值，返回false。</p>
+<p>第二步，对左边的 []  toPrimitive规则，得到 ‘’ 空字符串。</p>
+<p>第三步，空字符串Number转换成0，false转换成0，结果是 true</p>
+<p>给自己出一个题目做~</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#125; != &#123;&#125; =&gt; <span class="string">&#x27;[object Object]&#x27;</span> != <span class="string">&#x27;[object Objkect]&#x27;</span> =&gt; <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="抽象关系比较"><a href="#抽象关系比较" class="headerlink" title="抽象关系比较"></a>抽象关系比较</h2><p>你不知道的JavaScript(中)第89页</p>
+<p>该算法仅针对 a &lt; b。</p>
+<p>直接举例，这块我也没看明白。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;<span class="attr">b</span>: <span class="number">42</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> b = &#123;<span class="attr">b</span>: <span class="number">43</span>&#125;;</span><br><span class="line">a &gt; b;  <span class="comment">// false</span></span><br><span class="line">a &lt; b;  <span class="comment">// false</span></span><br><span class="line">a == b; <span class="comment">// false</span></span><br><span class="line">a &gt;= b; <span class="comment">// true</span></span><br><span class="line">a &lt;= b; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>下面俩返回true的原因是根据规范 a &lt;= b 被转换成 a &gt; b，计算 a&gt; b的结果后取反，再返回。</p>
+<p>到这里第二章第三章就基本上结束了！再接再励！争取两周内把这本书认真的过一遍。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wusiyuan02.github.io/RedBookRead/2-3.html" data-id="cl1x781650006vgvcaflq6yrf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hello-Blog/">Hello Blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue%E6%A1%86%E6%9E%B6/">Vue框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BOM/" rel="tag">BOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript/" rel="tag">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2/" rel="tag">字节二面</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Siyuan Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/RedBookRead" class="mobile-nav-link">红宝书重读</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

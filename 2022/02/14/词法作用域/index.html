@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>编译与词法作用域 | 追光者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="对于JavaScript来说，因为JavaScript运行环境的特殊性（通常是浏览器终端运行），JavaScript必须对程序编译后就做好执行它的准备。通常编译时间极短，几微秒之内。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译与词法作用域">
+<meta property="og:url" content="https://wusiyuan02.github.io/2022/02/14/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F/index.html">
+<meta property="og:site_name" content="追光者">
+<meta property="og:description" content="对于JavaScript来说，因为JavaScript运行环境的特殊性（通常是浏览器终端运行），JavaScript必须对程序编译后就做好执行它的准备。通常编译时间极短，几微秒之内。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wusiyuan02.github.io/2022/02/14/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F/1.png">
+<meta property="article:published_time" content="2022-02-14T14:13:14.000Z">
+<meta property="article:modified_time" content="2022-02-25T13:33:48.395Z">
+<meta property="article:author" content="Siyuan Wu">
+<meta property="article:tag" content="你不知道的JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wusiyuan02.github.io/2022/02/14/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F/1.png">
+  
+  
+    <link rel="icon" href="[object Object]">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">
+          追光者
+        </a>
+      </h1>
+      <h2 id="subtitle-wrap">
+        <a href="/" id="subtitle">
+          踮起脚，就能更接近阳光。
+        </a>
+      </h2>
+
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">
+            Home
+          </a>
+          
+          <a class="main-nav-link" href="/archives">
+            Archives
+          </a>
+          
+          <a class="main-nav-link" href="/categories">
+            Category
+          </a>
+          
+          <a class="main-nav-link" href="/tags">
+            Tags
+          </a>
+          
+          <a class="main-nav-link" href="/RedBookRead">
+            红宝书重读
+          </a>
+          
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wusiyuan02.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-词法作用域" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/02/14/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F/" class="article-date">
+  <time datetime="2022-02-14T14:13:14.000Z" itemprop="datePublished">2022-02-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      编译与词法作用域
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>对于JavaScript来说，因为JavaScript运行环境的特殊性（通常是浏览器终端运行），JavaScript必须对程序编译后就做好执行它的准备。通常编译时间极短，几微秒之内。</p>
+<span id="more"></span>
+<p>在<strong>传统</strong>的编译流程中，代码的编译一共分为三个模块：分词，解析与代码生成。    </p>
+<ul>
+<li><span style="color:red">分词/词法分析</span>：将由字符组成的字符串分解成与意义的的代码块。这些代码块被称为<span style="color:red">词法单元</span>。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>   </span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这段代码会被分解成 var 、a 、= 、2 、；这些就是词法单元，至于空格会不会被当作词法单元，取决于空额在这门语言中是否有意义。</p>
+</blockquote>
+</li>
+<li><span style="color:red">解析/词法分析</span>：将词法单元流转换成由元素逐级嵌套所组成的代表了程序语法结构的树，这个树被称为‘<span style="color:red">抽象语法树</span>’。  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>   </span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这段代码的抽象语法树可能会有一个叫VariableDeclaration的顶级节点，接下来是一个Identifier(值为a)的子节点和一个叫做AssignmentExpression的子节点。AssignmentExpression节点有一个叫做NumericLiteral(值为2)的子节点。</p>
+</blockquote>
+</li>
+<li><span style="color:red">代码生成</span>：将抽象语法树转化为可执行的代码的过程。</li>
+</ul>
+<h2 id="JavaScript的代码生成过程"><a href="#JavaScript的代码生成过程" class="headerlink" title="JavaScript的代码生成过程"></a>JavaScript的代码生成过程</h2><ol>
+<li>遇到var a 编译器会询问作用域是否有该名称的变量存在于同一作用域集合中（查询），如果有，则忽略该声明继续编译，如果没有，编译器要求作用域在当前作用域集合中声明过一个新变量，并命名为a</li>
+<li>编译器回味引擎生成运行所需的代码，这些代码被用在为a赋值的操作。引擎运行时首先询问作用域，当前作用域是否存在a变量，如果是，引擎就会使用这个变量进行赋值，如果没有，查找下一个作用域。</li>
+</ol>
+<h3 id="编译器的查询类型"><a href="#编译器的查询类型" class="headerlink" title="编译器的查询类型"></a>编译器的查询类型</h3><p>编译器的查询类型一共可以分成两类：<strong>LHS</strong>(用于给变量赋值时查询)和<strong>RHS</strong>(用于查找变量时查询)。</p>
+<p>LHS试图找到变量的容器本身，从而可以对其进行赋值操作。RHS简单查找某个变量的值。</p>
+<h4 id="区分LHS和RHS"><a href="#区分LHS和RHS" class="headerlink" title="区分LHS和RHS"></a>区分LHS和RHS</h4><p>在非严格模式下，对未声明的变量使用RHS查询时，在任何相关作用域无法找到所需的变量。引擎就会抛出ReferenceError异常。而使用LHS查询时，在全局作用域中也无法找到，引擎会在全局作用域中创建一个具有该名称的变量，并将其返还给引擎。</p>
+<h3 id="作用域嵌套"><a href="#作用域嵌套" class="headerlink" title="作用域嵌套"></a>作用域嵌套</h3><p>引擎在当前执行作用域开始查找变量，如果找不到，就像上一级查找，当地最外层的全局作用域时，无论有没有找到，都会停止寻找。</p>
+<p><strong>小结：</strong>作用域是一套规则，用于确定在何处以及如何查找变量（标识符），管理引擎如何在全局作用域以及嵌套的子作用域中根据标识符名称进行变量查询。</p>
+<h2 id="词法作用域"><a href="#词法作用域" class="headerlink" title="词法作用域"></a>词法作用域</h2><p>作用域包含两种主要的工作模型：第一种最为普遍，叫做静态作用域，也叫做<span style="color:red">词法作用域</span>，另一种叫做动态作用域。</p>
+<h3 id="词法作用域-1"><a href="#词法作用域-1" class="headerlink" title="词法作用域"></a>词法作用域</h3><p>是定义在词法阶段的作用域，也就是词法作用域是由你在写代码时将变量和块作用域写在哪里来决定的，因此当词法分析器处理代码时大部分情况下会保持作用域不变。(但是下面介绍的eval和with会破坏作用域不变的原则)<br>第一章说到作用域查找是<strong>自底向顶</strong>的查找，作用域查找会在找到第一个匹配的标识符时停止查找，在多层的嵌套作用域中可以定义同名标识符，这叫做“<span style="color:red">遮蔽效应</span>”。</p>
+<blockquote>
+<p>可以通过window.a间接来访问被同名变量所遮蔽的全局变量   </p>
+</blockquote>
+<p>而<span style="color:red">词法作用域链查找标识符是根据函数声明代码位置来确定</span>的，并不是由函数在何处被调用来确定的。(这里，动态作用域链的查找就是根据函数在何处被调用来确定的)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line">  foo();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">bar(); <span class="comment">//打印 a = 2,如果是动态作用域的打印的就是a = 3</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="eval-和-with"><a href="#eval-和-with" class="headerlink" title="eval 和 with"></a>eval 和 with</h3><h4 id="eval"><a href="#eval" class="headerlink" title="eval"></a>eval</h4><p>eval(..)接受一个<span style="color:red">字符串</span>为参数，如果参数不是字符串，则直接返回参数。 eval 将其中的<strong>内容</strong>是为好像书写时就存在于程序中这个位置的代码，换句话说，在你写的代码中用程序生成代码运行就好像代码是写在那个位置的一样。执行eval(…)之后的代码，引擎并不知道或在意前面的代码是以动态形式插入，并对词法作用域的环境进行修改的。<br>类似与eval ( str ) 的功能效果还有setTimeout(..) 和 setInterval(..) 和 new Function( .. )…</p>
+<h4 id="with"><a href="#with" class="headerlink" title="with"></a>with</h4><p>with(..)通常被当作重复引用用一个对象中的多个属性的快捷方式，可以不需要重复引用对象本身。示例如图。<img src="/2022/02/14/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F/1.png"><br>在with中对变量a 进行简单的词法引用实际上就是一个LHS引用，如果obj中没有变量a，则将a泄露到全局变量中(即在全局作用域声明变量a)。  </p>
+<p>with 将对象处理成一个完全隔离的词法作用域，对象上的属性被处理成定义在这个作用域中的标识符。这样，可以理解变量泄露的原因。但是，在with定义的块中，使用var定义声明并不会被显示在这个块的作用域中，而是被添加到with所处的函数作用域中。</p>
+<p><strong>小结</strong>:eval(..)和with(..)是两个欺骗词法作用域的机制。前者修改已经存在的词法作用域，后者本质上通过将对象的引用当作作用域来处理，创建一个虚拟的词法作用域。两者都是在运行时发生。<br>这两个机制的副作用是引擎无法在编译是对作用域查找进行优化，因为引擎只能谨慎的认为这样优化是无效的。使用者其中任何一个机制会使代码运行变慢。不要使用它们。</p>
+<h2 id="函数作用域与块作用域"><a href="#函数作用域与块作用域" class="headerlink" title="函数作用域与块作用域"></a>函数作用域与块作用域</h2><h3 id="函数作用域"><a href="#函数作用域" class="headerlink" title="函数作用域"></a>函数作用域</h3><p>JavaScript中不止具有基于函数的作用域。<br>函数作用域的含义是指属于这个函数的全部变量都可以在整个函数的范围内使用和服饰。</p>
+<h4 id="隐藏函数的内部实现"><a href="#隐藏函数的内部实现" class="headerlink" title="隐藏函数的内部实现"></a>隐藏函数的内部实现</h4><p>在函数作用域内部的代码端周围创建一个作用域，也就是说<strong>代码段中任何声明都将绑定在这个新创建的包装函数的作用域</strong>中。使用这个作用域来“隐藏”这个代码段。</p>
+<h4 id="最小授权或最小暴露原则"><a href="#最小授权或最小暴露原则" class="headerlink" title="最小授权或最小暴露原则"></a>最小授权或最小暴露原则</h4><p>这个原则是指在软件设计中，应该<span style="color:red">最小限度</span>地暴露必要内容而将其他内容都“隐藏”起来。如果所有的变量和函数都在全局作用域中，当然可以在所有的内部嵌套作用域中访问到他们，但这样会破坏前面提到的最小特权原则。因为可能会暴漏更多的变量或函数，而这些东本泵应该是私有的。正确的代码应该是可以组织对这些变量或函数进行访问的。</p>
+<h4 id="这种隐藏函数的行为并不理想"><a href="#这种隐藏函数的行为并不理想" class="headerlink" title="这种隐藏函数的行为并不理想"></a>这种隐藏函数的行为并不理想</h4><p><strong>首先</strong>，必须声明一个具名函数，这意味着具名函数的名称本身“污染”了所在作用域。<br><strong>其次</strong>，必须显示调用函数才能运行其中的代码。<br><span style="color:red">如果函数不需要函数名（或者至少函数名可以不污染所在作用域）并且能够自动执行，这将会更好</span>。</p>
+<h4 id="解决使用函数来隐藏变量出现的问题"><a href="#解决使用函数来隐藏变量出现的问题" class="headerlink" title="解决使用函数来隐藏变量出现的问题"></a>解决使用函数来隐藏变量出现的问题</h4><p>包装函数的声明以<span style="color:red">(function…</span>而不是以function…开始。这样，函数会被当作<strong>函数表达式</strong>而不是一个标准的函数声明来处理。</p>
+<h5 id="函数声明和函数表达式的区别"><a href="#函数声明和函数表达式的区别" class="headerlink" title="函数声明和函数表达式的区别"></a>函数声明和函数表达式的区别</h5><ul>
+<li>最简单区别函数声明和函数表达式的方法是看function是否是声明中第一个词，如果是，就是函数声明，否则就是一个函数表达式。</li>
+<li>最重要的区别是他们的名称标识符将会绑定在何处。   </li>
+</ul>
+<blockquote>
+<p>比较下面两个代码片段。第一个代码片段中foo被绑定在函数表达式自身的函数中。上第二个代码片段中foo被绑定在所在作用域中.<br>换句话说，(function foo(){ ..})作为函数表达式意味着foo只能在..所代表的位置中被访问，尾部作用域则不行。<strong>foo变量名被隐藏在自身中意味着不会非必要地污染外部函数作用域</strong>。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">(<span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(a) <span class="comment">//打印当前作用域 a = 3</span></span><br><span class="line">&#125;)();</span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">//打印外部作用域 a = 2</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(a) <span class="comment">//打印当前作用域 a = 2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line">foo(); <span class="comment">// 忽略函数内部对a的声明，执行对a的赋值操作，a = 2</span></span><br><span class="line"> <span class="built_in">console</span>.log(a) <span class="comment">//a = 2</span></span><br></pre></td></tr></table></figure>
+<h6 id="匿名函数："><a href="#匿名函数：" class="headerlink" title="匿名函数："></a>匿名函数：</h6><p>函数表达式最熟悉的使用就是回调函数。比如</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="comment">//此处是匿名函数</span></span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(a)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>function()就叫做匿名函数表达式，因为function()…没有名称表示符。这样书写起来简单快捷，但也有几个缺点需要考虑。    </p>
+<ol>
+<li>匿名函数在函数调用栈追踪中不会显示出有意义的函数名，调试困难</li>
+<li>没有函数名想引用自身时只能使用arguments.callee，这种方法已经过期</li>
+<li>增加代码可读性的难度。</li>
+</ol>
+<p><strong>始终给函数表达式命名是一个最佳实践。</strong><br> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> <span class="title">Vara</span>(<span class="params"></span>)</span>&#123; <span class="comment">//此处是匿名函数</span></span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(a)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h6 id="立即执行函数表达式IIFE"><a href="#立即执行函数表达式IIFE" class="headerlink" title="立即执行函数表达式IIFE"></a>立即执行函数表达式IIFE</h6><p>上图函数表达式<span style="color: red">(Vara)</span>的使用就是一个IIFE,IIFE也支持具名。上图函数表达式另外一种形式时将调用括号放在包装括号里面。  </p>
+<blockquote>
+<p>(function(){…}())     </p>
+</blockquote>
+<p>IIFE 另一种普遍的进阶形式就是把他们当作函数调用并<span style="color:red">传递参数</span>进去.例如：<br>  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> <span class="title">Vara</span>(<span class="params"><span class="built_in">global</span></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">global</span>.a = <span class="number">2</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(a);</span><br><span class="line">&#125;)(<span class="built_in">window</span>)</span><br></pre></td></tr></table></figure><br>可以从外部作用域传任何东西进去，并将变量命名为任何你觉得合适的名字，这对于改进代码风格是非常有帮助的。</p>
+<h3 id="块作用域"><a href="#块作用域" class="headerlink" title="块作用域"></a>块作用域</h3><p>  块作用域是一个用来对之前的最小授权原则进行扩展的工具，将代码从在函数中隐藏信息扩展为在块中隐藏信息。with关键字也是块作用域的一个例子。<br><strong>在ES6 let和const关键字声明之前，JavaScript没有块作用域的相关功能</strong>。<br>let关键字的引入使变量的附属关系变得清晰</p>
+<h3 id="声明提升"><a href="#声明提升" class="headerlink" title="声明提升"></a>声明提升</h3><p>var 声明变量会提前。<br>函数声明也会提前。<br>函数声明会提升到变量声明前面。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wusiyuan02.github.io/2022/02/14/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F/" data-id="cl1x78176001ovgvcb8d7dj3r" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript/" rel="tag">你不知道的JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/02/14/Array/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          强制类型转换
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/01/24/BOM/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">BOM</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hello-Blog/">Hello Blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue%E6%A1%86%E6%9E%B6/">Vue框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BOM/" rel="tag">BOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript/" rel="tag">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2/" rel="tag">字节二面</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Siyuan Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/RedBookRead" class="mobile-nav-link">红宝书重读</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

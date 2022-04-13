@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>B2 | 追光者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="说实话，字节二面给我的压力远比字节一面的压力大得多。不得不说面试官提的问题太刁钻了！ 反正二面是有很多的知识盲区。面试官问我的好多问题都让我犯难。让我影响最深刻的一点是面试官问我在url输入你博客的网址时，为什么能跳转到对应的网页。还有一个应该是我被面试官问傻了才没回答上来的问题，移动端的适配方案是什么。最后的算法题查找字符串中最大不含重复元素的字符串。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="B2">
+<meta property="og:url" content="https://wusiyuan02.github.io/2022/04/06/B2/index.html">
+<meta property="og:site_name" content="追光者">
+<meta property="og:description" content="说实话，字节二面给我的压力远比字节一面的压力大得多。不得不说面试官提的问题太刁钻了！ 反正二面是有很多的知识盲区。面试官问我的好多问题都让我犯难。让我影响最深刻的一点是面试官问我在url输入你博客的网址时，为什么能跳转到对应的网页。还有一个应该是我被面试官问傻了才没回答上来的问题，移动端的适配方案是什么。最后的算法题查找字符串中最大不含重复元素的字符串。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wusiyuan02.github.io/2022/04/06/B2/Users/%E6%B5%81%E7%81%AB/HelloGithub/source/_posts/B2/2.jpg">
+<meta property="article:published_time" content="2022-04-06T13:04:33.000Z">
+<meta property="article:modified_time" content="2022-04-09T14:46:51.696Z">
+<meta property="article:author" content="Siyuan Wu">
+<meta property="article:tag" content="字节二面">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wusiyuan02.github.io/2022/04/06/B2/Users/%E6%B5%81%E7%81%AB/HelloGithub/source/_posts/B2/2.jpg">
+  
+  
+    <link rel="icon" href="[object Object]">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">
+          追光者
+        </a>
+      </h1>
+      <h2 id="subtitle-wrap">
+        <a href="/" id="subtitle">
+          踮起脚，就能更接近阳光。
+        </a>
+      </h2>
+
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">
+            Home
+          </a>
+          
+          <a class="main-nav-link" href="/archives">
+            Archives
+          </a>
+          
+          <a class="main-nav-link" href="/categories">
+            Category
+          </a>
+          
+          <a class="main-nav-link" href="/tags">
+            Tags
+          </a>
+          
+          <a class="main-nav-link" href="/RedBookRead">
+            红宝书重读
+          </a>
+          
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wusiyuan02.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-B2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/04/06/B2/" class="article-date">
+  <time datetime="2022-04-06T13:04:33.000Z" itemprop="datePublished">2022-04-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      B2
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>说实话，字节二面给我的压力远比字节一面的压力大得多。不得不说面试官提的问题太刁钻了！</p>
+<p>反正二面是有很多的知识盲区。面试官问我的好多问题都让我犯难。让我影响最深刻的一点是面试官问我在url输入你博客的网址时，为什么能跳转到对应的网页。还有一个应该是我被面试官问傻了才没回答上来的问题，移动端的适配方案是什么。最后的算法题查找字符串中最大不含重复元素的字符串。</p>
+<span id="more"></span>
+
+<p>上面两个问题稍后会总结。现在写说一下那个查找字符串中最大不含重复元素的字符串的算法。</p>
+<h1 id="字符串中最大不含重复元素的字符串"><a href="#字符串中最大不含重复元素的字符串" class="headerlink" title="字符串中最大不含重复元素的字符串"></a>字符串中最大不含重复元素的字符串</h1><p>这一题都做了两三遍了还是没想起来啊！</p>
+<p>题目是这样的：给定一个字符串 <code>s</code> ，请你找出其中不含有重复字符的 <strong>最长子串</strong> 的长度。</p>
+<p>这一题先提供一个动态规划解法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> lengthOfLongestSubstring = <span class="function"><span class="keyword">function</span> (<span class="params">s</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(s == <span class="string">&#x27;&#x27;</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> pre = <span class="number">1</span>,max = <span class="number">1</span>,cur; </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>;i &lt; s.length ;i++)&#123;</span><br><span class="line">        <span class="keyword">let</span> index = s.indexOf(s.charAt(i),i - pre);</span><br><span class="line">        <span class="keyword">if</span>( index == i)&#123;</span><br><span class="line">            cur = pre + <span class="number">1</span>;</span><br><span class="line">            pre = cur;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            cur = i - index;</span><br><span class="line">            pre = cur;</span><br><span class="line">        &#125;</span><br><span class="line">        max = <span class="built_in">Math</span>.max(max, cur);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> max;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>大概解释一下，dp[i] 是以字符串中第i个元素结尾的最长不含重复元素的字符串。那么我们可以查询在最长的不含重复元素的字符串中，是否有s[i + 1]这个元素.</p>
+<p>如果有，dp[i + 1] =  重复元素 到 第i+1元素 之间的个数。</p>
+<p>如果没有，dp[i + 1] = dp[i] + 1;</p>
+<p>下面再提供一个滑动窗口的解法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> lengthOfLongestSubstring = <span class="function"><span class="keyword">function</span> (<span class="params">s</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">    <span class="keyword">let</span> res = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>,j = <span class="number">0</span>;i &lt; s.length;i++)&#123;</span><br><span class="line">        <span class="keyword">while</span>(set.has(s.charAt(i)))&#123; <span class="comment">//滑动窗口！删除set的元素直到没有s.charAt(i)这个样子！</span></span><br><span class="line">            set.delete(s.charAt(j++));</span><br><span class="line">        &#125;</span><br><span class="line">        set.add(s.charAt(i));</span><br><span class="line">        res = <span class="built_in">Math</span>.max(res,set.size);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这借助了set这一数据结构，大致意思就是如果set中有重复的元素，那我就把set中重复元素之前的元素删去，代码中通过初始化 j = 0 来做到这一步，这样一想，直到set中没有重复元素的时候，我就可以把这个元素加上去。而遍历一遍字符串之后，j起始也基本遍历了一遍。</p>
+<p>不得不说这一题没做出来真的好可惜。字节的二面应该就这样b掉了。</p>
+<p>事情发生了转变！！！二面没b掉，难道是因为二面我太能扯了嘛！不得不说有社交牛逼症就是好！</p>
+<h1 id="hexo-githubPages-生成博客的原理"><a href="#hexo-githubPages-生成博客的原理" class="headerlink" title="hexo + githubPages 生成博客的原理"></a>hexo + githubPages 生成博客的原理</h1><p>Hexo+ GithubPages 搭建的博客本质是一个web网站。web网站有静态和动态区分，静态网站是指用户和web页面不能做一些交互，动态网站允许用户和网站做一些交互。博客网站类似于一个静态网站。也就是说输入博客的url：<a href="https://wusiyuan02.github.io/">wusiyuan02.github.io</a>，就会进入正常的输入url解析的过程。</p>
+<p>贴一个帖子，这块讲的很好！<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000022490303">彻底搞懂如何使用Hexo + GitHubPages搭建个人博客 - SegmentFault 思否</a></p>
+<h2 id="github-Pages"><a href="#github-Pages" class="headerlink" title="github Pages"></a>github Pages</h2><p>github 自己用的很少，所以对github的了解也就很少，github 在我看来可能就是一个代码管理平台？马上就得熟悉一下github这东西。先了解一下pages服务吧~</p>
+<p><strong>GitHub Pages</strong>是GitHub公司提供的免费静态网站托管服务。<strong>GitHub Pages</strong>严格意义上来说并不是一个服务器，只是可以提供类似服务器功能的一种服务。当我们把HTML等资源文件存放到GitHub指定的位置时，也就是一个<strong>GitHub Pages仓库</strong>下，<strong>GitHub Pages服务</strong>会对这些文件进行处理并把它展示为一个网站。所以说可以<strong>将GitHub Pages提供的功能替代Web服务器的功能</strong>。我们只需要把编写好的HTML等资源文件存到<strong>GitHub指定的位置</strong>，那么就实现了类似的Web服务器的功能，可以响应请求，并把相应的资源文件发送给客户端。</p>
+<h2 id="hexo原理"><a href="#hexo原理" class="headerlink" title="hexo原理"></a>hexo原理</h2><p>主要应该了解的是hexo生成静态文件的原理。</p>
+<p>hexo 使用markdown 解析文件，根据主题生成静态网页。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">├── node_modules      # 依赖包-安装插件及所需nodejs模块。</span><br><span class="line">├── public            # 最终网页信息。即存放被解析markdown、html文件。</span><br><span class="line">├── scaffolds         # 模板文件夹。即当您新建文章时，根据 scaffold生成文件。</span><br><span class="line">├── source            # 资源文件夹。即存放用户资源。</span><br><span class="line">|   └── _posts        # 博客文章目录。</span><br><span class="line">└── themes            # 存放主题。Hexo根据主题生成静态页面。</span><br><span class="line">├── _config.yml       # 网站的配置信息。标题、网站名称等。</span><br><span class="line">├── db.json           # source解析所得到的缓存文件。</span><br><span class="line">├── package.json      # 应用程序信息。即配置Hexo运行需要js包。</span><br></pre></td></tr></table></figure>
+
+<p>这是hexo文件的架构，很显然，我们写的.md文件是存放在source里面的。</p>
+<p>每次部署的流程有</p>
+<p>1、 hexo g 生成静态文件。将我们的md文件和theme主题中的界面模板结合生成静态文件。hexo g会遍历主题文件中的source 目录，获取静态资源，然后<strong>建立索引</strong>，根据索引生成由html、css、js、img建立的纯静态文件然后放到public文件夹中。</p>
+<p>2、hexo d 部署文件。根据_config.yml 配置的git仓库将public文件通过git方法push到github上。</p>
+<p>3、然后就可以根据pages 服务呈现页面了。</p>
+<h3 id="模板引擎"><a href="#模板引擎" class="headerlink" title="模板引擎"></a>模板引擎</h3><p>模板引擎的作用是将界面与数据分离。hexo 的默认主题使用ejs渲染模板。最简单的原理是将模板内容中指定的地方替换成数据。实现业务代码和逻辑代码分离。</p>
+<p>hexo 首先解析md文件，然后根据layout变量判断布局类型，再调用相应布局文件，如此这番每一块内容都是独立的。最终生成一个html页面。</p>
+<p>layout 中的文件架构为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">├── _partial</span><br><span class="line">├── _widget</span><br><span class="line">├── archive.ejs</span><br><span class="line">├── category.ejs</span><br><span class="line">├── index.ejs</span><br><span class="line">├── layout.ejs</span><br><span class="line">├── page.ejs</span><br><span class="line">├── post.ejs</span><br><span class="line">├──tag.ejs</span><br></pre></td></tr></table></figure>
+
+
+
+<p>模板可以自定义。也就是ejs可以修改。等过了这段时间我就打算修改模板，写一个自用主题的博客。</p>
+<h2 id="数据填充"><a href="#数据填充" class="headerlink" title="数据填充"></a>数据填充</h2><p>就是把数据传递给ejs模板中，然后再由ejs模板填充到HTML中。</p>
+<h1 id="移动端的适配方案"><a href="#移动端的适配方案" class="headerlink" title="移动端的适配方案"></a>移动端的适配方案</h1><p>下面来补充一下移动端的适配方案！</p>
+<p>移动端的适配目的是为了让不同屏幕大小的终端设备拥有一致的UI页面。和这方面息息相关的就是viewport，meta标签中的name属性的一个值。</p>
+<h2 id="viewport"><a href="#viewport" class="headerlink" title="viewport"></a>viewport</h2><p>viewport叫做视口，也可以叫做视窗。在vscode快捷生成html模板的时候都会有一句：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width,initial-scale=1.0&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>就是说，移动端为了让页面能更好的展示内容，视口的宽度默认为设备的宽度。视窗有三个概念：布局视窗，视觉视窗，理想视窗。</p>
+<ul>
+<li><p>布局视窗（layout viewport）：浏览器中css布局的区域，如果不加上面那一HTML语句，不同设备不同浏览器的默认值不同，大多数都默认为980px。此时浏览器默认的把页面缩小了。此时的缩放值为理想视窗 / 布局视窗。</p>
+<ul>
+<li>网页中的所有内容，可以通过<strong>document.documentElement.clientWidth</strong>来获取。</li>
+</ul>
+</li>
+<li><p>视觉视窗（visual viewport）：设备显示网页的窗口，可以拖动或者放大缩小网页。</p>
+<ul>
+<li>可以通过<strong>window.innerWidth</strong>来获取。</li>
+</ul>
+</li>
+<li><p>理想视窗（ideal viewport）：当前设备展示给用户内容的页面的窗口。</p>
+</li>
+</ul>
+<p><strong>我们想要达成的适配的效果，是再没有特殊布局要求下，让布局视窗和理想视窗达成一致</strong>。</p>
+<p>再说一下content里面的属性：</p>
+<ol>
+<li><p>width:    定义视口的宽度，取值可以为device-width或者正整数。</p>
+</li>
+<li><p>height：定义视口的高度，取值可以为device-height或者正整数。</p>
+</li>
+<li><p>initial-scale：初始化缩放值。取值为小数或者整数。</p>
+</li>
+<li><p> maxinum-scale：最大缩放值，整数或者小数。</p>
+</li>
+<li><p>mininum-scale：最小缩放值，整数或者小数。</p>
+</li>
+<li><p>user-scalable：定义用户是否可以缩放，yes / no。</p>
+</li>
+</ol>
+<p>缩放值 = 理想视窗 / 视觉视窗</p>
+<p>当我们设置缩放比为0.5时，在iphone6/7/8中，通过window.innerWidth 得750，即视觉视窗就为750px，此时理想视窗为375px，而理想视窗是不变化的，理想视窗和设备有关，所以公式应该改成下面这样：</p>
+<p>视觉视窗 = 理想视窗 / 缩放值</p>
+<p><strong>举个例子</strong>，当设置：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width,initial-scale=0.5&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>当我画一条20px宽，200px长的线，在移动端会显示这样：</p>
+<img src="/2022/04/06/B2/Users/%E6%B5%81%E7%81%AB/HelloGithub/source/_posts/B2/2.jpg">
+
+<p>显然在屏幕中，我画的线效果远没有200px长，20px宽。应该只有100px长，10px宽，当然这一块应该时移动端视口缩放的问题。所以下面一个小节画一个0.5px的线就可以让1px缩放0.5。</p>
+<p>此时视觉视窗 = 375 / 0.5 = 750px，咱们的布局也就是相对于视觉视窗布局的。</p>
+<p><span style="color:red">注意，这种计算公式只在移动端有效！</span></p>
+<h2 id="移动端的适配方案-1"><a href="#移动端的适配方案-1" class="headerlink" title="移动端的适配方案"></a>移动端的适配方案</h2><h3 id="rem"><a href="#rem" class="headerlink" title="rem"></a>rem</h3><p>以HTML的font-size为参考，修改HTML元素的字体大小可以成比例的调整以rem为单位的属性。</p>
+<p>在移动端浏览器 布局中，rem 布局是解决移动端适配的主流方案。</p>
+<p>配合媒体查询检测不同的屏幕尺寸设置不同的HTML元素的font-size属性。</p>
+<p>使用vscode写rem时，提供了一个postcss pxtorem 可以将px转换成rem。</p>
+<h3 id="em"><a href="#em" class="headerlink" title="em"></a>em</h3><p>以父元素的font-size为参考，主要缺点是父元素的font-size难以确定。</p>
+<h3 id="vw-vh"><a href="#vw-vh" class="headerlink" title="vw/vh"></a>vw/vh</h3><p>vw和vh是针对于理想视口的。将理想视口的width和height分成100份，1vw/vh 就是理想视口的百分之一。</p>
+<h3 id="百分比布局"><a href="#百分比布局" class="headerlink" title="百分比布局"></a>百分比布局</h3><p>给宽和高设一百分比，缺点是元素嵌套比较深的时候会出现问题。而且一些元素的百分比参照不同，增加开发的难度。</p>
+<p>常见的百分比参考</p>
+<ol>
+<li>子元素的width、margin、padding参考父元素的width</li>
+<li>子元素的height参考父元素的height</li>
+<li>子元素的transform、border-radius参考自身。</li>
+</ol>
+<h3 id="响应式布局"><a href="#响应式布局" class="headerlink" title="响应式布局"></a>响应式布局</h3><p>通过媒体查询，针对不同的屏幕进行单独的设置，但针对所有的屏幕做适配显然是不合理，只能做简单的适配。</p>
+<h2 id="px"><a href="#px" class="headerlink" title="px"></a>px</h2><h2 id="画一条0-5px的线"><a href="#画一条0-5px的线" class="headerlink" title="画一条0.5px的线"></a>画一条0.5px的线</h2><p>第一种方法就是transform:scaleY(0.5); 缩小1px的线为0.5px。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.lines</span> &#123;</span><br><span class="line">	<span class="attribute">height</span>: <span class="number">1px</span>;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">scaleY</span>(<span class="number">0.5</span>);</span><br><span class="line">    transfrom-origin: <span class="number">50%</span> <span class="number">100%</span>; // 改变元素变形的原点</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>第二种方法是线性渐变linear-gradient，可以这样写 </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.lines</span> &#123;</span><br><span class="line">	<span class="attribute">height</span>: <span class="number">1px</span>;</span><br><span class="line">    <span class="attribute">background</span>: <span class="built_in">linear-gradient</span>(<span class="number">0deg</span>, <span class="number">#fff</span>, <span class="number">#000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第三种方法是box-shadow:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.lines</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">1px</span>;</span><br><span class="line">    <span class="attribute">background</span>: none;</span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0.5px</span> <span class="number">0</span> <span class="number">#000</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wusiyuan02.github.io/2022/04/06/B2/" data-id="cl1x781690009vgvc1qpu7ucd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2/" rel="tag">字节二面</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/04/08/%E6%9C%80%E9%95%BF%E6%9C%89%E6%95%88%E6%8B%AC%E5%8F%B7/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          最长有效括号
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/03/29/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">排序算法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hello-Blog/">Hello Blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue%E6%A1%86%E6%9E%B6/">Vue框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BOM/" rel="tag">BOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript/" rel="tag">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2/" rel="tag">字节二面</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Siyuan Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/RedBookRead" class="mobile-nav-link">红宝书重读</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
