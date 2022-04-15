@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>JavaScript重读（4） | 追光者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="第一次学习迭代器与生成器这一章的时候对迭代器的概念很不理解，就这样稀里糊涂的学过去了。从现在接触js四个月时间后，再让我谈论起迭代器，我会认为迭代器是对引用数据类型定义的一种有序遍历的规则。 有默认遍历功能的数据类型都有默认的迭代器，Array，Map，Set…因为Object没有默认的迭代器功能，所以object就不能对其中属性进行迭代。当然，我们可以为object写一个迭代器实现他遍历的功能。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="JavaScript重读（4）">
+<meta property="og:url" content="https://wusiyuan02.github.io/RedBookRead/7.html">
+<meta property="og:site_name" content="追光者">
+<meta property="og:description" content="第一次学习迭代器与生成器这一章的时候对迭代器的概念很不理解，就这样稀里糊涂的学过去了。从现在接触js四个月时间后，再让我谈论起迭代器，我会认为迭代器是对引用数据类型定义的一种有序遍历的规则。 有默认遍历功能的数据类型都有默认的迭代器，Array，Map，Set…因为Object没有默认的迭代器功能，所以object就不能对其中属性进行迭代。当然，我们可以为object写一个迭代器实现他遍历的功能。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/7/iterator.jpg">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/7/Iterator2.jpg">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/7/Iterator3.jpg">
+<meta property="article:published_time" content="2022-04-15T14:31:11.000Z">
+<meta property="article:modified_time" content="2022-04-15T15:47:30.207Z">
+<meta property="article:author" content="Siyuan Wu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wusiyuan02.github.io/RedBookRead/7/iterator.jpg">
+  
+  
+    <link rel="icon" href="[object Object]">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">
+          追光者
+        </a>
+      </h1>
+      <h2 id="subtitle-wrap">
+        <a href="/" id="subtitle">
+          踮起脚，就能更接近阳光。
+        </a>
+      </h2>
+
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">
+            Home
+          </a>
+          
+          <a class="main-nav-link" href="/archives">
+            Archives
+          </a>
+          
+          <a class="main-nav-link" href="/categories">
+            Category
+          </a>
+          
+          <a class="main-nav-link" href="/tags">
+            Tags
+          </a>
+          
+          <a class="main-nav-link" href="/RedBookRead">
+            红宝书重读
+          </a>
+          
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wusiyuan02.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/RedBookRead/7.html" class="article-date">
+  <time datetime="2022-04-15T14:31:11.000Z" itemprop="datePublished">2022-04-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JavaScript重读（4）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>第一次学习迭代器与生成器这一章的时候对迭代器的概念很不理解，就这样稀里糊涂的学过去了。从现在接触js四个月时间后，再让我谈论起迭代器，我会认为迭代器是<strong>对引用数据类型定义的一种有序遍历的规则</strong>。</p>
+<p>有默认遍历功能的数据类型都有默认的迭代器，Array，Map，Set…因为Object没有默认的迭代器功能，所以object就不能对其中属性进行迭代。当然，我们可以为object写一个迭代器实现他遍历的功能。这个自己实现的迭代器具有更强大的功能性，这应该也是为什么jECMAScript不给object添加默认迭代器的原因。</p>
+<p>下面就来学习一下迭代器的概念！</p>
+<h1 id="数组中的迭代"><a href="#数组中的迭代" class="headerlink" title="数组中的迭代"></a>数组中的迭代</h1><p>在其他语言中，我们对数组进行遍历应该会这样写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int arr[<span class="number">5</span>] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; arr.length; i++)&#123;</span><br><span class="line">    <span class="comment">// code...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>根据这串代码，我们能得知<strong>每次循环之后我们都可以知道下一个循环的元素是否存在和其value</strong>。</p>
+<p>下面是js语言的写法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>;i &lt; arr.length; i++)&#123;</span><br><span class="line">    <span class="comment">// code...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>虽然和上述代码也没多大区别，但是ES6为迭代器提供了一个方便的写法letof，这种写法默认调用迭代器。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">of</span> arr)&#123;</span><br><span class="line">    <span class="comment">// code...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这串代码可以和上一串实现相同的效果。所以，是不是就可以说迭代器就是在每次循环之后为我们提供下一个循环的元素？</p>
+<p>其实到这里迭代的意义我觉得了解就差不多了。下面就要学习迭代器模式了。</p>
+<h1 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h1><p>JavaScript在ES6支持了迭代器模式，目的应该是为了让迭代这个方法更具有特定的功能性。如上面数组的迭代器那样默认的迭代方式不免太死板。</p>
+<p>JavaScript高级程序设计第四版184页中说到：迭代器模式描述了一个方案，可以把有些结构（其实就是特定的数据类型）称为”可迭代对象“，因为他们实现了正式的Iterable接口，而且可以通过迭代器Interator消费。</p>
+<p>英语翻译过来有点绕，用我的描述是：<strong>一些对象实现了格式正确的Iterable接口，而且可以通过迭代器Iterator调用，这些对象就是可迭代的</strong>。</p>
+<p>实现able接口的对象在调用迭代的时候，就会生成<strong>迭代器对象</strong>。迭代器对象是一次性对象，调用完成后会立刻删除。每个迭代器对象会关联一个<strong>可迭代对象</strong>。迭代器模式将迭代器对象（Iterator）和可迭代对象分离，迭代器会暴露迭代其相关可迭代对象的API。<strong>迭代器无须了解与其相关的可迭代对象的结构</strong>。迭代器只需要知道如何取得连续的值。而这个连续取得的值是由Iterable接口实现的。这就是迭代器模式的强大之处。</p>
+<p>那现在其实我们只需要实现一个可迭代对象就可以了吧。换句话说，我们只需要实现一个带有able接口的对象就可以了。当我们调用Iterable接口的时候，就会自动生成迭代器对象。</p>
+<p>那迭代器对象应该是什么形式的调用呢？每次迭代之后都应该由能力判断是否进行下一次迭代。正如我们之前写的那串代码一样，我们对i进行限制，i &lt; arr.length，我们每次迭代返回的迭代器对象应该也可以暗示是否有下一次迭代。</p>
+<p>下面就是要来实现Interable接口和迭代器对象的格式了。</p>
+<h1 id="实现Iterable接口和迭代器对象"><a href="#实现Iterable接口和迭代器对象" class="headerlink" title="实现Iterable接口和迭代器对象"></a>实现Iterable接口和迭代器对象</h1><h2 id="可迭代协议"><a href="#可迭代协议" class="headerlink" title="可迭代协议"></a>可迭代协议</h2><p>JavaScript高级程序设计第四版184页中说到：实现Iterable接口（可迭代协议）要求同时具备两种能力：支持迭代的自我识别能力和创建实现Iterator接口的对象的能力。在ECMAScript中，这意味着必须要暴露一个属性作为”默认迭代器“，而这个属性必须使用特殊的Symbol.iterator作为键。</p>
+<p>到这里，我知道了想实现迭代器，就要写一个以[Symbol.iterator]为函数名的函数。</p>
+<h2 id="迭代器协议"><a href="#迭代器协议" class="headerlink" title="迭代器协议"></a>迭代器协议</h2><p>迭代器是一种一次性使用的对象，用于迭代预期关联的可迭代对象。迭代器API使用next()方法在可迭代对象中遍历数据。每次成功调用next()，就会返回一个迭代器对象。其中包含返回值与是否可以下次调用的标识。</p>
+<h2 id="理解Array的迭代器"><a href="#理解Array的迭代器" class="headerlink" title="理解Array的迭代器"></a>理解Array的迭代器</h2><p>到这里，想实现一个迭代功能就得有以[Symbol.iterator]为函数名的API接口，next()方法提供迭代器对象。</p>
+<p>下面来了解Array的[Symbol.iterator]和next方法都返回了什么！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"><span class="keyword">const</span> arrInterator = arr[<span class="built_in">Symbol</span>.iterator](); <span class="comment">// 调用接口，这个时候应该会返回一个迭代器对象。</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(arrInterator);        <span class="comment">// Array Iterator()</span></span><br><span class="line"><span class="comment">// 调用next()方法，返回下一个迭代器对象。</span></span><br><span class="line"><span class="built_in">console</span>.log(arrInterator.next()); <span class="comment">// &#123;value: 1, done: false&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(arrInterator.next()); <span class="comment">// &#123;value: 2, done: false&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(arrInterator.next()); <span class="comment">// &#123;value: 3, done: false&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(arrInterator.next()); <span class="comment">// &#123;value: 4, done: false&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(arrInterator.next()); <span class="comment">// &#123;value: 5, done: false&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(arrInterator.next()); <span class="comment">// &#123;value: undefined, done: true&#125;</span></span><br><span class="line"><span class="comment">// 当done为true时，继续调用next()方法只会返回同样的值。</span></span><br><span class="line"><span class="built_in">console</span>.log(arrInterator.next()); <span class="comment">// &#123;value: undefined, done: true&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>上述代码没有讲到的一点时，迭代器对象不会和可迭代对象某一时刻的状态进行关联。也就是说，可迭代对象更新后，迭代器对象会自动更新。</p>
+<h2 id="自定义迭代器"><a href="#自定义迭代器" class="headerlink" title="自定义迭代器"></a>自定义迭代器</h2><p>下面会使用迭代器模式来实现一个计数器。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">limit</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.limit = limit;</span><br><span class="line">        <span class="built_in">this</span>.count = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    [<span class="built_in">Symbol</span>.iterator]()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="function"><span class="title">next</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">this</span>.count &lt;= <span class="built_in">this</span>.limit)&#123;</span><br><span class="line">            <span class="keyword">return</span> &#123;<span class="attr">value</span>: <span class="built_in">this</span>.count++, done: <span class="literal">false</span>&#125;;</span><br><span class="line">            </span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">             <span class="keyword">return</span> &#123;<span class="attr">value</span>: <span class="built_in">this</span>.count, <span class="attr">done</span>: <span class="literal">true</span>&#125;;</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/RedBookRead/7/iterator.jpg">
+
+<p>这串代码有个缺点，就是每次实例只能被迭代一次。换句话说就是每个实例只能创建一个迭代器，为了能让一个可迭代对象创建多个迭代器，必须每创建一个迭代器就对应一个实例。而我们调用[Symbol.iterable]之后，只需要有一个next方法就可以进行迭代了。所以下面我们使用闭包将代码改成：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">limit</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.limit = limit;</span><br><span class="line">        <span class="built_in">this</span>.count = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    [<span class="built_in">Symbol</span>.iterator]()&#123;</span><br><span class="line">        <span class="keyword">let</span> count = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">let</span> limit = <span class="built_in">this</span>.limit;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="function"><span class="title">next</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      		    <span class="keyword">if</span>(count &lt;= limit)&#123;</span><br><span class="line">         	 	    <span class="keyword">return</span> &#123;<span class="attr">value</span>: count++, done: <span class="literal">false</span>&#125;;</span><br><span class="line">       		    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                	<span class="keyword">return</span> &#123;<span class="attr">value</span>: count, <span class="attr">done</span>: <span class="literal">true</span>&#125;;</span><br><span class="line">       			&#125;</span><br><span class="line">	       &#125; </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果如下图展示：</p>
+<img src="/RedBookRead/7/Iterator2.jpg">
+
+<p>但是还存在一个问题，无法提前终止迭代器，原因时没有写指定迭代器提前关闭时执行的逻辑。</p>
+<p>在返回的迭代器对象中写一个return()方法即可。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">limit</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.limit = limit;</span><br><span class="line">        <span class="built_in">this</span>.count = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    [<span class="built_in">Symbol</span>.iterator]()&#123;</span><br><span class="line">        <span class="keyword">let</span> count = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">let</span> limit = <span class="built_in">this</span>.limit;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="function"><span class="title">next</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      		    <span class="keyword">if</span>(count &lt;= limit)&#123;</span><br><span class="line">         	 	    <span class="keyword">return</span> &#123;<span class="attr">value</span>: count++, done: <span class="literal">false</span>&#125;;</span><br><span class="line">       		    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                	<span class="keyword">return</span> &#123;<span class="attr">value</span>: count, <span class="attr">done</span>: <span class="literal">true</span>&#125;;</span><br><span class="line">       			&#125;</span><br><span class="line">	        &#125;,</span><br><span class="line">            <span class="keyword">return</span>()&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">&quot;Exiting early!&quot;</span>)</span><br><span class="line">            	<span class="keyword">return</span> &#123;<span class="attr">value</span>: count, <span class="attr">done</span>: <span class="literal">true</span>&#125;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/RedBookRead/7/Iterator3.jpg">
+
+<p>到这里一个基本的迭代器功能实现完成了。明天再学学生成器吧。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wusiyuan02.github.io/RedBookRead/7.html" data-id="cl20lti9y0000mkvc5y90e5xm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hello-Blog/">Hello Blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue%E6%A1%86%E6%9E%B6/">Vue框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BOM/" rel="tag">BOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript/" rel="tag">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2/" rel="tag">字节二面</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Siyuan Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/RedBookRead" class="mobile-nav-link">红宝书重读</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
