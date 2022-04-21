@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>JavaScript重读（8） | 追光者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在JavaScript重读（4） | 追光者 (wusiyuan02.github.io)中随口说明了Global对象，浏览器中的Global对象其实就是BOM（浏览器对象模型），也就是window对象。但是window对象不仅有ES中的Global对象一个身份，其还是浏览器窗口的JavaScript接口。 全局作用域在全局作用域中使用var声明变量或者使用function声明函数，可以通过win">
+<meta property="og:type" content="website">
+<meta property="og:title" content="JavaScript重读（8）">
+<meta property="og:url" content="https://wusiyuan02.github.io/RedBookRead/12.html">
+<meta property="og:site_name" content="追光者">
+<meta property="og:description" content="在JavaScript重读（4） | 追光者 (wusiyuan02.github.io)中随口说明了Global对象，浏览器中的Global对象其实就是BOM（浏览器对象模型），也就是window对象。但是window对象不仅有ES中的Global对象一个身份，其还是浏览器窗口的JavaScript接口。 全局作用域在全局作用域中使用var声明变量或者使用function声明函数，可以通过win">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/window1.jpg">
+<meta property="article:published_time" content="2022-04-21T12:42:18.000Z">
+<meta property="article:modified_time" content="2022-04-21T15:58:00.531Z">
+<meta property="article:author" content="Siyuan Wu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wusiyuan02.github.io/RedBookRead/window1.jpg">
+  
+  
+    <link rel="icon" href="[object Object]">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">
+          追光者
+        </a>
+      </h1>
+      <h2 id="subtitle-wrap">
+        <a href="/" id="subtitle">
+          踮起脚，就能更接近阳光。
+        </a>
+      </h2>
+
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">
+            Home
+          </a>
+          
+          <a class="main-nav-link" href="/archives">
+            Archives
+          </a>
+          
+          <a class="main-nav-link" href="/categories">
+            Category
+          </a>
+          
+          <a class="main-nav-link" href="/tags">
+            Tags
+          </a>
+          
+          <a class="main-nav-link" href="/RedBookRead">
+            红宝书重读
+          </a>
+          
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wusiyuan02.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/RedBookRead/12.html" class="article-date">
+  <time datetime="2022-04-21T12:42:18.000Z" itemprop="datePublished">2022-04-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JavaScript重读（8）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在<a href="https://wusiyuan02.github.io/RedBookRead/56.html">JavaScript重读（4） | 追光者 (wusiyuan02.github.io)</a>中随口说明了Global对象，浏览器中的Global对象其实就是BOM（浏览器对象模型），也就是window对象。但是window对象不仅有ES中的Global对象一个身份，其还是浏览器窗口的JavaScript接口。</p>
+<h1 id="全局作用域"><a href="#全局作用域" class="headerlink" title="全局作用域"></a>全局作用域</h1><p>在全局作用域中使用var声明变量或者使用function声明函数，可以通过window.来直接调用。</p>
+<h1 id="窗口"><a href="#窗口" class="headerlink" title="窗口"></a>窗口</h1><p>window对象上的top对象始终指向最上层的窗口，即浏览器窗口本身。parent对象始终指向当前窗口的父窗口。还有一个self对象，始终指向window。之所以暴露self对象，是为了和top、parent保持一致。</p>
+<h2 id="窗口位置与像素比"><a href="#窗口位置与像素比" class="headerlink" title="窗口位置与像素比"></a>窗口位置与像素比</h2><p>两个方法，window.moveTo，window.moveBy，蛮小丑的是，这两方法好像被google和firefox禁用了？？所以试验一下啥效果也看不出来。</p>
+<p>关于像素比，就是物理像素和逻辑像素之间的关系，没啥好说头。</p>
+<h2 id="视口大小"><a href="#视口大小" class="headerlink" title="视口大小"></a>视口大小</h2><p>innerWidth，innerHeight，outerWidth，outerHeight这四个属性，其中outer返回浏览器窗口自身大小。inner返回浏览器窗口中页面视口的大小。</p>
+<p>document.documentElement.clientWidth，documnet.documentElement.clientHeight返回页面视口的宽度和高度。</p>
+<img src="/RedBookRead/window1.jpg">
+
+<p>如上面图片，window.innerWidth为1200，window.innerHeight为400，window.outerWidth为1216，window.outerHeight为1000。可见，inner是视口大小，outer是窗口大小。至于document.documentElement.clientWidth和document.documentElement.clientHeight也是窗口的大小。其实，document是window对应的DOM对象。</p>
+<h2 id="导航与打开新窗口"><a href="#导航与打开新窗口" class="headerlink" title="导航与打开新窗口"></a>导航与打开新窗口</h2><p>window.open可以导航到指定URL，也可以用来打开新的浏览器窗口。</p>
+<p>window.open可以接受四个参数，要加载的URL，目标窗口，特性字符串和表示新窗口在浏览器历史记录种是否替代当前加载页的布尔值。</p>
+<p>如果没有目标窗口，则创建一个新的窗口，为其命名。</p>
+<p>特性字符串用来指定新窗口的配置。基本就这样，具体细节我感觉不重要。</p>
+<p>window.close只能关闭window.open()创建的窗口。</p>
+<h2 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h2><p>setTimeout(callback, delay[, arg1, arg2])</p>
+<p>setInterval(callback, delay[, arg1, arg2])</p>
+<p>这两个方法是在delay之后将callback送入事件队列中。在调用这两个方法时就会返回一个序号。</p>
+<p>clearTimeout(id), clearInterval(id)</p>
+<h2 id="弹框"><a href="#弹框" class="headerlink" title="弹框"></a>弹框</h2><h3 id="alert"><a href="#alert" class="headerlink" title="alert"></a>alert</h3><p>警告框</p>
+<h3 id="confirm"><a href="#confirm" class="headerlink" title="confirm"></a>confirm</h3><p>确认框，确认框有两个按钮，点击OK返回true。点击Cancel或者X关闭确认框返回false。</p>
+<h3 id="promt"><a href="#promt" class="headerlink" title="promt"></a>promt</h3><p>对话框，promt(strQuestion, strAnswer)；接受第二个参数为第一个参数问题默认的结果。</p>
+<p>对话框有两个按钮，点击OK返回字符串。点击Cancel或者X关闭确认框返回null。</p>
+<h3 id="print"><a href="#print" class="headerlink" title="print"></a>print</h3><p>显示打印对话框</p>
+<p>使用方法：window.print()</p>
+<h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><p>这东西没有调用出来，也不知道是干嘛的。。。先码住！</p>
+<h2 id="location对象"><a href="#location对象" class="headerlink" title="location对象"></a>location对象</h2><p>这个对象是最有用的BOM对象之一，提供了当前窗口中加载文档的信息以及通用的导航功能。</p>
+<p>下面是浏览器当前加载的URL是”http://foouser:barpassword@www.wrox.com:80/WileyCDA/?q=javascript#contents”。</p>
+<table>
+<thead>
+<tr>
+<th align="center">属性</th>
+<th align="center">值</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">location.href</td>
+<td align="center">‘http://www.wrox.com:80/WileyCDA/?q=javascript#contents’</td>
+<td align="center">完整的URL</td>
+</tr>
+<tr>
+<td align="center">location.origin</td>
+<td align="center">‘http://www.wrox.com’</td>
+<td align="center">URL的源地址。只读</td>
+</tr>
+<tr>
+<td align="center">location.search</td>
+<td align="center">‘?q=javascript’</td>
+<td align="center">查询字符串</td>
+</tr>
+<tr>
+<td align="center">location.protocol</td>
+<td align="center">‘http:’</td>
+<td align="center">协议号</td>
+</tr>
+<tr>
+<td align="center">location.host</td>
+<td align="center">‘www.wrox.com:80’</td>
+<td align="center">域名加端口号</td>
+</tr>
+<tr>
+<td align="center">location.hostname</td>
+<td align="center">‘www.wrox.com’</td>
+<td align="center">域名</td>
+</tr>
+<tr>
+<td align="center">location.port</td>
+<td align="center">‘80’</td>
+<td align="center">端口号</td>
+</tr>
+<tr>
+<td align="center">location.hash</td>
+<td align="center">‘#contents’</td>
+<td align="center">URL的散列值，没有的话为空字符串</td>
+</tr>
+<tr>
+<td align="center">location.username</td>
+<td align="center">‘foouser’</td>
+<td align="center">域名前指定的用户名</td>
+</tr>
+<tr>
+<td align="center">location.password</td>
+<td align="center">‘barpassword’</td>
+<td align="center">域名前指定的密码</td>
+</tr>
+</tbody></table>
+<p>URLSearchParams提供一组API，可以检查和修改查询字符串。</p>
+<p>主要的方法有has，set，get。在部分浏览器中，URLSearchParams也可作为迭代器。</p>
+<p>location可以用作修改浏览器地址。有一种跨域方式就是利用location来跨域。</p>
+<p>有三种方法可以直接修改浏览器地址，但是会添加历史记录。</p>
+<ul>
+<li>location.assgin(newURL) 如果url没有协议后，会在端口号后面更新url。</li>
+<li>window.location = newURL</li>
+<li>location.href = newURL</li>
+</ul>
+<p>这三种方法修改浏览器地址会修改浏览器的历史记录。如果不希望增加历史记录，使用location.replace(newURL)。</p>
+<h2 id="navigator对象"><a href="#navigator对象" class="headerlink" title="navigator对象"></a>navigator对象</h2><p>客户端标识浏览器的标准，主要是在第十三章。</p>
+<h2 id="screen对象"><a href="#screen对象" class="headerlink" title="screen对象"></a>screen对象</h2><p>很少用，跳过~</p>
+<h2 id="history对象"><a href="#history对象" class="headerlink" title="history对象"></a>history对象</h2><p>go方法，接受数字的话表示浏览器在用户历史记录中前进或者后退多少步。接受字符串的话导航到历史记录中最近的href页面。</p>
+<p>back() == go(-1) </p>
+<p>forward() == go(1)</p>
+<p>基本结束了。感觉BOM这玩意憨批的很。好些方法浏览器都不支持。感觉有用的就window.open()和location对象了。当然window.inner/outer也有些用。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wusiyuan02.github.io/RedBookRead/12.html" data-id="cl296wjxo000040vcd2ga9un9" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hello-Blog/">Hello Blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue%E6%A1%86%E6%9E%B6/">Vue框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BOM/" rel="tag">BOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript/" rel="tag">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2/" rel="tag">字节二面</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Siyuan Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/RedBookRead" class="mobile-nav-link">红宝书重读</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
