@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>JavaScript(10) | 追光者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Selectors API在DOM1中，获取DOM节点的方法准确来说只有两个：getElementById(id) 和 getElementsByTagName(tagName)，而在jQuery中，完全以CSS选择符查询DOM获取元素的引用。 而Selectors API Level1中提供了两种方法，他的表现就如同jQuery中的$()查询符。querySelector(CSSDescript">
+<meta property="og:type" content="website">
+<meta property="og:title" content="JavaScript(10)">
+<meta property="og:url" content="https://wusiyuan02.github.io/RedBookRead/15-16.html">
+<meta property="og:site_name" content="追光者">
+<meta property="og:description" content="Selectors API在DOM1中，获取DOM节点的方法准确来说只有两个：getElementById(id) 和 getElementsByTagName(tagName)，而在jQuery中，完全以CSS选择符查询DOM获取元素的引用。 而Selectors API Level1中提供了两种方法，他的表现就如同jQuery中的$()查询符。querySelector(CSSDescript">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-25T12:56:05.000Z">
+<meta property="article:modified_time" content="2022-04-25T14:19:14.071Z">
+<meta property="article:author" content="Siyuan Wu">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="[object Object]">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">
+          追光者
+        </a>
+      </h1>
+      <h2 id="subtitle-wrap">
+        <a href="/" id="subtitle">
+          踮起脚，就能更接近阳光。
+        </a>
+      </h2>
+
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">
+            Home
+          </a>
+          
+          <a class="main-nav-link" href="/archives">
+            Archives
+          </a>
+          
+          <a class="main-nav-link" href="/categories">
+            Category
+          </a>
+          
+          <a class="main-nav-link" href="/tags">
+            Tags
+          </a>
+          
+          <a class="main-nav-link" href="/RedBookRead">
+            红宝书重读
+          </a>
+          
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wusiyuan02.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/RedBookRead/15-16.html" class="article-date">
+  <time datetime="2022-04-25T12:56:05.000Z" itemprop="datePublished">2022-04-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JavaScript(10)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Selectors-API"><a href="#Selectors-API" class="headerlink" title="Selectors API"></a>Selectors API</h1><p>在DOM1中，获取DOM节点的方法准确来说只有两个：getElementById(id) 和 getElementsByTagName(tagName)，而在jQuery中，完全以CSS选择符查询DOM获取元素的引用。</p>
+<p>而Selectors API Level1中提供了两种方法，他的表现就如同jQuery中的$()查询符。querySelector(CSSDescription)，querySlectorAll(CSSDescription)。第一个方法返回第一个匹配的DOM元素，第二个方法返回匹配的NodeList。</p>
+<p>在兼容浏览器中，暴露这俩方法的类型是Document，Element。</p>
+<p>还有一个方法matches()我倒是从来没用使用过，接受的参数也是CSSDescription。不过返回的是boolean，如果元素匹配CSSDescription，为true，否则为false。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&#x27;myDiv&#x27;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.matches(<span class="string">&quot;div&quot;</span>)  <span class="comment">// TypeError</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.body.match(<span class="string">&quot;div&quot;</span>) <span class="comment">// false</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> div = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;myDiv&#x27;</span>);</span></span><br><span class="line"><span class="javascript">    div.matches(<span class="string">&#x27;div&#x27;</span>); <span class="comment">// true</span></span></span><br><span class="line"><span class="javascript">    div.match(<span class="string">&quot;div#myDiv&quot;</span>); <span class="comment">// true</span></span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="HTML5"><a href="#HTML5" class="headerlink" title="HTML5"></a>HTML5</h1><h2 id="CSS-扩展"><a href="#CSS-扩展" class="headerlink" title="CSS 扩展"></a>CSS 扩展</h2><p>1、 getElementByClassName</p>
+<p>2、 classList</p>
+<p>H5之前操作类名是className字面量形式的，H5提供了一个属性ClassList实现class类的添加、删除和替换。</p>
+<p>提供了如下方法。</p>
+<table>
+<thead>
+<tr>
+<th align="center">方法</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">DOM.classList.add(value)</td>
+<td align="center">添加</td>
+</tr>
+<tr>
+<td align="center">DOM.classList.remove(value)</td>
+<td align="center">删除</td>
+</tr>
+<tr>
+<td align="center">DOM.classList.toggle(value)</td>
+<td align="center">如果有则删除，如果没有则添加</td>
+</tr>
+<tr>
+<td align="center">DOM.classList.contains(value)</td>
+<td align="center">返回boolean，表示给定的value是否存在</td>
+</tr>
+</tbody></table>
+<p>3、document.activeElement 始终包含当前拥有焦点的DOM元素。</p>
+<p>4、dataset</p>
+<p>在标签上使用data-自定义数据属性，可以通过DOM.dataset.propName来访问。自定义数据的数据类型都是字符串类型。</p>
+<p>5、Element类型</p>
+<p>新增几个属性，firstElementChild，lastElementChild，nextElementSibling，previousElementChild，</p>
+<p>children。对比fristChild，lastChild，nextSibling，previousSibling，childNodes，很明显返回的都是Element类型的节点。</p>
+<h1 id="DOM2-amp-amp-DOM3"><a href="#DOM2-amp-amp-DOM3" class="headerlink" title="DOM2&amp;&amp;DOM3"></a>DOM2&amp;&amp;DOM3</h1><p>DOM2和DOM3都是在DOM1定义的底层结构上加入更多的交互能力。</p>
+<p>DOM2在Node的原型对象上新增了命名空间这一概念。当然也衍生了许多对应的方法。不过大体上都是原先的方法后缀-NS，接受的第一个参数改成了namespace，有点C++的意思。</p>
+<p>DOM2新增了isSameNode()和isEqualNode()方法。故名思意，如果两个节点只是属性一样，并不是值一样调用isSameNode为false，调用isEqualNode为true。</p>
+<p>感觉好多东西我都没咋用过，这块部分跳过，直接来我听过的内容。</p>
+<h1 id="元素尺寸"><a href="#元素尺寸" class="headerlink" title="元素尺寸"></a>元素尺寸</h1><h2 id="偏移尺寸"><a href="#偏移尺寸" class="headerlink" title="偏移尺寸"></a>偏移尺寸</h2><p>offsetHeight，offsetWidth，offsetTop，offsetLeft。</p>
+<h2 id="客户端尺寸"><a href="#客户端尺寸" class="headerlink" title="客户端尺寸"></a>客户端尺寸</h2><p>clientHeight，clientWidth。</p>
+<h2 id="滚动尺寸"><a href="#滚动尺寸" class="headerlink" title="滚动尺寸"></a>滚动尺寸</h2><p>scrollHeight，scrollWidth，scrollTop，scrollLeft。</p>
+<p>就先这样，其他的直接跳过。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wusiyuan02.github.io/RedBookRead/15-16.html" data-id="cl2evcqhg0000c4vc0w3ocu4v" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hello-Blog/">Hello Blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue%E6%A1%86%E6%9E%B6/">Vue框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BOM/" rel="tag">BOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript/" rel="tag">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2/" rel="tag">字节二面</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Siyuan Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/RedBookRead" class="mobile-nav-link">红宝书重读</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
