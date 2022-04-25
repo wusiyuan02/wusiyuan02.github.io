@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>14 | 追光者</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="DOM（文档对象模型）表示由多层节点构成的文档，是HTML和XML文档的编程接口。可以实现动态改变html，增加与用户交互的体验。这就是DOM存在的意义。 DOM树其实从html代码中可以发现，html中的标签其实是一个树结构，比如： 12345678&lt;!DOCTYPE html&gt;              &lt;!-- DocumentType--&gt;&lt;!-- 第一个注释">
+<meta property="og:type" content="website">
+<meta property="og:title" content="14">
+<meta property="og:url" content="https://wusiyuan02.github.io/RedBookRead/14.html">
+<meta property="og:site_name" content="追光者">
+<meta property="og:description" content="DOM（文档对象模型）表示由多层节点构成的文档，是HTML和XML文档的编程接口。可以实现动态改变html，增加与用户交互的体验。这就是DOM存在的意义。 DOM树其实从html代码中可以发现，html中的标签其实是一个树结构，比如： 12345678&lt;!DOCTYPE html&gt;              &lt;!-- DocumentType--&gt;&lt;!-- 第一个注释">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/14/DOM1.jpg">
+<meta property="og:image" content="https://wusiyuan02.github.io/RedBookRead/14/DOM2.jpg">
+<meta property="article:published_time" content="2022-04-24T08:41:01.000Z">
+<meta property="article:modified_time" content="2022-04-25T12:49:37.964Z">
+<meta property="article:author" content="Siyuan Wu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wusiyuan02.github.io/RedBookRead/14/DOM1.jpg">
+  
+  
+    <link rel="icon" href="[object Object]">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">
+          追光者
+        </a>
+      </h1>
+      <h2 id="subtitle-wrap">
+        <a href="/" id="subtitle">
+          踮起脚，就能更接近阳光。
+        </a>
+      </h2>
+
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">
+            Home
+          </a>
+          
+          <a class="main-nav-link" href="/archives">
+            Archives
+          </a>
+          
+          <a class="main-nav-link" href="/categories">
+            Category
+          </a>
+          
+          <a class="main-nav-link" href="/tags">
+            Tags
+          </a>
+          
+          <a class="main-nav-link" href="/RedBookRead">
+            红宝书重读
+          </a>
+          
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wusiyuan02.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/RedBookRead/14.html" class="article-date">
+  <time datetime="2022-04-24T08:41:01.000Z" itemprop="datePublished">2022-04-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      14
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>DOM（文档对象模型）表示由多层节点构成的文档，是HTML和XML文档的编程接口。可以实现动态改变html，增加与用户交互的体验。这就是DOM存在的意义。</p>
+<h1 id="DOM树"><a href="#DOM树" class="headerlink" title="DOM树"></a>DOM树</h1><p>其实从html代码中可以发现，html中的标签其实是一个树结构，比如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span>              <span class="comment">&lt;!-- DocumentType--&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 第一个注释 --&gt;</span>            <span class="comment">&lt;!-- Comment--&gt;</span>                             </span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span>                       <span class="comment">&lt;!-- Element --&gt;</span></span><br><span class="line">    TextElement                   <span class="comment">&lt;!-- Text --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span>                 <span class="comment">&lt;!-- Element --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span>                 <span class="comment">&lt;!-- Element --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 第二个注释 --&gt;</span>            <span class="comment">&lt;!-- Comment--&gt;</span>    </span><br></pre></td></tr></table></figure>
+
+<p>首先他有一个根节点： Document。当然根节点并没有在html文件中显示。</p>
+<p>根节点的子节点共有四个，代码中已经标记。</p>
+<p>这四个子结点中，Element节点下面又有三个节点，“TextElement”，&lt;head&gt;、&lt;body&gt;，节点类型都在后面标注。</p>
+<p>这其实就是DOM树，一个很简单的东西。</p>
+<h1 id="DOM的节点类型"><a href="#DOM的节点类型" class="headerlink" title="DOM的节点类型"></a>DOM的节点类型</h1><p>在DOM Level1中描述了名为Node的接口，这个接口是DOM中所有的node必须实现的。Node接口在JS中被实现为Node类型。根据对象那块的知识，Node.prototype应该是所有node节点的原型链上的一层。</p>
+<p>下面的图片可以证明这一点。其中，document.documentElement对应的是html节点。</p>
+<img src="/RedBookRead/14/DOM1.jpg">
+
+<p>每个节点都有nodeType和nodeValue属性,下面就介绍几个主要使用的node吧。</p>
+<table>
+<thead>
+<tr>
+<th align="center">name</th>
+<th align="center">nodeType</th>
+<th align="center">nodeValue</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Document</td>
+<td align="center">Node.DOCUMENT_NODE</td>
+<td align="center">9</td>
+</tr>
+<tr>
+<td align="center">Element</td>
+<td align="center">Node.ELEMENT_NODE</td>
+<td align="center">1</td>
+</tr>
+</tbody></table>
+<h2 id="Node"><a href="#Node" class="headerlink" title="Node"></a>Node</h2><p>在介绍DOM中节点之前，应该首先介绍Node。上面也说了DOM节点每个都有nodeType和nodeValue属性，这俩属性保存着有关节点的信息。</p>
+<p>Node中还有一个childNodes属性，值为NodeList（子节点的类数组）。</p>
+<p>Node中有nextSibling和previousSibling属性，指向位于同一DOM层中后一个节点和前一个节点。如果没有的话，值为null。</p>
+<p>Node中有appendChild方法，用于在childNodes列表末尾插入节点。</p>
+<table>
+<thead>
+<tr>
+<th align="center">属性/方法</th>
+<th align="center">返回值</th>
+<th align="center">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Node.prototype.childNodes（可读）</td>
+<td align="center">NodeLists</td>
+<td align="center">获取this下的子节点</td>
+</tr>
+<tr>
+<td align="center">Node.prototype.lastChild（可读）</td>
+<td align="center">node</td>
+<td align="center">获取this下最后一个子节点</td>
+</tr>
+<tr>
+<td align="center">Node.prototype.firstChild（可读）</td>
+<td align="center">node</td>
+<td align="center">获取this下第一个子节点</td>
+</tr>
+<tr>
+<td align="center">Node.prototype.nextSibling（可读）</td>
+<td align="center">node</td>
+<td align="center">获取当前dom树下 this后同胞节点</td>
+</tr>
+<tr>
+<td align="center">Node.prototype.previousSibling（可读）</td>
+<td align="center">node</td>
+<td align="center">获取当前dom树下this前同胞节点</td>
+</tr>
+<tr>
+<td align="center">Node.prototype.appendChild( node )</td>
+<td align="center">newNode</td>
+<td align="center">将node插入到this的childNodes的末尾</td>
+</tr>
+<tr>
+<td align="center">Node.prototype.insertBefore(newNode, oldNode)</td>
+<td align="center">newNode</td>
+<td align="center">将newNode插入到this的childNodes中的oldNode前面</td>
+</tr>
+<tr>
+<td align="center">Node.prototype.replaceChild(newNode, oldNode)</td>
+<td align="center">oldNode</td>
+<td align="center">将oldNode替换成newNode</td>
+</tr>
+<tr>
+<td align="center">Node.prototype.removeChild(node)</td>
+<td align="center">node</td>
+<td align="center">移除node节点</td>
+</tr>
+<tr>
+<td align="center">Node.prototype.cloneNode(boolean)</td>
+<td align="center">node</td>
+<td align="center">如果为true，则深拷贝node，否则浅拷贝node</td>
+</tr>
+<tr>
+<td align="center">Node.prototype.normalize()</td>
+<td align="center">undefined</td>
+<td align="center">处理文档子树中的文本节点</td>
+</tr>
+</tbody></table>
+<h2 id="Document"><a href="#Document" class="headerlink" title="Document"></a>Document</h2><p>Document指向整个DOM节点树，代表整个HTML页面，document 是 window 的一个属性。所以其实我们每次些document…. 其实省略了window.。</p>
+<p>Document的nodeType为9，nodeName为“#document”，nodeValue为null,parentNode为null，ownerDocument为null。<strong>子节点可以为DocumentType（最多一个）、Element（最多一个）、ProcessingInstruction、Comment。</strong></p>
+<p>Document.documentElement就是html元素，对应子节点就是Element。</p>
+<p>Document.doctype就是&lt;! Doctype&gt;文档声明，对应字节带你就是DocumentType。</p>
+<p>comment就是文档的注释。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span>              // DocumentType</span><br><span class="line"><span class="comment">&lt;!-- 第一个注释 --&gt;</span>            // Comment</span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span>                       // Element</span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 第二个注释 --&gt;</span>            // Comment</span><br></pre></td></tr></table></figure>
+
+<p>document文档写入功能：</p>
+<table>
+<thead>
+<tr>
+<th align="center">方法名</th>
+<th align="center">说明</th>
+<th align="center">用法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">write(str)</td>
+<td align="center">将字符串写入网页</td>
+<td align="center">常用于动态包含外部资源</td>
+</tr>
+<tr>
+<td align="center">writeIn(str)</td>
+<td align="center">在字符串末尾追加一个换行符\n</td>
+<td align="center">常用于动态包含外部资源</td>
+</tr>
+<tr>
+<td align="center">open()</td>
+<td align="center">打开网页</td>
+<td align="center">打开网页</td>
+</tr>
+<tr>
+<td align="center">close()</td>
+<td align="center">关闭网页</td>
+<td align="center">关闭网页</td>
+</tr>
+</tbody></table>
+<h2 id="Element"><a href="#Element" class="headerlink" title="Element"></a>Element</h2><p>所有的html元素都是通过HTMLElement类型表示。每个属性对应下列属性值之一：</p>
+<ol>
+<li>id 唯一标识符</li>
+<li>title 包含元素的额外信息</li>
+<li>lang 元素内容的语言</li>
+<li>dir 语言的书写方向</li>
+<li><strong>className 相当于class属性，后面也有对应的属性classList。不使用class是因为class是ES的关键字。</strong></li>
+</ol>
+<p>取得属性与设置属性说明</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&#x27;myDiv&#x27;</span> <span class="attr">class</span>=<span class="string">&#x27;myClass&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> div = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;myDiv&#x27;</span>);</span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(div.id);        <span class="comment">// &#x27;myDiv&#x27;  </span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(div.className); <span class="comment">// &#x27;myClass&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(div.getAttribute(<span class="string">&quot;id&quot;</span>)) <span class="comment">// // &#x27;myDiv&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(div.getAttribute(<span class="string">&quot;class&quot;</span>)) <span class="comment">// // &#x27;myClass&#x27;</span></span></span><br><span class="line"><span class="javascript">    div.id = <span class="string">&#x27;newDiv&#x27;</span>;</span></span><br><span class="line"><span class="javascript">    div.className = <span class="string">&#x27;newClass&#x27;</span>;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 等价于</span></span></span><br><span class="line"><span class="javascript">    div.setAttribute(<span class="string">&quot;id&quot;</span>, <span class="string">&quot;newDiv&quot;</span>);</span></span><br><span class="line"><span class="javascript">    div.setAttribute(<span class="string">&quot;class&quot;</span>, <span class="string">&quot;newClass&quot;</span>);</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>虽然dom节点共有十几种类型，但常用的其实就这两种。很多都是了解一下就可以了。下面就该介绍DOM树。</p>
+<h1 id="MutationObserver"><a href="#MutationObserver" class="headerlink" title="MutationObserver"></a>MutationObserver</h1><p>这是一个可以在DOM被修改时异步执行回调的方法。</p>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> div = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;myDiv&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> MutationObserver(<span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;DOM is mutated&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line">observer.observe(div, &#123;<span class="attr">attributes</span>: <span class="literal">true</span>&#125;)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    div.id = <span class="string">&#x27;newDiv&#x27;</span>;</span><br><span class="line">&#125;,<span class="number">1000</span>) </span><br></pre></td></tr></table></figure>
+
+<p>上述代码一秒后会打印“DOM is mutated”。</p>
+<p>下面对代码进行说明：</p>
+<p>首先，调用MutationObserver构造函数并传入一个回调函数作为参数创建一个MutationObserver实例。</p>
+<p>第二步，调用observe方法，将该实例与DOM节点绑定，observe接受两个参数，第一个参数是DOM节点，第二个参数叫做MutationObserverInit对象。这个对象用于控制哪些方面的变化。</p>
+<p>下面表格说明MutationObserverInit对象中的合法属性。</p>
+<table>
+<thead>
+<tr>
+<th align="center">属性</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">subtree</td>
+<td align="center">布尔值，表示除了目标节点，是否观察目标节点的后代。默认为false，则之观察目标节点的变化，为true则观察整个子树节点的变化</td>
+</tr>
+<tr>
+<td align="center">attributes</td>
+<td align="center">布尔值，默认为false，表示是否观察目标节点的属性变化</td>
+</tr>
+<tr>
+<td align="center">attributeFilter</td>
+<td align="center">字符串数组，表示要观察哪些属性变化，将这个值设为true，会将attributes设为true</td>
+</tr>
+<tr>
+<td align="center">attributeOldValue</td>
+<td align="center">布尔值，表示MutationRecord是否记录变化之前的属性值</td>
+</tr>
+<tr>
+<td align="center">characterData</td>
+<td align="center">布尔值，表示修改字符属性是否触发回调函数。默认为false</td>
+</tr>
+<tr>
+<td align="center">characterDataOldValue</td>
+<td align="center">与attributeOldValue类似</td>
+</tr>
+<tr>
+<td align="center">childList</td>
+<td align="center">表示修改目标节点的子节点是否触发回调函数。</td>
+</tr>
+</tbody></table>
+<p>表格中提到了MutationRecord，这个东西是回调函数的参数，包含的信息包括发生了说明变化，以及哪一部分受到了影响</p>
+<p>因为回调执行之前可能同时发生多个满足观察条件的事件，所以每次执行回调都会传入一个包含按顺序入队的MutationRecord实例的数组。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> div = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;myDiv&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> MutationObserver(<span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">MutationRecords</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(MutationRecords);</span><br><span class="line">&#125;);</span><br><span class="line">observer.observe(div, &#123;<span class="attr">attributes</span>: <span class="literal">true</span>&#125;)</span><br><span class="line">div.id = <span class="string">&#x27;newDiv&#x27;</span>;</span><br><span class="line">div.className = <span class="string">&#x27;newClass&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>MutationRecord也有许多属性。下面用一个表格来展示：</p>
+<table>
+<thead>
+<tr>
+<th align="center">属性</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">target</td>
+<td align="center">DOM节点</td>
+</tr>
+<tr>
+<td align="center">type</td>
+<td align="center">表示变化的类型</td>
+</tr>
+<tr>
+<td align="center">oldValue</td>
+<td align="center">表示旧值，当characterDataOldValue或者attributeOldValue设为true时有值，否则为null</td>
+</tr>
+<tr>
+<td align="center">attributeName</td>
+<td align="center">对于attributes: true，保存的是被修改的属性名</td>
+</tr>
+<tr>
+<td align="center">attributeNamespace</td>
+<td align="center">对于使用了命名空间的”attributes“类型的变化，保存的是被修改的属性名</td>
+</tr>
+<tr>
+<td align="center">addedNodes</td>
+<td align="center">对于”childList”类型的变化，返回添加节点的NodeList</td>
+</tr>
+<tr>
+<td align="center">removedNodes</td>
+<td align="center">对于”childList”类型的变化，返回删除节点的NodeList</td>
+</tr>
+<tr>
+<td align="center">previousSibling</td>
+<td align="center">对于”childList”类型的变化，返回<strong>变化</strong>节点的前一个同胞Node</td>
+</tr>
+<tr>
+<td align="center">nextSibling</td>
+<td align="center">对于”childList”类型的变化，返回<strong>变化</strong>节点的后一个同胞Node</td>
+</tr>
+</tbody></table>
+<p>注意： 对子节点的重新排序会报告两次变化事件，因为从技术上会设计先移除和后添加：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">const</span> div = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;myDiv&#x27;</span>);</span><br><span class="line"> <span class="keyword">const</span> observer = <span class="keyword">new</span> MutationObserver(<span class="function"><span class="keyword">function</span> <span class="title">callback</span> (<span class="params">MutationRecords</span>) </span>&#123;</span><br><span class="line">     <span class="built_in">console</span>.log(MutationRecords);</span><br><span class="line"> &#125;);</span><br><span class="line"> <span class="keyword">const</span> div1 = <span class="built_in">document</span>.createElement(<span class="string">&quot;div&quot;</span>);</span><br><span class="line"> div1.innerHTML = <span class="string">&#x27;1&#x27;</span>;</span><br><span class="line"> <span class="keyword">const</span> div2 = <span class="built_in">document</span>.createElement(<span class="string">&quot;div&quot;</span>);</span><br><span class="line"> div2.innerHTML = <span class="string">&#x27;2&#x27;</span>;</span><br><span class="line"> div.appendChild(div1)</span><br><span class="line"> div.appendChild(div2)</span><br><span class="line"> observer.observe(div, &#123;</span><br><span class="line">    <span class="attr">childList</span>: <span class="literal">true</span></span><br><span class="line"> &#125;)</span><br><span class="line">div.insertBefore(div.lastChild, div.firstChild)</span><br></pre></td></tr></table></figure>
+
+<p>结果如下图，首先删除div.lastChild，然后再插入，这个时候previousSibling为div1。</p>
+<img src="/RedBookRead/14/DOM2.jpg">
+
+<p>disconnect()方法可以提前终止执行回调。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wusiyuan02.github.io/RedBookRead/14.html" data-id="cl2d3kpsp0000j8vcek5q0h2x" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hello-Blog/">Hello Blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue%E6%A1%86%E6%9E%B6/">Vue框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BOM/" rel="tag">BOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript/" rel="tag">你不知道的JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2/" rel="tag">字节二面</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Siyuan Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/RedBookRead" class="mobile-nav-link">红宝书重读</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
